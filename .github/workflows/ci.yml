@@ -15,5 +15,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run prepare-model
-      - run: npm run evaluate
+      - run: npm run evaluate -- --check
       - run: npm run qa

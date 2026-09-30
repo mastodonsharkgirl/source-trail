@@ -10,7 +10,7 @@
     "build": "astro build",
     "qa": "npm run check && npm test && npm run build",
     "prepare-model": "node scripts/prepare-model.mjs",
-    "evaluate": "node scripts/evaluate.mjs"
+    "evaluate": "node --experimental-strip-types scripts/evaluate.mjs"
   },
   "dependencies": {
     "@huggingface/transformers": "4.3.0",

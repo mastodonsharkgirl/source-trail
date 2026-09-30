@@ -9,10 +9,11 @@
     "pooling": "mean",
     "normalized": true,
     "dimensions": 384,
-    "tokenizerLimit": 512
+    "tokenizerLimit": 512,
+    "embeddingBatchStrategy": "all passages in one batch, then each query in a separate batch"
   },
   "measurement": {
-    "loadMs": 184,
+    "loadMs": 185,
     "passageTokenCounts": [
       36,
       32,
@@ -32,14 +33,18 @@
   },
   "calibration": {
     "semantic": {
-      "recallAt3": 1,
-      "mrrFirstRelevantFullRanking": 0.9166666666666666,
+      "ungatedRecallAt3": 1,
+      "ungatedMrrFirstRelevantFullRanking": 0.9166666666666666,
+      "answerableAccepted": 6,
+      "answerableAbstained": 0,
       "noAnswerFalsePositives": 0,
       "noAnswerAbstentions": 2
     },
     "lexical": {
-      "recallAt3": 0.9166666666666666,
-      "mrrFirstRelevantFullRanking": 0.9166666666666666,
+      "ungatedRecallAt3": 0.9166666666666666,
+      "ungatedMrrFirstRelevantFullRanking": 0.9166666666666666,
+      "answerableAccepted": 6,
+      "answerableAbstained": 0,
       "noAnswerFalsePositives": 2,
       "noAnswerAbstentions": 0
     },
@@ -925,14 +930,18 @@
   },
   "heldOut": {
     "semantic": {
-      "recallAt3": 0.9230769230769231,
-      "mrrFirstRelevantFullRanking": 0.8269230769230769,
+      "ungatedRecallAt3": 0.9230769230769231,
+      "ungatedMrrFirstRelevantFullRanking": 0.8269230769230769,
+      "answerableAccepted": 7,
+      "answerableAbstained": 6,
       "noAnswerFalsePositives": 0,
       "noAnswerAbstentions": 3
     },
     "lexical": {
-      "recallAt3": 0.5384615384615384,
-      "mrrFirstRelevantFullRanking": 0.5153846153846154,
+      "ungatedRecallAt3": 0.5384615384615384,
+      "ungatedMrrFirstRelevantFullRanking": 0.5153846153846154,
+      "answerableAccepted": 13,
+      "answerableAbstained": 0,
       "noAnswerFalsePositives": 3,
       "noAnswerAbstentions": 0
     },

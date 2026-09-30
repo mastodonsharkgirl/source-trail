@@ -1,6 +1,8 @@
 export const MAX_NOTES = 12;
 export const MAX_PASSAGES = 24;
 export const MAX_CORPUS_BYTES = 16 * 1024;
+export const MAX_TITLE_BYTES = 256;
+export const MAX_VERSION_BYTES = 128;
 export const MAX_QUERY_CHARACTERS = 800;
 export const MODEL_REVISION = '751bff37182d3f1213fa05d7196b954e230abad9';
 export const MODEL_ID = 'Xenova/all-MiniLM-L6-v2';
@@ -42,9 +44,10 @@ function corpusRevision(notes: readonly SourceNote[]): string {
   return `sources-${(hash >>> 0).toString(16).padStart(8, '0')}`;
 }
 
-function validateText(value: string, field: string, noteNumber: number): void {
+function validateText(value: string, field: string, noteNumber: number, maxBytes?: number): void {
   if (!value.trim()) throw new Error(`Note ${noteNumber} ${field} must not be empty.`);
   if (value.includes('\u0000')) throw new Error(`Note ${noteNumber} ${field} must not contain NUL characters.`);
+  if (maxBytes !== undefined && encoder.encode(value).byteLength > maxBytes) throw new Error(`Note ${noteNumber} ${field} exceeds the ${maxBytes}-byte UTF-8 limit.`);
 }
 
 export function validateSources(notes: readonly SourceNote[]): Corpus {
@@ -63,8 +66,8 @@ export function validateSources(notes: readonly SourceNote[]): Corpus {
     if (typeof note.title !== 'string') throw new Error(`Note ${number} title must be text.`);
     if (typeof note.version !== 'string') throw new Error(`Note ${number} version must be text.`);
     if (typeof note.text !== 'string') throw new Error(`Note ${number} text must be text.`);
-    validateText(note.title, 'title', number);
-    validateText(note.version, 'version', number);
+    validateText(note.title, 'title', number, MAX_TITLE_BYTES);
+    validateText(note.version, 'version', number, MAX_VERSION_BYTES);
     validateText(note.text, 'text', number);
     byteCount += encoder.encode(note.text).byteLength;
     const blocks: string[] = note.text.split(/\r?\n\s*\r?\n/).map((block: string) => block.trim()).filter(Boolean);

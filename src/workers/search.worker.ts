@@ -2,6 +2,7 @@ import { env, pipeline } from '@huggingface/transformers';
 import { rankVectors } from '../lib/ranking.js';
 import type { WorkerRequest, WorkerResponse } from '../lib/protocol.js';
 import { MAX_QUERY_CHARACTERS, MODEL_DTYPE, MODEL_LOCAL_PATH, POOLING, VECTOR_DIMENSIONS } from '../lib/sources.js';
+import { WorkerCoordinator } from '../lib/worker-controller.js';
 
 const MAX_MODEL_TOKENS = 512;
 type Extractor = Awaited<ReturnType<typeof pipeline<'feature-extraction'>>>;
@@ -26,13 +27,11 @@ async function tokenCount(text: string): Promise<number> {
   return encoded.input_ids.dims.at(-1) ?? 0;
 }
 
-async function load(request: Extract<WorkerRequest, { type: 'load' }>): Promise<void> {
-  post({ type: 'loading', jobId: request.jobId, revision: request.revision });
+async function load(): Promise<void> {
   extractor ??= await pipeline('feature-extraction', MODEL_LOCAL_PATH, { dtype: MODEL_DTYPE, device: 'wasm' });
-  post({ type: 'ready', jobId: request.jobId, revision: request.revision });
 }
 
-async function search(request: Extract<WorkerRequest, { type: 'search' }>): Promise<void> {
+async function search(request: Extract<WorkerRequest, { type: 'search' }>): Promise<Extract<WorkerResponse, { type: 'results' }>> {
   if (request.query.length > MAX_QUERY_CHARACTERS) throw new Error(`Question exceeds the ${MAX_QUERY_CHARACTERS}-character limit.`);
   if (!extractor) throw new Error('Load local search before searching.');
   const queryTokens = await tokenCount(request.query);
@@ -41,20 +40,18 @@ async function search(request: Extract<WorkerRequest, { type: 'search' }>): Prom
     const count = await tokenCount(passage.text);
     if (count > MAX_MODEL_TOKENS) throw new Error(`Passage ${passage.id} has ${count} model tokens; shorten the source note before searching.`);
   }
-  const output = await extractor([...request.corpus.passages.map((passage) => passage.text), request.query], { pooling: POOLING, normalize: true });
-  const vectors = output.tolist() as number[][];
-  const queryVector = vectors.pop();
+  const passageOutput = await extractor(request.corpus.passages.map((passage) => passage.text), { pooling: POOLING, normalize: true });
+  const vectors = passageOutput.tolist() as number[][];
+  const queryOutput = await extractor(request.query, { pooling: POOLING, normalize: true });
+  const queryVector = (queryOutput.tolist() as number[][])[0];
   if (!queryVector || queryVector.length !== VECTOR_DIMENSIONS) throw new Error('Local model returned an unexpected vector dimension.');
-  post({ type: 'results', jobId: request.jobId, revision: request.revision, results: rankVectors(request.corpus.passages, vectors, queryVector), tokenCount: queryTokens });
+  return { type: 'results', jobId: request.jobId, revision: request.revision, results: rankVectors(request.corpus.passages, vectors, queryVector), tokenCount: queryTokens };
 }
 
-self.addEventListener('message', async ({ data }: MessageEvent<WorkerRequest>) => {
-  try {
-    if (data.type === 'load') await load(data);
-    else await search(data);
-  } catch (error) {
-    post({ type: 'error', jobId: data.jobId, revision: data.revision, message: error instanceof Error ? error.message : 'Local search failed.' });
-  }
+const coordinator = new WorkerCoordinator({ post, load, search });
+
+self.addEventListener('message', ({ data }: MessageEvent<WorkerRequest>) => {
+  void coordinator.handle(data);
 });
 
 export { MAX_MODEL_TOKENS };
