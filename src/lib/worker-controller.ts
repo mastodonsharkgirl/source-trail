@@ -13,7 +13,13 @@ export class WorkerCoordinator {
   constructor(private readonly operations: WorkerOperations) {}
 
   private ensureLoaded(): Promise<void> {
-    this.loadPromise ??= this.operations.load();
+    if (!this.loadPromise) {
+      const attempt = this.operations.load();
+      this.loadPromise = attempt;
+      void attempt.catch(() => {
+        if (this.loadPromise === attempt) this.loadPromise = undefined;
+      });
+    }
     return this.loadPromise;
   }
 

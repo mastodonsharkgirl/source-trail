@@ -29,6 +29,31 @@ describe('WorkerCoordinator', () => {
     expect(messages.filter((message) => (message as { type: string }).type === 'ready')).toHaveLength(2);
   });
 
+  it('clears a failed load so a later concurrent retry shares one new attempt', async () => {
+    const messages: unknown[] = [];
+    let loads = 0;
+    let release!: () => void;
+    const pendingRetry = new Promise<void>((resolve) => { release = resolve; });
+    const coordinator = new WorkerCoordinator({
+      post: (message) => messages.push(message),
+      load: async () => {
+        loads += 1;
+        if (loads === 1) throw new Error('network unavailable');
+        await pendingRetry;
+      },
+      search: async () => ({ type: 'results', jobId: 'x', revision: 'rev-1', results: [], tokenCount: 1 }),
+    });
+    await coordinator.handle({ type: 'load', jobId: 'failed', revision: 'rev-1' });
+    const retryOne = coordinator.handle({ type: 'load', jobId: 'retry-one', revision: 'rev-1' });
+    const retryTwo = coordinator.handle({ type: 'load', jobId: 'retry-two', revision: 'rev-1' });
+    await Promise.resolve();
+    expect(loads).toBe(2);
+    release();
+    await Promise.all([retryOne, retryTwo]);
+    expect(messages).toContainEqual(expect.objectContaining({ type: 'error', jobId: 'failed' }));
+    expect(messages.filter((message) => (message as { type: string }).type === 'ready')).toHaveLength(2);
+  });
+
   it('serializes overlapping searches in message order', async () => {
     const order: string[] = [];
     let release!: () => void;
