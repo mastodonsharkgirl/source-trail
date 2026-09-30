@@ -1,0 +1,40 @@
+{
+  "version": "source-trail-owned-fictional-v1",
+  "notice": "All organisations, equipment and procedures below are authored fictional examples. These are search test notes, not real operating instructions.",
+  "sources": [
+    {"id":"camera","title":"Camera returns","version":"2026-01","text":"If a borrowed camera is damaged, take photographs of the damage and label the kit before asking the equipment coordinator to inspect it. Do not return it to the available shelf.\n\nA working camera can be checked back in after its battery, lens cap and carry bag have been counted. Record any missing item in the return note."},
+    {"id":"projector","title":"Projector setup","version":"2026-01","text":"A projector that shows no picture should first be checked for a loose video cable and the selected input. If neither fixes the picture, stop the setup and contact the room technician.\n\nA replacement projector may be borrowed from the labelled spare shelf. Record the spare unit number and return it to that shelf after the session."},
+    {"id":"room","title":"Workshop room bookings","version":"2026-02","text":"Cancel a workshop room reservation by emailing the room coordinator before noon on the previous working day. Include the booking reference and session date.\n\nThe east workshop has twelve seats. A larger session needs a different room; adding chairs to the doorway is not allowed in this fictional venue."},
+    {"id":"refund-old","title":"Ticket refunds: archived note","version":"2025-11 archived","text":"The archived ticket note says attendees can request a refund up to twenty-four hours before the session. This note has been superseded; preserve it when investigating an older booking.\n\nThe archived note does not describe how to cancel a room reservation or report damaged equipment."},
+    {"id":"refund-current","title":"Ticket refunds: current note","version":"2026-02 current","text":"The current ticket note allows refund requests until three working days before a session. Send the ticket reference to the workshop organiser. It replaces the archived twenty-four-hour rule.\n\nAn organiser may transfer a ticket to another named attendee after recording the original and new names. This is a ticket change, not a refund."},
+    {"id":"garden","title":"Garden workshop materials","version":"2026-01","text":"Use the blue tray for seeds and the green tray for watering supplies. Ask the garden lead before taking tools from the locked cupboard.\n\nReturn borrowed hand tools after brushing away soil and counting them against the tool list. Note a missing tool before closing the workshop."}
+  ],
+  "calibration": [
+    {"id":"c1","query":"What should I do with a broken borrowed camera?","relevant":["camera:1"]},
+    {"id":"c2","query":"The projector screen is blank. What do I check?","relevant":["projector:1"]},
+    {"id":"c3","query":"How do I cancel the workshop room?","relevant":["room:1"]},
+    {"id":"c4","query":"When can a ticket be refunded under the current rule?","relevant":["refund-current:1"]},
+    {"id":"c5","query":"Which tray holds the seeds?","relevant":["garden:1"]},
+    {"id":"c6","query":"What do the two ticket refund notes say?","relevant":["refund-old:1","refund-current:1"]},
+    {"id":"c7","query":"What is the Wi-Fi password?","relevant":[]},
+    {"id":"c8","query":"Who won the national football league?","relevant":[]}
+  ],
+  "heldOut": [
+    {"id":"t1","query":"Someone brought back a camera with a cracked case. What happens next?","relevant":["camera:1"],"class":"paraphrase"},
+    {"id":"t2","query":"Can I put a faulty camera straight back where people borrow equipment?","relevant":["camera:1"],"class":"hard-negative"},
+    {"id":"t3","query":"Which accessories need counting when a camera comes back intact?","relevant":["camera:2"],"class":"paraphrase"},
+    {"id":"t4","query":"Nothing appears from the projector even though the session is starting.","relevant":["projector:1"],"class":"paraphrase"},
+    {"id":"t5","query":"Where can I get another projector and what should I record?","relevant":["projector:2"],"class":"paraphrase"},
+    {"id":"t6","query":"I need to release a reserved room, rather than refund a ticket.","relevant":["room:1"],"class":"hard-negative"},
+    {"id":"t7","query":"Can thirteen people sit in the east workshop?","relevant":["room:2"],"class":"capacity"},
+    {"id":"t8","query":"What deadline did the old ticket refund policy use?","relevant":["refund-old:1"],"class":"version"},
+    {"id":"t9","query":"Has the one-day ticket refund cutoff been replaced?","relevant":["refund-current:1"],"class":"version"},
+    {"id":"t10","query":"A friend will attend in my place. What can the organiser do?","relevant":["refund-current:2"],"class":"paraphrase"},
+    {"id":"t11","query":"Which equipment can I access only after asking the garden lead?","relevant":["garden:1"],"class":"hard-negative"},
+    {"id":"t12","query":"How should gardening tools be handed back?","relevant":["garden:2"],"class":"paraphrase"},
+    {"id":"t13","query":"I need to understand ticket cancellation deadlines, including the older policy.","relevant":["refund-old:1","refund-current:1"],"class":"ambiguous"},
+    {"id":"t14","query":"What password opens the equipment booking website?","relevant":[],"class":"no-answer"},
+    {"id":"t15","query":"How much does repairing a cracked camera cost?","relevant":[],"class":"no-answer-near-topic"},
+    {"id":"t16","query":"Which train should I take to reach the venue?","relevant":[],"class":"no-answer"}
+  ]
+}

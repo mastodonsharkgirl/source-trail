@@ -1,0 +1,25 @@
+{
+  "name": "source-trail",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24.11.0 <26" },
+  "scripts": {
+    "check": "astro check",
+    "test": "vitest run",
+    "build": "astro build",
+    "qa": "npm run check && npm test && npm run build",
+    "prepare-model": "node scripts/prepare-model.mjs",
+    "evaluate": "node scripts/evaluate.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.0",
+    "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^24.19.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.11"
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+public/models/Xenova/
+public/models/onnxruntime/
+public/models/.prepared.json
+output/

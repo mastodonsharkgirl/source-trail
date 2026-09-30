@@ -1,0 +1,2714 @@
+{
+  "fixtureVersion": "source-trail-owned-fictional-v1",
+  "fixtureSha256": "07db8d2593158d250131b79f993b5b12f56df2297875f57c4a6c7ee08e5417cf",
+  "method": {
+    "model": "Xenova/all-MiniLM-L6-v2",
+    "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+    "runtime": "@huggingface/transformers 4.3.0 Node CPU",
+    "dtype": "q8",
+    "pooling": "mean",
+    "normalized": true,
+    "dimensions": 384,
+    "tokenizerLimit": 512
+  },
+  "measurement": {
+    "loadMs": 184,
+    "passageTokenCounts": [
+      36,
+      32,
+      39,
+      30,
+      29,
+      30,
+      37,
+      19,
+      39,
+      33,
+      28,
+      27
+    ],
+    "threshold": 0.577270614119211,
+    "thresholdSelection": "max calibration answer-vs-no-answer accuracy; held-out labels excluded"
+  },
+  "calibration": {
+    "semantic": {
+      "recallAt3": 1,
+      "mrrFirstRelevantFullRanking": 0.9166666666666666,
+      "noAnswerFalsePositives": 0,
+      "noAnswerAbstentions": 2
+    },
+    "lexical": {
+      "recallAt3": 0.9166666666666666,
+      "mrrFirstRelevantFullRanking": 0.9166666666666666,
+      "noAnswerFalsePositives": 2,
+      "noAnswerAbstentions": 0
+    },
+    "rows": [
+      {
+        "id": "c1",
+        "query": "What should I do with a broken borrowed camera?",
+        "relevant": [
+          "camera:1"
+        ],
+        "semantic": {
+          "tokens": 12,
+          "ranked": [
+            {
+              "id": "camera:1",
+              "score": 0.7131307646601528
+            },
+            {
+              "id": "camera:2",
+              "score": 0.4862316933454536
+            },
+            {
+              "id": "projector:2",
+              "score": 0.43894847869251036
+            },
+            {
+              "id": "projector:1",
+              "score": 0.34063057807841857
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.2414815689706871
+            },
+            {
+              "id": "garden:2",
+              "score": 0.21844900572541798
+            },
+            {
+              "id": "garden:1",
+              "score": 0.14164687549459323
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.12182979773443932
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.10300559106266852
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.08399100676611823
+            },
+            {
+              "id": "room:1",
+              "score": 0.052353277766390094
+            },
+            {
+              "id": "room:2",
+              "score": -0.07615328525690332
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "camera:1",
+            "score": 0.23947373603569985
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.2
+          },
+          {
+            "id": "projector:1",
+            "score": 0.1767766952966369
+          },
+          {
+            "id": "garden:2",
+            "score": 0.13900960937138318
+          },
+          {
+            "id": "projector:2",
+            "score": 0.13333333333333333
+          },
+          {
+            "id": "room:2",
+            "score": 0.13333333333333333
+          },
+          {
+            "id": "camera:2",
+            "score": 0.12830005981991682
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.08333333333333333
+          },
+          {
+            "id": "room:1",
+            "score": 0.06804138174397717
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.06085806194501846
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.06085806194501846
+          },
+          {
+            "id": "garden:1",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "c2",
+        "query": "The projector screen is blank. What do I check?",
+        "relevant": [
+          "projector:1"
+        ],
+        "semantic": {
+          "tokens": 14,
+          "ranked": [
+            {
+              "id": "projector:1",
+              "score": 0.6762245978335802
+            },
+            {
+              "id": "projector:2",
+              "score": 0.5803906602663262
+            },
+            {
+              "id": "camera:1",
+              "score": 0.34873917119109044
+            },
+            {
+              "id": "camera:2",
+              "score": 0.24841750094596884
+            },
+            {
+              "id": "garden:2",
+              "score": 0.17418290063511016
+            },
+            {
+              "id": "garden:1",
+              "score": 0.1215273647525168
+            },
+            {
+              "id": "room:1",
+              "score": 0.07986831215220457
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.06100378403219388
+            },
+            {
+              "id": "room:2",
+              "score": 0.05241033390134811
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.0045042183909473725
+            },
+            {
+              "id": "refund-old:1",
+              "score": -0.04247861136913174
+            },
+            {
+              "id": "refund-current:2",
+              "score": -0.05884138934574204
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "camera:1",
+            "score": 0.35921060405354976
+          },
+          {
+            "id": "projector:1",
+            "score": 0.2946278254943948
+          },
+          {
+            "id": "garden:1",
+            "score": 0.2721655269759087
+          },
+          {
+            "id": "projector:2",
+            "score": 0.26666666666666666
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.24343224778007383
+          },
+          {
+            "id": "room:1",
+            "score": 0.2041241452319315
+          },
+          {
+            "id": "room:2",
+            "score": 0.2
+          },
+          {
+            "id": "garden:2",
+            "score": 0.13900960937138318
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.13333333333333333
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.12171612389003691
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.08333333333333333
+          },
+          {
+            "id": "camera:2",
+            "score": 0.06415002990995841
+          }
+        ]
+      },
+      {
+        "id": "c3",
+        "query": "How do I cancel the workshop room?",
+        "relevant": [
+          "room:1"
+        ],
+        "semantic": {
+          "tokens": 10,
+          "ranked": [
+            {
+              "id": "room:1",
+              "score": 0.7954995438131148
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.5818040151752891
+            },
+            {
+              "id": "room:2",
+              "score": 0.4641930262002005
+            },
+            {
+              "id": "garden:2",
+              "score": 0.391281206317955
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.3869700833436791
+            },
+            {
+              "id": "projector:2",
+              "score": 0.35721685584183344
+            },
+            {
+              "id": "projector:1",
+              "score": 0.3374794910030197
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.2580479343983947
+            },
+            {
+              "id": "camera:1",
+              "score": 0.24540143061479444
+            },
+            {
+              "id": "garden:1",
+              "score": 0.18353870866356478
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.1688772782820361
+            },
+            {
+              "id": "camera:2",
+              "score": 0.02482213806492984
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "room:1",
+            "score": 0.5400617248673216
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.3779644730092272
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.3450327796711771
+          },
+          {
+            "id": "camera:1",
+            "score": 0.33942211665106536
+          },
+          {
+            "id": "projector:1",
+            "score": 0.33407655239053047
+          },
+          {
+            "id": "garden:1",
+            "score": 0.3086066999241838
+          },
+          {
+            "id": "room:2",
+            "score": 0.30237157840738177
+          },
+          {
+            "id": "garden:2",
+            "score": 0.23643312187173018
+          },
+          {
+            "id": "projector:2",
+            "score": 0.22677868380553634
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.13801311186847084
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.07559289460184544
+          },
+          {
+            "id": "camera:2",
+            "score": 0.07273929674533079
+          }
+        ]
+      },
+      {
+        "id": "c4",
+        "query": "When can a ticket be refunded under the current rule?",
+        "relevant": [
+          "refund-current:1"
+        ],
+        "semantic": {
+          "tokens": 15,
+          "ranked": [
+            {
+              "id": "refund-old:1",
+              "score": 0.6522742822394638
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.6452668830441748
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.48632259305134157
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.2574273069941721
+            },
+            {
+              "id": "room:1",
+              "score": 0.19301388258053498
+            },
+            {
+              "id": "camera:1",
+              "score": 0.18151526104582155
+            },
+            {
+              "id": "camera:2",
+              "score": 0.17139659939306076
+            },
+            {
+              "id": "room:2",
+              "score": 0.039208271161758186
+            },
+            {
+              "id": "projector:2",
+              "score": 0.035932720003213695
+            },
+            {
+              "id": "garden:2",
+              "score": -0.00880927139812516
+            },
+            {
+              "id": "projector:1",
+              "score": -0.06653204885092887
+            },
+            {
+              "id": "garden:1",
+              "score": -0.07664247461431631
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:1",
+            "score": 0.5196152422706631
+          },
+          {
+            "id": "projector:1",
+            "score": 0.3913118960624632
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.37947331922020555
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.3464101615137754
+          },
+          {
+            "id": "projector:2",
+            "score": 0.31622776601683794
+          },
+          {
+            "id": "camera:1",
+            "score": 0.2839809171235324
+          },
+          {
+            "id": "garden:1",
+            "score": 0.2581988897471611
+          },
+          {
+            "id": "room:1",
+            "score": 0.2581988897471611
+          },
+          {
+            "id": "room:2",
+            "score": 0.25298221281347033
+          },
+          {
+            "id": "camera:2",
+            "score": 0.24343224778007383
+          },
+          {
+            "id": "garden:2",
+            "score": 0.1978141420187361
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.15811388300841897
+          }
+        ]
+      },
+      {
+        "id": "c5",
+        "query": "Which tray holds the seeds?",
+        "relevant": [
+          "garden:1"
+        ],
+        "semantic": {
+          "tokens": 8,
+          "ranked": [
+            {
+              "id": "garden:1",
+              "score": 0.577270614119211
+            },
+            {
+              "id": "garden:2",
+              "score": 0.1468581615536571
+            },
+            {
+              "id": "room:2",
+              "score": 0.09658710780036367
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.07612061309456483
+            },
+            {
+              "id": "camera:1",
+              "score": 0.049654064707950626
+            },
+            {
+              "id": "room:1",
+              "score": 0.04924975270152992
+            },
+            {
+              "id": "projector:2",
+              "score": 0.028249984505866153
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.022380331130052326
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.02028599892917715
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.017156217533701175
+            },
+            {
+              "id": "projector:1",
+              "score": -0.04956204825958552
+            },
+            {
+              "id": "camera:2",
+              "score": -0.05796019531479624
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "garden:1",
+            "score": 0.6390096504226938
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.32659863237109044
+          },
+          {
+            "id": "camera:1",
+            "score": 0.32128773156099955
+          },
+          {
+            "id": "projector:1",
+            "score": 0.31622776601683794
+          },
+          {
+            "id": "room:1",
+            "score": 0.27386127875258304
+          },
+          {
+            "id": "projector:2",
+            "score": 0.2683281572999747
+          },
+          {
+            "id": "garden:2",
+            "score": 0.18650096164806276
+          },
+          {
+            "id": "room:2",
+            "score": 0.17888543819998318
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.16329931618554522
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.11180339887498948
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.08944271909999159
+          },
+          {
+            "id": "camera:2",
+            "score": 0.08606629658238704
+          }
+        ]
+      },
+      {
+        "id": "c6",
+        "query": "What do the two ticket refund notes say?",
+        "relevant": [
+          "refund-old:1",
+          "refund-current:1"
+        ],
+        "semantic": {
+          "tokens": 12,
+          "ranked": [
+            {
+              "id": "refund-old:1",
+              "score": 0.5884189236046415
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.547315610050496
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.4870233396261042
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.33669732448011747
+            },
+            {
+              "id": "camera:2",
+              "score": 0.2406962330806839
+            },
+            {
+              "id": "room:1",
+              "score": 0.1394494349449043
+            },
+            {
+              "id": "room:2",
+              "score": 0.11513264690863852
+            },
+            {
+              "id": "camera:1",
+              "score": 0.10199539687336569
+            },
+            {
+              "id": "garden:2",
+              "score": 0.03221774600384015
+            },
+            {
+              "id": "garden:1",
+              "score": -0.009040171441234039
+            },
+            {
+              "id": "projector:2",
+              "score": -0.009945183562110407
+            },
+            {
+              "id": "projector:1",
+              "score": -0.10633829173593662
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:1",
+            "score": 0.45184805705753195
+          },
+          {
+            "id": "camera:1",
+            "score": 0.31750031750047625
+          },
+          {
+            "id": "garden:1",
+            "score": 0.2886751345948129
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.282842712474619
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.2581988897471611
+          },
+          {
+            "id": "projector:1",
+            "score": 0.25
+          },
+          {
+            "id": "room:1",
+            "score": 0.21650635094610968
+          },
+          {
+            "id": "projector:2",
+            "score": 0.21213203435596426
+          },
+          {
+            "id": "garden:2",
+            "score": 0.14744195615489714
+          },
+          {
+            "id": "room:2",
+            "score": 0.1414213562373095
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.08838834764831843
+          },
+          {
+            "id": "camera:2",
+            "score": 0.06804138174397717
+          }
+        ]
+      },
+      {
+        "id": "c7",
+        "query": "What is the Wi-Fi password?",
+        "relevant": [],
+        "semantic": {
+          "tokens": 10,
+          "ranked": [
+            {
+              "id": "refund-old:2",
+              "score": 0.13188298350639163
+            },
+            {
+              "id": "garden:1",
+              "score": 0.08963749186146852
+            },
+            {
+              "id": "camera:1",
+              "score": 0.08213608579417703
+            },
+            {
+              "id": "camera:2",
+              "score": 0.08131133015308462
+            },
+            {
+              "id": "projector:2",
+              "score": 0.06521914910568186
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.05524273368389735
+            },
+            {
+              "id": "room:2",
+              "score": 0.04550593694819406
+            },
+            {
+              "id": "projector:1",
+              "score": 0.038789202845211895
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.037498906033922294
+            },
+            {
+              "id": "room:1",
+              "score": 0.02132693523310128
+            },
+            {
+              "id": "refund-current:2",
+              "score": -0.008355249591080393
+            },
+            {
+              "id": "garden:2",
+              "score": -0.055440317473809154
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "camera:1",
+            "score": 0.36661778755338326
+          },
+          {
+            "id": "garden:1",
+            "score": 0.3333333333333333
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.29814239699997197
+          },
+          {
+            "id": "projector:1",
+            "score": 0.2886751345948129
+          },
+          {
+            "id": "room:1",
+            "score": 0.25
+          },
+          {
+            "id": "projector:2",
+            "score": 0.24494897427831783
+          },
+          {
+            "id": "room:2",
+            "score": 0.24494897427831783
+          },
+          {
+            "id": "garden:2",
+            "score": 0.17025130615174972
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.16329931618554522
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.14907119849998599
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.10206207261596577
+          },
+          {
+            "id": "camera:2",
+            "score": 0.07856742013183861
+          }
+        ]
+      },
+      {
+        "id": "c8",
+        "query": "Who won the national football league?",
+        "relevant": [],
+        "semantic": {
+          "tokens": 9,
+          "ranked": [
+            {
+              "id": "projector:1",
+              "score": 0.04119451970815158
+            },
+            {
+              "id": "garden:2",
+              "score": 0.029478910298366447
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.02131023880933872
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.015327238822468593
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.011053985961346534
+            },
+            {
+              "id": "camera:2",
+              "score": -0.008796667545946121
+            },
+            {
+              "id": "camera:1",
+              "score": -0.011824061695960363
+            },
+            {
+              "id": "refund-old:2",
+              "score": -0.03149898609965797
+            },
+            {
+              "id": "projector:2",
+              "score": -0.031573970146340696
+            },
+            {
+              "id": "garden:1",
+              "score": -0.03959406929105246
+            },
+            {
+              "id": "room:1",
+              "score": -0.06177384093994142
+            },
+            {
+              "id": "room:2",
+              "score": -0.1186077252711432
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "garden:1",
+            "score": 0.3333333333333333
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.29814239699997197
+          },
+          {
+            "id": "camera:1",
+            "score": 0.2932942300427066
+          },
+          {
+            "id": "projector:1",
+            "score": 0.2886751345948129
+          },
+          {
+            "id": "room:1",
+            "score": 0.25
+          },
+          {
+            "id": "projector:2",
+            "score": 0.24494897427831783
+          },
+          {
+            "id": "garden:2",
+            "score": 0.17025130615174972
+          },
+          {
+            "id": "room:2",
+            "score": 0.16329931618554522
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.14907119849998599
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.10206207261596577
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.08164965809277261
+          },
+          {
+            "id": "camera:2",
+            "score": 0.07856742013183861
+          }
+        ]
+      }
+    ]
+  },
+  "heldOut": {
+    "semantic": {
+      "recallAt3": 0.9230769230769231,
+      "mrrFirstRelevantFullRanking": 0.8269230769230769,
+      "noAnswerFalsePositives": 0,
+      "noAnswerAbstentions": 3
+    },
+    "lexical": {
+      "recallAt3": 0.5384615384615384,
+      "mrrFirstRelevantFullRanking": 0.5153846153846154,
+      "noAnswerFalsePositives": 3,
+      "noAnswerAbstentions": 0
+    },
+    "rows": [
+      {
+        "id": "t1",
+        "query": "Someone brought back a camera with a cracked case. What happens next?",
+        "relevant": [
+          "camera:1"
+        ],
+        "class": "paraphrase",
+        "semantic": {
+          "tokens": 16,
+          "ranked": [
+            {
+              "id": "camera:1",
+              "score": 0.5439131581081106
+            },
+            {
+              "id": "camera:2",
+              "score": 0.501758403924891
+            },
+            {
+              "id": "projector:2",
+              "score": 0.29661093328697397
+            },
+            {
+              "id": "projector:1",
+              "score": 0.21700585161062708
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.18424647850054254
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.1758983878245161
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.17226785454514187
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.14502932435418933
+            },
+            {
+              "id": "garden:2",
+              "score": 0.065226617808437
+            },
+            {
+              "id": "garden:1",
+              "score": 0.02973037380444709
+            },
+            {
+              "id": "room:2",
+              "score": -0.010713441669812767
+            },
+            {
+              "id": "room:1",
+              "score": -0.021384342771710203
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:2",
+            "score": 0.18090680674665816
+          },
+          {
+            "id": "camera:2",
+            "score": 0.17407765595569785
+          },
+          {
+            "id": "room:2",
+            "score": 0.12060453783110543
+          },
+          {
+            "id": "camera:1",
+            "score": 0.10830607221477646
+          },
+          {
+            "id": "projector:1",
+            "score": 0.10660035817780521
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.07537783614444091
+          },
+          {
+            "id": "garden:2",
+            "score": 0.06286946134619315
+          },
+          {
+            "id": "room:1",
+            "score": 0.06154574548966636
+          },
+          {
+            "id": "projector:2",
+            "score": 0.060302268915552716
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.055048188256318034
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.055048188256318034
+          },
+          {
+            "id": "garden:1",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "t2",
+        "query": "Can I put a faulty camera straight back where people borrow equipment?",
+        "relevant": [
+          "camera:1"
+        ],
+        "class": "hard-negative",
+        "semantic": {
+          "tokens": 15,
+          "ranked": [
+            {
+              "id": "camera:1",
+              "score": 0.5656920992747876
+            },
+            {
+              "id": "camera:2",
+              "score": 0.4647017427657355
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.30006280320080575
+            },
+            {
+              "id": "projector:2",
+              "score": 0.2851482851829847
+            },
+            {
+              "id": "projector:1",
+              "score": 0.2556194597430431
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.17920884916430535
+            },
+            {
+              "id": "garden:2",
+              "score": 0.14222000968581833
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.12972159698492125
+            },
+            {
+              "id": "room:1",
+              "score": 0.10646447710800336
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.09210490582276615
+            },
+            {
+              "id": "garden:1",
+              "score": 0.0538408885219287
+            },
+            {
+              "id": "room:2",
+              "score": 0.02311287273219373
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "camera:2",
+            "score": 0.2222222222222222
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.1732050807568877
+          },
+          {
+            "id": "camera:1",
+            "score": 0.1555427542095638
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.14433756729740646
+          },
+          {
+            "id": "room:2",
+            "score": 0.11547005383792514
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.10540925533894598
+          },
+          {
+            "id": "projector:1",
+            "score": 0.10206207261596577
+          },
+          {
+            "id": "garden:2",
+            "score": 0.0601929265428846
+          },
+          {
+            "id": "room:1",
+            "score": 0.05892556509887897
+          },
+          {
+            "id": "projector:2",
+            "score": 0.05773502691896257
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.05270462766947299
+          },
+          {
+            "id": "garden:1",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "t3",
+        "query": "Which accessories need counting when a camera comes back intact?",
+        "relevant": [
+          "camera:2"
+        ],
+        "class": "paraphrase",
+        "semantic": {
+          "tokens": 13,
+          "ranked": [
+            {
+              "id": "camera:2",
+              "score": 0.6452295932374037
+            },
+            {
+              "id": "camera:1",
+              "score": 0.39381154827939224
+            },
+            {
+              "id": "garden:2",
+              "score": 0.25351566594614083
+            },
+            {
+              "id": "projector:2",
+              "score": 0.18873783447251763
+            },
+            {
+              "id": "projector:1",
+              "score": 0.14927087272087472
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.1141431749754205
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.11087682459904019
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.09487284163405836
+            },
+            {
+              "id": "room:2",
+              "score": 0.09252445263482026
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.07329498130051225
+            },
+            {
+              "id": "garden:1",
+              "score": 0.06541923010559136
+            },
+            {
+              "id": "room:1",
+              "score": -0.0076300921862029435
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:2",
+            "score": 0.18973665961010278
+          },
+          {
+            "id": "camera:2",
+            "score": 0.18257418583505539
+          },
+          {
+            "id": "garden:2",
+            "score": 0.1318760946791574
+          },
+          {
+            "id": "room:2",
+            "score": 0.12649110640673517
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.11547005383792514
+          },
+          {
+            "id": "camera:1",
+            "score": 0.11359236684941296
+          },
+          {
+            "id": "projector:1",
+            "score": 0.11180339887498948
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.07905694150420949
+          },
+          {
+            "id": "room:1",
+            "score": 0.06454972243679027
+          },
+          {
+            "id": "projector:2",
+            "score": 0.06324555320336758
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.05773502691896257
+          },
+          {
+            "id": "garden:1",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "t4",
+        "query": "Nothing appears from the projector even though the session is starting.",
+        "relevant": [
+          "projector:1"
+        ],
+        "class": "paraphrase",
+        "semantic": {
+          "tokens": 15,
+          "ranked": [
+            {
+              "id": "projector:2",
+              "score": 0.5531584614817454
+            },
+            {
+              "id": "projector:1",
+              "score": 0.5490557929520233
+            },
+            {
+              "id": "camera:2",
+              "score": 0.26904112603568786
+            },
+            {
+              "id": "camera:1",
+              "score": 0.23665039744921493
+            },
+            {
+              "id": "room:1",
+              "score": 0.1939792180545693
+            },
+            {
+              "id": "room:2",
+              "score": 0.15342566686476686
+            },
+            {
+              "id": "garden:2",
+              "score": 0.15249378584657491
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.12269796524555093
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.1073502227289993
+            },
+            {
+              "id": "garden:1",
+              "score": 0.09234490875256979
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.0842183054429228
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.006921436890493
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "projector:2",
+            "score": 0.37947331922020555
+          },
+          {
+            "id": "garden:1",
+            "score": 0.3227486121839514
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.28867513459481287
+          },
+          {
+            "id": "camera:1",
+            "score": 0.2839809171235324
+          },
+          {
+            "id": "projector:1",
+            "score": 0.2795084971874737
+          },
+          {
+            "id": "room:1",
+            "score": 0.2581988897471611
+          },
+          {
+            "id": "room:2",
+            "score": 0.25298221281347033
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.1732050807568877
+          },
+          {
+            "id": "garden:2",
+            "score": 0.1318760946791574
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.12649110640673517
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.07905694150420949
+          },
+          {
+            "id": "camera:2",
+            "score": 0.06085806194501846
+          }
+        ]
+      },
+      {
+        "id": "t5",
+        "query": "Where can I get another projector and what should I record?",
+        "relevant": [
+          "projector:2"
+        ],
+        "class": "paraphrase",
+        "semantic": {
+          "tokens": 15,
+          "ranked": [
+            {
+              "id": "projector:2",
+              "score": 0.5875361555846075
+            },
+            {
+              "id": "projector:1",
+              "score": 0.47677343987909354
+            },
+            {
+              "id": "camera:1",
+              "score": 0.4028343261359306
+            },
+            {
+              "id": "camera:2",
+              "score": 0.2285316679358644
+            },
+            {
+              "id": "garden:2",
+              "score": 0.18558540305694438
+            },
+            {
+              "id": "room:1",
+              "score": 0.13576891221918924
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.12373985201490643
+            },
+            {
+              "id": "garden:1",
+              "score": 0.08940270164097547
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.08913712824437936
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.08512577020001173
+            },
+            {
+              "id": "room:2",
+              "score": 0.07021462664436064
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.03672487446576623
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "projector:1",
+            "score": 0.22360679774997896
+          },
+          {
+            "id": "projector:2",
+            "score": 0.18973665961010278
+          },
+          {
+            "id": "camera:2",
+            "score": 0.18257418583505539
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.12649110640673517
+          },
+          {
+            "id": "garden:2",
+            "score": 0.0659380473395787
+          },
+          {
+            "id": "garden:1",
+            "score": 0.06454972243679027
+          },
+          {
+            "id": "room:1",
+            "score": 0.06454972243679027
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.05773502691896257
+          },
+          {
+            "id": "camera:1",
+            "score": 0.05679618342470648
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0
+          },
+          {
+            "id": "room:2",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "t6",
+        "query": "I need to release a reserved room, rather than refund a ticket.",
+        "relevant": [
+          "room:1"
+        ],
+        "class": "hard-negative",
+        "semantic": {
+          "tokens": 17,
+          "ranked": [
+            {
+              "id": "refund-old:1",
+              "score": 0.5065790506673613
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.5059409997065889
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.5004881030969213
+            },
+            {
+              "id": "room:1",
+              "score": 0.4736159369317415
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.45343492628079096
+            },
+            {
+              "id": "room:2",
+              "score": 0.3417084244042077
+            },
+            {
+              "id": "projector:2",
+              "score": 0.18449017550397723
+            },
+            {
+              "id": "camera:1",
+              "score": 0.15249561305746034
+            },
+            {
+              "id": "camera:2",
+              "score": 0.10712653704616952
+            },
+            {
+              "id": "projector:1",
+              "score": 0.09402869726002629
+            },
+            {
+              "id": "garden:2",
+              "score": 0.08417144758844783
+            },
+            {
+              "id": "garden:1",
+              "score": 0.045954440060377424
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:2",
+            "score": 0.42211588240886905
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.27524094128159016
+          },
+          {
+            "id": "room:2",
+            "score": 0.24120907566221086
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.22613350843332272
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.22019275302527214
+          },
+          {
+            "id": "room:1",
+            "score": 0.1846372364689991
+          },
+          {
+            "id": "camera:1",
+            "score": 0.1624591083221647
+          },
+          {
+            "id": "projector:1",
+            "score": 0.15990053726670783
+          },
+          {
+            "id": "projector:2",
+            "score": 0.12060453783110543
+          },
+          {
+            "id": "garden:2",
+            "score": 0.06286946134619315
+          },
+          {
+            "id": "camera:2",
+            "score": 0.058025885318565944
+          },
+          {
+            "id": "garden:1",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "t7",
+        "query": "Can thirteen people sit in the east workshop?",
+        "relevant": [
+          "room:2"
+        ],
+        "class": "capacity",
+        "semantic": {
+          "tokens": 11,
+          "ranked": [
+            {
+              "id": "room:2",
+              "score": 0.7599651667767127
+            },
+            {
+              "id": "room:1",
+              "score": 0.3366427706621736
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.2564778743628971
+            },
+            {
+              "id": "garden:2",
+              "score": 0.20173492016663166
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.15404287443214182
+            },
+            {
+              "id": "garden:1",
+              "score": 0.11908703606143545
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.11640291724505851
+            },
+            {
+              "id": "projector:1",
+              "score": 0.09240830517326241
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.0754119265803757
+            },
+            {
+              "id": "projector:2",
+              "score": 0.07524433497887972
+            },
+            {
+              "id": "camera:1",
+              "score": 0.0030420702073026724
+            },
+            {
+              "id": "camera:2",
+              "score": -0.0034798518663993108
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "room:2",
+            "score": 0.35355339059327373
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.3227486121839514
+          },
+          {
+            "id": "garden:1",
+            "score": 0.2886751345948129
+          },
+          {
+            "id": "room:1",
+            "score": 0.2886751345948129
+          },
+          {
+            "id": "camera:2",
+            "score": 0.2721655269759087
+          },
+          {
+            "id": "camera:1",
+            "score": 0.254000254000381
+          },
+          {
+            "id": "projector:1",
+            "score": 0.25
+          },
+          {
+            "id": "garden:2",
+            "score": 0.2211629342323457
+          },
+          {
+            "id": "projector:2",
+            "score": 0.21213203435596426
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.19364916731037085
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.08838834764831843
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.07071067811865475
+          }
+        ]
+      },
+      {
+        "id": "t8",
+        "query": "What deadline did the old ticket refund policy use?",
+        "relevant": [
+          "refund-old:1"
+        ],
+        "class": "version",
+        "semantic": {
+          "tokens": 13,
+          "ranked": [
+            {
+              "id": "refund-old:1",
+              "score": 0.6662175384628014
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.6279150295745095
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.47401806939513513
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.2590014672514437
+            },
+            {
+              "id": "room:1",
+              "score": 0.19775045611170225
+            },
+            {
+              "id": "camera:2",
+              "score": 0.18566433341122834
+            },
+            {
+              "id": "camera:1",
+              "score": 0.1595621080593115
+            },
+            {
+              "id": "room:2",
+              "score": 0.08676965251064503
+            },
+            {
+              "id": "projector:2",
+              "score": 0.07753244162782916
+            },
+            {
+              "id": "garden:2",
+              "score": 0.003946646896804863
+            },
+            {
+              "id": "projector:1",
+              "score": -0.046389152210729874
+            },
+            {
+              "id": "garden:1",
+              "score": -0.0614374758089824
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:1",
+            "score": 0.42600643361512924
+          },
+          {
+            "id": "garden:1",
+            "score": 0.34020690871988585
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.26666666666666666
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.24343224778007383
+          },
+          {
+            "id": "camera:1",
+            "score": 0.23947373603569985
+          },
+          {
+            "id": "projector:1",
+            "score": 0.23570226039551587
+          },
+          {
+            "id": "room:1",
+            "score": 0.2041241452319315
+          },
+          {
+            "id": "projector:2",
+            "score": 0.2
+          },
+          {
+            "id": "garden:2",
+            "score": 0.13900960937138318
+          },
+          {
+            "id": "room:2",
+            "score": 0.13333333333333333
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.08333333333333333
+          },
+          {
+            "id": "camera:2",
+            "score": 0.06415002990995841
+          }
+        ]
+      },
+      {
+        "id": "t9",
+        "query": "Has the one-day ticket refund cutoff been replaced?",
+        "relevant": [
+          "refund-current:1"
+        ],
+        "class": "version",
+        "semantic": {
+          "tokens": 15,
+          "ranked": [
+            {
+              "id": "refund-old:1",
+              "score": 0.6220238620256973
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.5508042264087122
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.5049318395818128
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.2584523320426882
+            },
+            {
+              "id": "room:1",
+              "score": 0.22368395864163707
+            },
+            {
+              "id": "camera:2",
+              "score": 0.21222703739334675
+            },
+            {
+              "id": "room:2",
+              "score": 0.11854912711265123
+            },
+            {
+              "id": "camera:1",
+              "score": 0.09943497062569917
+            },
+            {
+              "id": "projector:2",
+              "score": 0.05600582457421096
+            },
+            {
+              "id": "garden:2",
+              "score": 0.019654535587836443
+            },
+            {
+              "id": "projector:1",
+              "score": -0.03442739720802623
+            },
+            {
+              "id": "garden:1",
+              "score": -0.09988546189948369
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:1",
+            "score": 0.42600643361512924
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.36514837167011077
+          },
+          {
+            "id": "garden:1",
+            "score": 0.2721655269759087
+          },
+          {
+            "id": "room:1",
+            "score": 0.2721655269759087
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.26666666666666666
+          },
+          {
+            "id": "camera:1",
+            "score": 0.23947373603569985
+          },
+          {
+            "id": "projector:1",
+            "score": 0.23570226039551587
+          },
+          {
+            "id": "projector:2",
+            "score": 0.2
+          },
+          {
+            "id": "room:2",
+            "score": 0.2
+          },
+          {
+            "id": "garden:2",
+            "score": 0.13900960937138318
+          },
+          {
+            "id": "camera:2",
+            "score": 0.12830005981991682
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.08333333333333333
+          }
+        ]
+      },
+      {
+        "id": "t10",
+        "query": "A friend will attend in my place. What can the organiser do?",
+        "relevant": [
+          "refund-current:2"
+        ],
+        "class": "paraphrase",
+        "semantic": {
+          "tokens": 17,
+          "ranked": [
+            {
+              "id": "room:2",
+              "score": 0.35207018276780333
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.33119304093213997
+            },
+            {
+              "id": "room:1",
+              "score": 0.32525737974125385
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.2459907744602421
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.23696576823615734
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.21647917190210295
+            },
+            {
+              "id": "garden:1",
+              "score": 0.16948154290980894
+            },
+            {
+              "id": "projector:1",
+              "score": 0.13085925498800013
+            },
+            {
+              "id": "garden:2",
+              "score": 0.0710947875785809
+            },
+            {
+              "id": "projector:2",
+              "score": 0.06143557422406933
+            },
+            {
+              "id": "camera:2",
+              "score": 0.043024636475146885
+            },
+            {
+              "id": "camera:1",
+              "score": 0.022856642793321377
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:1",
+            "score": 0.31622776601683794
+          },
+          {
+            "id": "camera:1",
+            "score": 0.3110855084191276
+          },
+          {
+            "id": "projector:1",
+            "score": 0.3061862178478973
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.28867513459481287
+          },
+          {
+            "id": "room:2",
+            "score": 0.28867513459481287
+          },
+          {
+            "id": "camera:2",
+            "score": 0.2777777777777778
+          },
+          {
+            "id": "garden:1",
+            "score": 0.23570226039551587
+          },
+          {
+            "id": "room:1",
+            "score": 0.23570226039551587
+          },
+          {
+            "id": "projector:2",
+            "score": 0.23094010767585027
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.21081851067789195
+          },
+          {
+            "id": "garden:2",
+            "score": 0.1805787796286538
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.14433756729740646
+          }
+        ]
+      },
+      {
+        "id": "t11",
+        "query": "Which equipment can I access only after asking the garden lead?",
+        "relevant": [
+          "garden:1"
+        ],
+        "class": "hard-negative",
+        "semantic": {
+          "tokens": 14,
+          "ranked": [
+            {
+              "id": "garden:1",
+              "score": 0.5801874069377906
+            },
+            {
+              "id": "garden:2",
+              "score": 0.3568961174731547
+            },
+            {
+              "id": "camera:1",
+              "score": 0.19109520506079386
+            },
+            {
+              "id": "projector:2",
+              "score": 0.15495688096741447
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.12623541850436273
+            },
+            {
+              "id": "camera:2",
+              "score": 0.11886073373827942
+            },
+            {
+              "id": "room:2",
+              "score": 0.11564642883541677
+            },
+            {
+              "id": "projector:1",
+              "score": 0.07615011709193831
+            },
+            {
+              "id": "room:1",
+              "score": 0.052851653917067164
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.03967101659235989
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.030016937268746158
+            },
+            {
+              "id": "refund-old:1",
+              "score": -0.04184974137444792
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "garden:1",
+            "score": 0.3692744729379982
+          },
+          {
+            "id": "camera:1",
+            "score": 0.3249182166443294
+          },
+          {
+            "id": "projector:2",
+            "score": 0.24120907566221086
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.22019275302527214
+          },
+          {
+            "id": "projector:1",
+            "score": 0.21320071635561041
+          },
+          {
+            "id": "garden:2",
+            "score": 0.18860838403857944
+          },
+          {
+            "id": "room:1",
+            "score": 0.1846372364689991
+          },
+          {
+            "id": "camera:2",
+            "score": 0.17407765595569785
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.1651445647689541
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.15075567228888181
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.12060453783110543
+          },
+          {
+            "id": "room:2",
+            "score": 0.12060453783110543
+          }
+        ]
+      },
+      {
+        "id": "t12",
+        "query": "How should gardening tools be handed back?",
+        "relevant": [
+          "garden:2"
+        ],
+        "class": "paraphrase",
+        "semantic": {
+          "tokens": 10,
+          "ranked": [
+            {
+              "id": "garden:2",
+              "score": 0.6839211470452453
+            },
+            {
+              "id": "garden:1",
+              "score": 0.5050112018662904
+            },
+            {
+              "id": "camera:1",
+              "score": 0.1648617109325283
+            },
+            {
+              "id": "projector:2",
+              "score": 0.12398713770561216
+            },
+            {
+              "id": "camera:2",
+              "score": 0.11616627035530531
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.10917213767024098
+            },
+            {
+              "id": "room:2",
+              "score": 0.05325684990337777
+            },
+            {
+              "id": "room:1",
+              "score": 0.044077963404408955
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.031441692207886424
+            },
+            {
+              "id": "projector:1",
+              "score": 0.022087309656650893
+            },
+            {
+              "id": "refund-old:1",
+              "score": -0.012608704517924105
+            },
+            {
+              "id": "refund-current:2",
+              "score": -0.018502760317409245
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "camera:2",
+            "score": 0.14547859349066158
+          },
+          {
+            "id": "projector:1",
+            "score": 0.1336306209562122
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.0944911182523068
+          },
+          {
+            "id": "garden:2",
+            "score": 0.07881104062391006
+          },
+          {
+            "id": "garden:1",
+            "score": 0.07715167498104596
+          },
+          {
+            "id": "projector:2",
+            "score": 0.07559289460184544
+          },
+          {
+            "id": "camera:1",
+            "score": 0
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0
+          },
+          {
+            "id": "room:1",
+            "score": 0
+          },
+          {
+            "id": "room:2",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "t13",
+        "query": "I need to understand ticket cancellation deadlines, including the older policy.",
+        "relevant": [
+          "refund-old:1",
+          "refund-current:1"
+        ],
+        "class": "ambiguous",
+        "semantic": {
+          "tokens": 16,
+          "ranked": [
+            {
+              "id": "refund-old:1",
+              "score": 0.5122725133729009
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.4761432346072326
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.389029477485895
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.38809301598253165
+            },
+            {
+              "id": "room:1",
+              "score": 0.3140140987057586
+            },
+            {
+              "id": "room:2",
+              "score": 0.13433073215183924
+            },
+            {
+              "id": "camera:2",
+              "score": 0.13021512838335877
+            },
+            {
+              "id": "camera:1",
+              "score": 0.10100769074309653
+            },
+            {
+              "id": "projector:2",
+              "score": 0.0654043226605159
+            },
+            {
+              "id": "garden:2",
+              "score": -0.04199351741896973
+            },
+            {
+              "id": "projector:1",
+              "score": -0.044499318339113234
+            },
+            {
+              "id": "garden:1",
+              "score": -0.04965508182741605
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-current:1",
+            "score": 0.3853373177942262
+          },
+          {
+            "id": "camera:1",
+            "score": 0.3249182166443294
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.27524094128159016
+          },
+          {
+            "id": "garden:1",
+            "score": 0.24618298195866545
+          },
+          {
+            "id": "projector:2",
+            "score": 0.24120907566221086
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.24120907566221086
+          },
+          {
+            "id": "projector:1",
+            "score": 0.21320071635561041
+          },
+          {
+            "id": "room:1",
+            "score": 0.1846372364689991
+          },
+          {
+            "id": "room:2",
+            "score": 0.18090680674665816
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.15075567228888181
+          },
+          {
+            "id": "garden:2",
+            "score": 0.1257389226923863
+          },
+          {
+            "id": "camera:2",
+            "score": 0.058025885318565944
+          }
+        ]
+      },
+      {
+        "id": "t14",
+        "query": "What password opens the equipment booking website?",
+        "relevant": [],
+        "class": "no-answer",
+        "semantic": {
+          "tokens": 10,
+          "ranked": [
+            {
+              "id": "refund-old:2",
+              "score": 0.23868938581010876
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.23612899356230108
+            },
+            {
+              "id": "room:2",
+              "score": 0.23567545743653673
+            },
+            {
+              "id": "room:1",
+              "score": 0.2007716914160101
+            },
+            {
+              "id": "garden:1",
+              "score": 0.1922036463943355
+            },
+            {
+              "id": "camera:1",
+              "score": 0.19032099352107198
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.18469483947365217
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.1820059650794729
+            },
+            {
+              "id": "projector:2",
+              "score": 0.17133954026985315
+            },
+            {
+              "id": "camera:2",
+              "score": 0.16125423588679144
+            },
+            {
+              "id": "projector:1",
+              "score": 0.11273760850872964
+            },
+            {
+              "id": "garden:2",
+              "score": 0.07247821811140573
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "camera:1",
+            "score": 0.33942211665106536
+          },
+          {
+            "id": "garden:1",
+            "score": 0.3086066999241838
+          },
+          {
+            "id": "room:1",
+            "score": 0.3086066999241838
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.2760262237369417
+          },
+          {
+            "id": "projector:1",
+            "score": 0.2672612419124244
+          },
+          {
+            "id": "projector:2",
+            "score": 0.22677868380553634
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.20701966780270628
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.1889822365046136
+          },
+          {
+            "id": "garden:2",
+            "score": 0.15762208124782012
+          },
+          {
+            "id": "room:2",
+            "score": 0.15118578920369088
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.07559289460184544
+          },
+          {
+            "id": "camera:2",
+            "score": 0.07273929674533079
+          }
+        ]
+      },
+      {
+        "id": "t15",
+        "query": "How much does repairing a cracked camera cost?",
+        "relevant": [],
+        "class": "no-answer-near-topic",
+        "semantic": {
+          "tokens": 11,
+          "ranked": [
+            {
+              "id": "camera:1",
+              "score": 0.5143079033468098
+            },
+            {
+              "id": "camera:2",
+              "score": 0.32635665500389277
+            },
+            {
+              "id": "projector:2",
+              "score": 0.31200821573126325
+            },
+            {
+              "id": "projector:1",
+              "score": 0.16167489006581345
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.11044726645191644
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.10823407282286321
+            },
+            {
+              "id": "garden:2",
+              "score": 0.07168498096400379
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.07142968706082448
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.0626356759565777
+            },
+            {
+              "id": "garden:1",
+              "score": 0.002026611010525401
+            },
+            {
+              "id": "room:1",
+              "score": -0.015052396724569213
+            },
+            {
+              "id": "room:2",
+              "score": -0.07339773189371088
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "refund-old:2",
+            "score": 0.2651650429449553
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.21213203435596426
+          },
+          {
+            "id": "room:2",
+            "score": 0.1414213562373095
+          },
+          {
+            "id": "camera:2",
+            "score": 0.13608276348795434
+          },
+          {
+            "id": "camera:1",
+            "score": 0.1270001270001905
+          },
+          {
+            "id": "projector:1",
+            "score": 0.125
+          },
+          {
+            "id": "garden:2",
+            "score": 0.07372097807744857
+          },
+          {
+            "id": "room:1",
+            "score": 0.07216878364870323
+          },
+          {
+            "id": "projector:2",
+            "score": 0.07071067811865475
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.06454972243679027
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.06454972243679027
+          },
+          {
+            "id": "garden:1",
+            "score": 0
+          }
+        ]
+      },
+      {
+        "id": "t16",
+        "query": "Which train should I take to reach the venue?",
+        "relevant": [],
+        "class": "no-answer",
+        "semantic": {
+          "tokens": 12,
+          "ranked": [
+            {
+              "id": "room:2",
+              "score": 0.2544798899343893
+            },
+            {
+              "id": "refund-current:2",
+              "score": 0.2205675600736907
+            },
+            {
+              "id": "refund-current:1",
+              "score": 0.21749634249601002
+            },
+            {
+              "id": "room:1",
+              "score": 0.20725437417581988
+            },
+            {
+              "id": "refund-old:1",
+              "score": 0.17166988949523854
+            },
+            {
+              "id": "refund-old:2",
+              "score": 0.019160480157885858
+            },
+            {
+              "id": "projector:1",
+              "score": 0.01864275714766422
+            },
+            {
+              "id": "projector:2",
+              "score": 0.016971945787240462
+            },
+            {
+              "id": "garden:1",
+              "score": 0.012475744879564772
+            },
+            {
+              "id": "camera:1",
+              "score": -0.01979686392945982
+            },
+            {
+              "id": "garden:2",
+              "score": -0.03395304212648164
+            },
+            {
+              "id": "camera:2",
+              "score": -0.09664208092185243
+            }
+          ]
+        },
+        "lexical": [
+          {
+            "id": "camera:1",
+            "score": 0.4190790380624747
+          },
+          {
+            "id": "refund-current:1",
+            "score": 0.3042903097250923
+          },
+          {
+            "id": "projector:1",
+            "score": 0.2946278254943948
+          },
+          {
+            "id": "garden:1",
+            "score": 0.2721655269759087
+          },
+          {
+            "id": "projector:2",
+            "score": 0.26666666666666666
+          },
+          {
+            "id": "room:2",
+            "score": 0.26666666666666666
+          },
+          {
+            "id": "room:1",
+            "score": 0.2041241452319315
+          },
+          {
+            "id": "refund-old:1",
+            "score": 0.18257418583505539
+          },
+          {
+            "id": "refund-old:2",
+            "score": 0.16666666666666666
+          },
+          {
+            "id": "garden:2",
+            "score": 0.13900960937138318
+          },
+          {
+            "id": "refund-current:2",
+            "score": 0.13333333333333333
+          },
+          {
+            "id": "camera:2",
+            "score": 0.06415002990995841
+          }
+        ]
+      }
+    ]
+  },
+  "caveat": "Node CPU measurement verifies actual tokenizer and inference. Browser ONNX WASM release measurement belongs to Task 2 and may differ."
+}
