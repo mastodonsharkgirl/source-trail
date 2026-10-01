@@ -1,15 +1,14 @@
-import { access, cp, mkdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { cp, mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(await readFile(path.join(root, 'public/models/manifest.json'), 'utf8'));
-const probeRoot = path.resolve(root, '../../output/portfolio-context/retrieval-spike');
 const revisionPath = `Xenova/all-MiniLM-L6-v2/${manifest.revision}`;
 const sourceFor = (asset) => asset.path.startsWith('onnxruntime/')
   ? path.join(root, 'node_modules/onnxruntime-web/dist', path.basename(asset.path))
-  : path.join(probeRoot, 'model-cache', revisionPath, asset.path.slice(`${revisionPath}/`.length));
+  : null;
 const targetFor = (asset) => path.join(root, 'public/models', asset.path);
 
 async function verify(filename, asset) {
@@ -25,7 +24,7 @@ for (const asset of manifest.assets) {
   await mkdir(path.dirname(target), { recursive: true });
   try { await verify(target, asset); continue; } catch { /* restore below */ }
   try {
-    await access(source);
+    if (!source) throw new Error('Fetch the pinned upstream asset.');
     await verify(source, asset);
     await cp(source, target);
   } catch (error) {

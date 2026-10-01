@@ -18,6 +18,7 @@ asserts the frozen fixture SHA-256 before inference, and provides
 `npm run evaluate -- --check` for CI drift detection. That comparison excludes
 machine-specific model load timing.
 
-This Task 1 measurement runs actual Transformers.js inference in Node CPU. It
-does not stand in for the required browser ONNX WASM release measurement, which
-Task 2 must run and report separately.
+The raw retrieval measurement runs actual Transformers.js inference in Node
+CPU. It does not stand in for browser ONNX WASM performance. Browser observations
+are documented separately in `BROWSER_VERIFICATION.md`, with device, host and
+cache context; the release suite repeats real WASM inference under built CSP.

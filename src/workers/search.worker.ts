@@ -7,6 +7,7 @@ import { WorkerCoordinator } from '../lib/worker-controller.js';
 const MAX_MODEL_TOKENS = 512;
 type Extractor = Awaited<ReturnType<typeof pipeline<'feature-extraction'>>>;
 let extractor: Extractor | undefined;
+let loadingIdentity: { jobId: string; revision: string } | undefined;
 
 env.allowRemoteModels = false;
 env.allowLocalModels = true;
@@ -28,7 +29,9 @@ async function tokenCount(text: string): Promise<number> {
 }
 
 async function load(): Promise<void> {
-  extractor ??= await pipeline('feature-extraction', MODEL_LOCAL_PATH, { dtype: MODEL_DTYPE, device: 'wasm' });
+  extractor ??= await pipeline('feature-extraction', MODEL_LOCAL_PATH, { dtype: MODEL_DTYPE, device: 'wasm', progress_callback: (event) => {
+    if (loadingIdentity && event.status === 'progress' && event.file.endsWith('.onnx')) post({ type: 'progress', ...loadingIdentity, percent: event.progress });
+  } });
 }
 
 async function search(request: Extract<WorkerRequest, { type: 'search' }>): Promise<Extract<WorkerResponse, { type: 'results' }>> {
@@ -51,6 +54,7 @@ async function search(request: Extract<WorkerRequest, { type: 'search' }>): Prom
 const coordinator = new WorkerCoordinator({ post, load, search });
 
 self.addEventListener('message', ({ data }: MessageEvent<WorkerRequest>) => {
+  if (data.type === 'load') loadingIdentity = { jobId: data.jobId, revision: data.revision };
   void coordinator.handle(data);
 });
 
