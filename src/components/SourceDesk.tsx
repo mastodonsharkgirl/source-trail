@@ -33,14 +33,15 @@ export default function SourceDesk() {
   const [selected, setSelected] = useState("camera");
   const [selectedPassage, setSelectedPassage] = useState("");
   const [editing, setEditing] = useState<SourceNote | null>(null);
-  const [progress, setProgress] = useState<number | null>(null);
   const worker = useRef<InstanceType<typeof Worker> | null>(null);
   const job = useRef<Pick<WorkerRequest, "jobId" | "revision"> | null>(null);
   const serial = useRef(0);
   const reader = useRef<HTMLElement>(null);
+  const editorTitle = useRef<HTMLInputElement>(null);
   const sourceIndex = useRef<HTMLDetailsElement>(null);
   const matches = useRef<HTMLElement>(null);
   const current = notes.find((note) => note.id === selected) ?? notes[0]!;
+  const newNote = !!editing && !notes.some((note) => note.id === editing.id);
   const accepted =
     !!results?.length &&
     (method === "semantic"
@@ -58,11 +59,15 @@ export default function SourceDesk() {
     setResults(null);
     setError("");
     setSelectedPassage("");
+    setStatus(
+      terminate
+        ? "Search cancelled. Load the model again or use text matching."
+        : "Search cleared. Search again when you are ready.",
+    );
     if (terminate) {
       worker.current?.terminate();
       worker.current = null;
       setModel("idle");
-      setProgress(null);
     }
   }
   function load() {
@@ -79,13 +84,8 @@ export default function SourceDesk() {
     job.current = identity;
     next.onmessage = ({ data }: MessageEvent<WorkerResponse>) => {
       if (!job.current || !acceptsWorkerResponse(job.current, data)) return;
-      if (data.type === "progress") {
-        setProgress(data.percent);
-        return;
-      }
       if (data.type === "ready") {
         setModel("ready");
-        setProgress(null);
         setStatus("Local model ready");
         job.current = null;
       }
@@ -183,15 +183,22 @@ export default function SourceDesk() {
       setError(issue instanceof Error ? issue.message : "Check your note.");
     }
   }
+  function focusSource(edit = false) {
+    requestAnimationFrame(() => {
+      const destination = edit ? editorTitle.current : reader.current;
+      destination?.focus({ preventScroll: true });
+      if (innerWidth < 760)
+        destination?.scrollIntoView({
+          behavior: "instant",
+          block: edit ? "center" : "start",
+        });
+    });
+  }
   function openSource(result: RankedPassage) {
     setSelected(result.sourceId);
     setSelectedPassage(result.id);
     setEditing(null);
-    requestAnimationFrame(() => {
-      reader.current?.focus({ preventScroll: true });
-      if (innerWidth < 760)
-        reader.current?.scrollIntoView({ behavior: "instant", block: "start" });
-    });
+    focusSource();
   }
   function exportRecord() {
     if (!results) return;
@@ -236,6 +243,7 @@ export default function SourceDesk() {
                 invalidate(true);
               } else if (results) {
                 setResults(null);
+                setStatus("Question changed. Search again.");
               }
               setQuery(event.target.value);
             }}
@@ -273,13 +281,11 @@ export default function SourceDesk() {
                   setMethod("semantic");
                 }}
               >
-                ● Local semantic search
+                ● Search by meaning
               </button>
             ) : model === "loading" ? (
               <span className="loading-label">
-                {progress === null
-                  ? "Preparing local search…"
-                  : `Model weights · ${Math.floor(progress)}%`}
+                Downloading & preparing local search…
               </span>
             ) : (
               <button
@@ -295,7 +301,14 @@ export default function SourceDesk() {
               className={`method-button ${method === "lexical" ? "chosen" : ""}`}
               onClick={() => {
                 if (busy) invalidate(true);
-                else setResults(null);
+                else {
+                  setResults(null);
+                  setStatus(
+                    model === "loading"
+                      ? "Model loading. Text matching is ready."
+                      : "Text matching is ready. Ask your question.",
+                  );
+                }
                 setMethod("lexical");
                 setError("");
               }}
@@ -337,6 +350,7 @@ export default function SourceDesk() {
                       setSelected(note.id);
                       setSelectedPassage("");
                       setEditing(null);
+                      focusSource();
                     }}
                   >
                     <span className="source-number">
@@ -369,6 +383,7 @@ export default function SourceDesk() {
                     text: "",
                   });
                   setError("");
+                  focusSource(true);
                 }}
                 disabled={notes.length >= 12}
               >
@@ -390,19 +405,23 @@ export default function SourceDesk() {
         >
           <div className="column-heading">
             <h2>Passages</h2>
-            <span>{results ? "03 MATCHES" : "AWAITING A QUESTION"}</span>
+            <span>
+              {results
+                ? `${results.length} ${accepted ? "ranked passages" : "reading alternatives"}`
+                : "AWAITING A QUESTION"}
+            </span>
           </div>
           {results ? (
             <>
               <div className="result-method">
                 <span className="eyebrow">
                   {method === "semantic"
-                    ? "Local semantic search"
+                    ? "Search by meaning"
                     : "Text matching"}
                 </span>
                 <p>
                   {method === "semantic"
-                    ? "Similarity is not factual confidence."
+                    ? "Runs in your browser. Similarity is not factual confidence."
                     : "Shared words, not model inference."}
                 </p>
               </div>
@@ -411,7 +430,7 @@ export default function SourceDesk() {
                   <h3>No close passage found in these notes.</h3>
                   <p>
                     {method === "semantic"
-                      ? "The best match is below the calibrated 0.5773 threshold."
+                      ? "None of these passages was close enough to the question."
                       : "No question words matched a passage."}{" "}
                     These are lower-ranked alternatives for reading.
                   </p>
@@ -498,10 +517,11 @@ export default function SourceDesk() {
           <article className="source-sheet">
             <div className="sheet-top">
               <span className="eyebrow">
-                SOURCE{" "}
-                {String(
-                  notes.findIndex((note) => note.id === current.id) + 1,
-                ).padStart(2, "0")}
+                {newNote ? "NEW SOURCE" : "SOURCE "}
+                {!newNote &&
+                  String(
+                    notes.findIndex((note) => note.id === current.id) + 1,
+                  ).padStart(2, "0")}
               </span>
               <span
                 className={
@@ -510,16 +530,19 @@ export default function SourceDesk() {
                     : "version"
                 }
               >
-                {current.version}
+                {newNote ? "Draft" : current.version}
               </span>
             </div>
-            <h3>{current.title}</h3>
-            <code className="source-id">{current.id}</code>
+            <h3>{newNote ? "New note" : current.title}</h3>
+            <code className="source-id">
+              {newNote ? "Not saved yet" : current.id}
+            </code>
             {editing ? (
               <div className="note-editor">
                 <label htmlFor="note-title">Note title</label>
                 <input
                   id="note-title"
+                  ref={editorTitle}
                   value={editing.title}
                   onChange={(event) =>
                     setEditing({ ...editing, title: event.target.value })

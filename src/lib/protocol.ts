@@ -5,7 +5,6 @@ export type WorkerRequest =
   | { type: 'load'; jobId: string; revision: string }
   | { type: 'search'; jobId: string; revision: string; corpus: Corpus; query: string };
 export type WorkerResponse =
-  | { type: 'progress'; jobId: string; revision: string; percent: number }
   | { type: 'loading'; jobId: string; revision: string }
   | { type: 'ready'; jobId: string; revision: string }
   | { type: 'results'; jobId: string; revision: string; results: RankedPassage[]; tokenCount: number }

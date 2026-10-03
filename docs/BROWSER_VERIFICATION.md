@@ -26,6 +26,15 @@ real-inference test used private-note and private-question sentinel text and
 confirmed neither appeared in requests. Local and session storage stayed empty.
 The worker disables Transformers browser/WASM application caches.
 
+The cold-transfer regression separately counted completed response bodies from
+the loopback server. It served 37,975,282 bytes across the public model and
+runtime assets: one 22,972,370-byte `model_quantized.onnx` response, plus the
+tokenizer, configuration, runtime module and 14,264,838-byte WASM response.
+The test fails if the weights are served more than once or those public assets
+exceed the roughly 38 MB visitor-facing estimate. This measures served bytes in
+one fresh local Chromium context; it does not estimate network overhead or a
+visitor's internet download time.
+
 Browser coverage includes actual WASM inference under the built policy,
 failed weight loading followed by retry, text matching during failure,
 reset and saved edits while an actual weight request is pending, reset during

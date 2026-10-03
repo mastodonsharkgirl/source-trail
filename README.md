@@ -2,7 +2,7 @@
 
 A small source desk for finding exact passages in notes. Ask a question, inspect three retrieved quotations, and open each original note with its version and passage highlighted. It does not generate an answer or decide which statement is true.
 
-The included six notes are authored fictional equipment and workshop examples. Edit or add notes with the form; the workspace lives only in browser memory and clears on reload. No account is needed. Loading semantic search explicitly downloads about 38 MB of public assets. A separate text-matching mode works without the model.
+The included six notes are authored fictional equipment and workshop examples. Edit or add notes with the form; the workspace lives only in browser memory and clears on reload. No account is needed. Loading Search by meaning explicitly downloads about 38 MB of public assets. A cold local-browser check served 37,975,282 bytes across its model and runtime responses, including one 22,972,370-byte weights response. A separate text-matching mode works without the model.
 
 ## Run locally
 

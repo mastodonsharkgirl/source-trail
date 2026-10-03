@@ -6,6 +6,9 @@ const headers = await readFile(path.join(root, "_headers"), "utf8").catch(
   () => "",
 );
 const csp = headers.match(/Content-Security-Policy: (.+)/)?.[1];
+// Test-server telemetry only; this script is not emitted into the static site.
+// Count completed response bodies, including repeated full transfers of one URL.
+const transfers = [];
 const mime = {
   ".html": "text/html",
   ".js": "text/javascript",
@@ -20,6 +23,15 @@ createServer(async (req, res) => {
   const pathname = decodeURIComponent(
     new URL(req.url, "http://localhost").pathname,
   );
+  if (pathname === "/__test_transfers") {
+    res
+      .writeHead(200, {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+      })
+      .end(JSON.stringify(transfers));
+    return;
+  }
   const file = path.resolve(
     root,
     "." + (pathname === "/" ? "/index.html" : pathname),
@@ -30,11 +42,19 @@ createServer(async (req, res) => {
   }
   try {
     const body = await readFile(file);
+    res.once("finish", () =>
+      transfers.push({
+        path: pathname,
+        status: res.statusCode,
+        bodyBytes: body.byteLength,
+      }),
+    );
     res
       .writeHead(200, {
         "Content-Type": mime[path.extname(file)] ?? "application/octet-stream",
         ...(csp ? { "Content-Security-Policy": csp } : {}),
         "Cache-Control": "no-store",
+        "Content-Length": body.byteLength,
       })
       .end(body);
   } catch {

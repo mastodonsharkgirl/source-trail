@@ -416,3 +416,152 @@ test("maximum-length unbroken source metadata remains readable at 320px", async 
     ),
   ).toBe(true);
 });
+
+test("cold model transfer sends the full weights once and stays within the advertised download", async ({
+  page,
+  request,
+}, testInfo) => {
+  const before = (await (await request.get("/__test_transfers")).json()).length;
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Load local search model", exact: true })
+    .click();
+  await expect(
+    page.getByText("Local model ready", { exact: true }),
+  ).toBeVisible({ timeout: 90_000 });
+  await page
+    .getByLabel("Your question")
+    .fill("What should I do with a broken borrowed camera?");
+  await page
+    .getByRole("button", { name: "Find passages", exact: true })
+    .click();
+  await expect(page.getByTestId("result").first()).toContainText("camera:1");
+  const records: { path: string; status: number; bodyBytes: number }[] = (
+    await (await request.get("/__test_transfers")).json()
+  ).slice(before);
+  const assets = records.filter((row) => row.path.startsWith("/models/"));
+  const weights = assets.filter(
+    (row) =>
+      row.path.endsWith("model_quantized.onnx") && row.bodyBytes === 22_972_370,
+  );
+  await testInfo.attach("actual-server-transfers", {
+    body: JSON.stringify({
+      assets,
+      totalModelBodyBytes: assets.reduce((sum, row) => sum + row.bodyBytes, 0),
+    }),
+    contentType: "application/json",
+  });
+  expect(weights).toHaveLength(1);
+  expect(
+    assets.reduce((sum, row) => sum + row.bodyBytes, 0),
+  ).toBeLessThanOrEqual(38_000_000);
+  expect(await page.evaluate(() => caches.keys())).toEqual([]);
+});
+
+test("query edit cancels actual inference and announces an accurate idle state", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Load local search model", exact: true })
+    .click();
+  await expect(
+    page.getByText("Local model ready", { exact: true }),
+  ).toBeVisible({ timeout: 90_000 });
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 6 });
+  await page
+    .getByLabel("Your question")
+    .fill("What should I do with a broken borrowed camera?");
+  await page
+    .getByRole("button", { name: "Find passages", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Finding passages…" }),
+  ).toBeVisible();
+  await page.getByLabel("Your question").fill("seeds blue tray");
+  await expect(page.getByRole("status")).toContainText("Search cancelled");
+  await expect(page.getByRole("status")).not.toContainText(
+    "Reading your passages",
+  );
+  await expect(
+    page.getByRole("button", { name: "Load local search model", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByTestId("result")).toHaveCount(0);
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+  await page
+    .getByRole("button", { name: "Text matching — no model", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Find passages", exact: true })
+    .click();
+  await expect(page.getByTestId("result").first()).toContainText("garden:1");
+});
+
+for (const width of [320, 375])
+  test(`mobile source browsing and new-note focus at ${width}px`, async ({
+    page,
+  }, testInfo) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+    await page
+      .getByRole("button", { name: "Text matching — no model", exact: true })
+      .click();
+    await page.getByLabel("Your question").fill("current ticket refund");
+    await page
+      .getByRole("button", { name: "Find passages", exact: true })
+      .click();
+    await page.locator(".source-index summary").click();
+    const source = page
+      .getByRole("navigation", { name: "Choose a source" })
+      .getByRole("button", { name: /Projector setup/ });
+    if (width === 320) await source.click();
+    else {
+      await source.focus();
+      await page.keyboard.press("Enter");
+    }
+    await expect(page.getByTestId("reader")).toBeFocused();
+    await expect(
+      page
+        .getByTestId("reader")
+        .getByRole("heading", { name: "Projector setup" }),
+    ).toBeInViewport();
+    const add = page.getByRole("button", { name: "Add a note" });
+    if (width === 320) await add.click();
+    else {
+      await add.focus();
+      await page.keyboard.press("Enter");
+    }
+    await expect(page.getByLabel("Note title")).toBeFocused();
+    await expect(page.getByLabel("Note title")).toBeInViewport();
+    await expect(
+      page
+        .getByTestId("reader")
+        .getByRole("heading", { name: "New note", exact: true }),
+    ).toBeVisible();
+    await page.screenshot({
+      path: testInfo.outputPath(`new-note-${width}.png`),
+    });
+  });
+
+test("abstention labels actual rows as reading alternatives, not matches", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Text matching — no model", exact: true })
+    .click();
+  await page.getByLabel("Your question").fill("quuxxxyzzy");
+  await page
+    .getByRole("button", { name: "Find passages", exact: true })
+    .click();
+  await expect(page.getByTestId("results")).toContainText(
+    "No close passage found",
+  );
+  await expect(
+    page.getByTestId("results").locator(".column-heading"),
+  ).toContainText("3 reading alternatives");
+  await expect(
+    page.getByTestId("results").locator(".column-heading"),
+  ).not.toContainText("MATCHES");
+});
