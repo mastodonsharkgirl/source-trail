@@ -1,4 +1,4 @@
-# Local model assets
+# Local model assets — preserved retrieval baseline
 
 The browser worker uses `Xenova/all-MiniLM-L6-v2` at immutable revision
 `751bff37182d3f1213fa05d7196b954e230abad9`, q8 weights, mean pooling, and

@@ -1,3 +1,4 @@
+const prefix = process.env.SOURCE_TRAIL_BASE || "/";
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
@@ -10,7 +11,7 @@ test("explicit real WASM search, privacy boundary, keyboard source and provenanc
     requests.push({ url: r.url(), method: r.method(), body: r.postData() }),
   );
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await expect(
     page.getByRole("heading", { name: "Find the passage. Keep the source." }),
   ).toBeVisible();
@@ -59,7 +60,7 @@ test("explicit real WASM search, privacy boundary, keyboard source and provenanc
   expect(record.model.runtime).toContain("WASM");
   expect(record.model.runtime).toContain("1.31.0-dev.20260914-8d85527a0");
   expect(
-    requests.every((r) => r.url.startsWith("http://127.0.0.1:4705/")),
+    requests.every((r) => r.url.startsWith("http://127.0.0.1:4733/")),
   ).toBe(true);
   expect(requests.every((r) => r.method === "GET" && r.body === null)).toBe(
     true,
@@ -117,7 +118,7 @@ test("failed asset load is retryable and text matching remains available", async
   await page.route("**/models/**/model_quantized.onnx", (route) =>
     route.abort(),
   );
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page
     .getByRole("button", { name: "Load local search model", exact: true })
     .click();
@@ -160,7 +161,7 @@ test("reset and edit during pending download recover without stale results", asy
       expect(String(error)).toMatch(/Route is already handled|Target.*closed/);
     });
   });
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   const pendingDownload = page.waitForRequest(
     "**/models/**/model_quantized.onnx",
   );
@@ -213,7 +214,7 @@ test("reset and edit during pending download recover without stale results", asy
 test("limits, escaped note editing and revision invalidation", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page
     .getByRole("button", { name: "Text matching — no model", exact: true })
     .click();
@@ -248,7 +249,7 @@ for (const width of [320, 375, 768, 1440])
   }, testInfo) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.emulateMedia({ reducedMotion: "reduce" });
-    await page.goto("/");
+    await page.goto(`${prefix}baseline/`);
     if (width < 760)
       await expect(page.locator(".source-index details")).not.toHaveAttribute(
         "open",
@@ -293,7 +294,7 @@ test("owned note stays local during real inference, exact quote export and no-an
   page.on("request", (request) =>
     requests.push({ url: request.url(), body: request.postData() }),
   );
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page.getByRole("button", { name: "Edit this note" }).click();
   const privateText =
     "PRIVATE-NOTE-CANARY-83: Return a damaged borrowed camera to the equipment coordinator for inspection. Photograph the damage first.";
@@ -318,7 +319,7 @@ test("owned note stays local during real inference, exact quote export and no-an
   expect(
     requests.every(
       (request) =>
-        request.url.startsWith("http://127.0.0.1:4705/") &&
+        request.url.startsWith("http://127.0.0.1:4733/") &&
         request.body === null,
     ),
   ).toBe(true);
@@ -347,7 +348,7 @@ test("owned note stays local during real inference, exact quote export and no-an
 test("actual tokenizer rejects an under-800-character over-token query without truncation", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page
     .getByRole("button", { name: "Load local search model", exact: true })
     .click();
@@ -366,15 +367,25 @@ test("actual tokenizer rejects an under-800-character over-token query without t
 test("reset during real pending inference discards the old job", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page
     .getByRole("button", { name: "Load local search model", exact: true })
     .click();
   await expect(
     page.getByText("Local model ready", { exact: true }),
   ).toBeVisible({ timeout: 90_000 });
-  const cdp = await page.context().newCDPSession(page);
-  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 6 });
+  // Keep actual inference; hold only result delivery so the pending state is stable.
+  await page.workers()[0]!.evaluate(() => {
+    const scope = globalThis as unknown as {
+      postMessage: (data: unknown) => void;
+    };
+    const send = scope.postMessage.bind(scope);
+    scope.postMessage = (data) => {
+      if ((data as { type?: string }).type === "results")
+        setTimeout(() => send(data), 2000);
+      else send(data);
+    };
+  });
   await page
     .getByLabel("Your question")
     .fill("What should I do with a broken borrowed camera?");
@@ -389,7 +400,7 @@ test("reset during real pending inference discards the old job", async ({
     page.getByRole("button", { name: "Load local search model", exact: true }),
   ).toBeVisible();
   await expect(page.getByTestId("result")).toHaveCount(0);
-  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+
   await page
     .getByRole("button", { name: "Text matching — no model", exact: true })
     .click();
@@ -404,7 +415,7 @@ test("maximum-length unbroken source metadata remains readable at 320px", async 
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 900 });
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page.getByRole("button", { name: "Edit this note" }).click();
   await page.getByLabel("Note title").fill("A".repeat(256));
   await page.getByLabel("Version or date").fill("B".repeat(128));
@@ -422,7 +433,7 @@ test("cold model transfer sends the full weights once and stays within the adver
   request,
 }, testInfo) => {
   const before = (await (await request.get("/__test_transfers")).json()).length;
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page
     .getByRole("button", { name: "Load local search model", exact: true })
     .click();
@@ -439,7 +450,9 @@ test("cold model transfer sends the full weights once and stays within the adver
   const records: { path: string; status: number; bodyBytes: number }[] = (
     await (await request.get("/__test_transfers")).json()
   ).slice(before);
-  const assets = records.filter((row) => row.path.startsWith("/models/"));
+  const assets = records.filter((row) =>
+    row.path.startsWith(`${prefix}models/`),
+  );
   const weights = assets.filter(
     (row) =>
       row.path.endsWith("model_quantized.onnx") && row.bodyBytes === 22_972_370,
@@ -461,15 +474,25 @@ test("cold model transfer sends the full weights once and stays within the adver
 test("query edit cancels actual inference and announces an accurate idle state", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page
     .getByRole("button", { name: "Load local search model", exact: true })
     .click();
   await expect(
     page.getByText("Local model ready", { exact: true }),
   ).toBeVisible({ timeout: 90_000 });
-  const cdp = await page.context().newCDPSession(page);
-  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 6 });
+  // Keep actual inference; hold only result delivery so the pending state is stable.
+  await page.workers()[0]!.evaluate(() => {
+    const scope = globalThis as unknown as {
+      postMessage: (data: unknown) => void;
+    };
+    const send = scope.postMessage.bind(scope);
+    scope.postMessage = (data) => {
+      if ((data as { type?: string }).type === "results")
+        setTimeout(() => send(data), 2000);
+      else send(data);
+    };
+  });
   await page
     .getByLabel("Your question")
     .fill("What should I do with a broken borrowed camera?");
@@ -488,7 +511,7 @@ test("query edit cancels actual inference and announces an accurate idle state",
     page.getByRole("button", { name: "Load local search model", exact: true }),
   ).toBeVisible();
   await expect(page.getByTestId("result")).toHaveCount(0);
-  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+
   await page
     .getByRole("button", { name: "Text matching — no model", exact: true })
     .click();
@@ -503,7 +526,7 @@ for (const width of [320, 375])
     page,
   }, testInfo) => {
     await page.setViewportSize({ width, height: 800 });
-    await page.goto("/");
+    await page.goto(`${prefix}baseline/`);
     await page
       .getByRole("button", { name: "Text matching — no model", exact: true })
       .click();
@@ -547,7 +570,7 @@ for (const width of [320, 375])
 test("abstention labels actual rows as reading alternatives, not matches", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto(`${prefix}baseline/`);
   await page
     .getByRole("button", { name: "Text matching — no model", exact: true })
     .click();

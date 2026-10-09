@@ -1,0 +1,11 @@
+{
+  "kind": "Representative nonempty CacheStorage fixture; real UI and library deletion APIs, no inference",
+  "after": {
+    "ownedModelKeys": [],
+    "configPresent": false,
+    "wasmPresent": false,
+    "sameCacheSentinel": "retain same-cache sentinel",
+    "otherCacheSentinel": "retain separate cache"
+  },
+  "externalRequests": []
+}

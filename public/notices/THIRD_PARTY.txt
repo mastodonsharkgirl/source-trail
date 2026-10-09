@@ -1,0 +1,10 @@
+# Bundled component notices
+
+Application source: MIT (root LICENSE).
+Qwen3.5 original model: Apache-2.0, https://huggingface.co/Qwen/Qwen3.5-0.8B/blob/main/LICENSE . MLC conversion is pinned by immutable revision in MODEL_MANIFEST.json.
+WebLLM0.2.85 and web-tokenizers0.1.6: Apache-2.0; https://github.com/mlc-ai/web-llm and https://github.com/mlc-ai/tokenizers-cpp .
+Three.js0.186.1: MIT; https://github.com/mrdoob/three/blob/dev/LICENSE .
+Fraunces and Geist fonts: SIL Open Font License1.1, included alongside this notice.
+MiniLM/Transformers.js/ONNX notices remain in models/ from the preserved baseline.
+
+These are distinct component licenses. No model-vendor affiliation or performance guarantee is claimed.

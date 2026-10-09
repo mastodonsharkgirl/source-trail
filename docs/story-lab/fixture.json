@@ -1,0 +1,273 @@
+{
+  "version": "meadow-eval-v1",
+  "pack": {
+    "id": "meadow-atlas",
+    "version": "1.0.0",
+    "label": "Meadow Atlas · authored fiction",
+    "sources": [
+      {
+        "id": "rabbit",
+        "title": "The keeper of the footbridge",
+        "version": "1",
+        "status": "current",
+        "text": "Pip is a rabbit who lives in a burrow beside the meadow footbridge. Every morning Pip carries a small amber lantern to the bridge."
+      },
+      {
+        "id": "bridge",
+        "title": "A crossing after sunrise",
+        "version": "1",
+        "status": "current",
+        "text": "The meadow footbridge opens after sunrise and closes at dusk. Pip waits on the near bank when the bridge is closed. The bridge never opens at night."
+      },
+      {
+        "id": "rainbow",
+        "title": "The view from Clover Hill",
+        "version": "1",
+        "status": "current",
+        "text": "In the fictional Meadow Atlas, a rainbow appears above Clover Hill when the sun follows rain. The rainbow can be seen from the hill, but not from inside Pip's burrow."
+      },
+      {
+        "id": "telescope",
+        "title": "The hilltop observatory",
+        "version": "1",
+        "status": "current",
+        "text": "A brass telescope stands on Clover Hill. Mira the fox tends it. Visitors look at the moon through the telescope after dusk; the telescope cannot see through clouds."
+      },
+      {
+        "id": "river",
+        "title": "What the river carries",
+        "version": "1",
+        "status": "current",
+        "text": "The river runs beneath the footbridge. A paper boat may drift downstream, but nobody in Meadow Atlas can walk on water. Reeds shelter small silver fish."
+      },
+      {
+        "id": "garden",
+        "title": "A place to leave a letter",
+        "version": "1",
+        "status": "current",
+        "text": "A blue postbox stands beside the meadow garden. Pip leaves letters there for Mira. Sunflowers turn the garden gold in summer, and a stone bench offers a place to read."
+      },
+      {
+        "id": "lantern",
+        "title": "Light for the path",
+        "version": "1",
+        "status": "current",
+        "text": "Pip's lantern glows amber. It lights the path, but it cannot change the weather or make the bridge open. At night, white stars appear between the clouds."
+      },
+      {
+        "id": "bridge-old",
+        "title": "An earlier crossing rule",
+        "version": "0",
+        "status": "archived",
+        "text": "An earlier Meadow Atlas draft said the footbridge stayed open all night. This draft is replaced by A crossing after sunrise, version 1, and must not govern a new story."
+      }
+    ]
+  },
+  "packSha256": "9a631584891875689f4125e9bbf8f0c5f23f167ed3b3e2e55c0fa01277868e4b",
+  "notes": "Small authored fixture. Frozen before inference; no tuning on held-out rows.",
+  "development": [
+    {
+      "id": "development-1",
+      "query": "Where does Pip live?",
+      "gold": [
+        {
+          "id": "rabbit",
+          "version": "1",
+          "start": 0,
+          "end": 130,
+          "text": "Pip is a rabbit who lives in a burrow beside the meadow footbridge. Every morning Pip carries a small amber lantern to the bridge."
+        }
+      ]
+    },
+    {
+      "id": "development-2",
+      "query": "When can someone cross the footbridge?",
+      "gold": [
+        {
+          "id": "bridge",
+          "version": "1",
+          "start": 0,
+          "end": 148,
+          "text": "The meadow footbridge opens after sunrise and closes at dusk. Pip waits on the near bank when the bridge is closed. The bridge never opens at night."
+        }
+      ]
+    },
+    {
+      "id": "development-3",
+      "query": "Where is the telescope?",
+      "gold": [
+        {
+          "id": "telescope",
+          "version": "1",
+          "start": 0,
+          "end": 164,
+          "text": "A brass telescope stands on Clover Hill. Mira the fox tends it. Visitors look at the moon through the telescope after dusk; the telescope cannot see through clouds."
+        }
+      ]
+    },
+    {
+      "id": "development-4",
+      "query": "What is the colour of the lantern?",
+      "gold": [
+        {
+          "id": "lantern",
+          "version": "1",
+          "start": 0,
+          "end": 153,
+          "text": "Pip's lantern glows amber. It lights the path, but it cannot change the weather or make the bridge open. At night, white stars appear between the clouds."
+        }
+      ]
+    },
+    {
+      "id": "development-5",
+      "query": "How much does a train ticket cost?",
+      "gold": []
+    },
+    {
+      "id": "development-6",
+      "query": "What medicine treats a headache?",
+      "gold": []
+    }
+  ],
+  "heldOut": [
+    {
+      "id": "heldOut-1",
+      "query": "Where can Pip post a letter for Mira?",
+      "gold": [
+        {
+          "id": "garden",
+          "version": "1",
+          "start": 0,
+          "end": 167,
+          "text": "A blue postbox stands beside the meadow garden. Pip leaves letters there for Mira. Sunflowers turn the garden gold in summer, and a stone bench offers a place to read."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-2",
+      "query": "Can visitors cross the river at midnight?",
+      "gold": [
+        {
+          "id": "bridge",
+          "version": "1",
+          "start": 0,
+          "end": 148,
+          "text": "The meadow footbridge opens after sunrise and closes at dusk. Pip waits on the near bank when the bridge is closed. The bridge never opens at night."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-3",
+      "query": "Who looks after the instrument on Clover Hill?",
+      "gold": [
+        {
+          "id": "telescope",
+          "version": "1",
+          "start": 0,
+          "end": 164,
+          "text": "A brass telescope stands on Clover Hill. Mira the fox tends it. Visitors look at the moon through the telescope after dusk; the telescope cannot see through clouds."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-4",
+      "query": "Can the lantern alter the weather?",
+      "gold": [
+        {
+          "id": "lantern",
+          "version": "1",
+          "start": 0,
+          "end": 153,
+          "text": "Pip's lantern glows amber. It lights the path, but it cannot change the weather or make the bridge open. At night, white stars appear between the clouds."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-5",
+      "query": "Where is a rainbow visible after rain?",
+      "gold": [
+        {
+          "id": "rainbow",
+          "version": "1",
+          "start": 0,
+          "end": 166,
+          "text": "In the fictional Meadow Atlas, a rainbow appears above Clover Hill when the sun follows rain. The rainbow can be seen from the hill, but not from inside Pip's burrow."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-6",
+      "query": "What travels downstream beneath the crossing?",
+      "gold": [
+        {
+          "id": "river",
+          "version": "1",
+          "start": 0,
+          "end": 152,
+          "text": "The river runs beneath the footbridge. A paper boat may drift downstream, but nobody in Meadow Atlas can walk on water. Reeds shelter small silver fish."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-7",
+      "query": "Which animal carries an amber light?",
+      "gold": [
+        {
+          "id": "rabbit",
+          "version": "1",
+          "start": 0,
+          "end": 130,
+          "text": "Pip is a rabbit who lives in a burrow beside the meadow footbridge. Every morning Pip carries a small amber lantern to the bridge."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-8",
+      "query": "What does the sky show between clouds at night?",
+      "gold": [
+        {
+          "id": "lantern",
+          "version": "1",
+          "start": 0,
+          "end": 153,
+          "text": "Pip's lantern glows amber. It lights the path, but it cannot change the weather or make the bridge open. At night, white stars appear between the clouds."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-9",
+      "query": "Where are the telescope and the rainbow viewpoint?",
+      "gold": [
+        {
+          "id": "telescope",
+          "version": "1",
+          "start": 0,
+          "end": 164,
+          "text": "A brass telescope stands on Clover Hill. Mira the fox tends it. Visitors look at the moon through the telescope after dusk; the telescope cannot see through clouds."
+        },
+        {
+          "id": "rainbow",
+          "version": "1",
+          "start": 0,
+          "end": 166,
+          "text": "In the fictional Meadow Atlas, a rainbow appears above Clover Hill when the sun follows rain. The rainbow can be seen from the hill, but not from inside Pip's burrow."
+        }
+      ]
+    },
+    {
+      "id": "heldOut-10",
+      "query": "What is the password for the bank?",
+      "gold": []
+    },
+    {
+      "id": "heldOut-11",
+      "query": "How many kilometres is the trip to Mars?",
+      "gold": []
+    },
+    {
+      "id": "heldOut-12",
+      "query": "What is the boiling point of nitrogen?",
+      "gold": []
+    }
+  ]
+}

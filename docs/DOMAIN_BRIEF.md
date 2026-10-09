@@ -1,16 +1,9 @@
 # Source Trail
 
-Source Trail is a browser-local evidence retrieval experiment.
-It searches an authored fictional source pack and returns exact passages; it
-does not answer questions, assess truth, or send a visitor's notes or vectors
-to a service. Model assets download only after a visitor requests local search.
+A static browser-local product with three views: Story Lab, the original operational Evidence Desk, and How It Works. Story Lab uses authored Meadow Atlas fiction, stable selectable ideas, an honest no-model example, optional WebGPU generation and exact immutable supplied-context inspection. The original six-note retrieval pack and its evaluation remain separately labelled.
 
-The source desk combines a bounded corpus, lexical and vector ranking,
-revision-bound worker messages, pinned same-host asset preparation, a
-reproducible evaluation and real browser WASM checks. Warm paper and cobalt
-connect the numbered source index, exact quotations and original reading pane.
+The product helps visitors understand the difference between retrieval, context and generation. It does not verify truth, causal attribution, training sources, authorship or plagiarism. Real generation has contradicted supplied world rules; generated prose is visibly marked as needing review.
 
-No accounts, uploads, source fetching, analytics, generated answers or
-persistent visitor storage. The repository can build independently with Node,
-npm and network access for its pinned public dependencies. Deployment and
-adoption must be verified separately from local checks.
+Astro static output, React interaction islands, one lazy decorative Three.js horizon, a dedicated WebLLM Worker and original Transformers.js/ONNX WASM Worker. No accounts, uploads, analytics, paid inference, remote user-text processing or persistent visitor-content storage. Explicit export is local; public model caches consume disk.
+
+Build with SOURCE_TRAIL_BASE=/tools/source-trail/ for portfolio integration. Integration/deployment belongs to the portfolio owner. Keep the previous source-trail-saran.pages.dev baseline deployment intact. Read MODEL_MANIFEST.json, REVIEW_LOG.md and docs/story-lab/ARCHITECTURE.md before changing claims or runtime boundaries.

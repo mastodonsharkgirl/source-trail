@@ -7,3 +7,6 @@ public/models/.prepared.json
 output/
 test-results/
 playwright-report/
+public/generation/tokenizer.json
+tools/python_rag/.venv/
+__pycache__/

@@ -16,7 +16,7 @@ env.useWasmCache = false;
 const wasm = env.backends.onnx.wasm;
 if (!wasm) throw new Error('ONNX WASM is unavailable in this worker.');
 wasm.numThreads = 1;
-wasm.wasmPaths = { mjs: '/models/onnxruntime/ort-wasm-simd-threaded.mjs', wasm: '/models/onnxruntime/ort-wasm-simd-threaded.wasm' };
+wasm.wasmPaths = { mjs: `${import.meta.env.BASE_URL}models/onnxruntime/ort-wasm-simd-threaded.mjs`, wasm: `${import.meta.env.BASE_URL}models/onnxruntime/ort-wasm-simd-threaded.wasm` };
 
 function post(message: WorkerResponse): void {
   self.postMessage(message);

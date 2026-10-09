@@ -1,4 +1,4 @@
-# Architecture
+# Architecture — preserved retrieval baseline
 
 Astro emits a static page. A React island owns the source desk; local UI button source and Tailwind accompany the editorial CSS. Geist is served locally. There are no remote fonts, analytics, account services or query APIs.
 

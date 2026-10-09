@@ -13,7 +13,7 @@
     "qa": "npm run check && npm test && npm run build && npm run test:e2e",
     "prepare-model": "node scripts/prepare-model.mjs",
     "evaluate": "node --experimental-strip-types scripts/evaluate.mjs",
-    "prebuild": "npm run prepare-model",
+    "prebuild": "npm run prepare-model && node scripts/prepare-generator.mjs",
     "test:e2e": "playwright test",
     "dev": "astro dev",
     "preview": "astro preview",
@@ -22,12 +22,16 @@
   "dependencies": {
     "@astrojs/react": "^6.0.6",
     "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource/fraunces": "5.2.8",
     "@huggingface/transformers": "4.3.0",
+    "@mlc-ai/web-llm": "0.2.85",
+    "@mlc-ai/web-tokenizers": "0.1.6",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.5",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "three": "0.186.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -35,6 +39,8 @@
     "@types/node": "^24.19.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/three": "0.183.1",
+    "prettier": "3.9.9",
     "typescript": "^6.0.3",
     "vitest": "^4.1.11"
   }

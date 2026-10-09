@@ -711,11 +711,11 @@ export default function SourceDesk() {
               fictional sources and 12 passages are a tiny test, not evidence of
               general accuracy.
             </p>
-            <a href="/evidence/evaluation.json" download>
+            <a href={`${import.meta.env.BASE_URL}evidence/evaluation.json`} download>
               Download raw evaluation ↗
             </a>{" "}
             ·{" "}
-            <a href="/evidence/source-trail-fixture.json" download>
+            <a href={`${import.meta.env.BASE_URL}evidence/source-trail-fixture.json`} download>
               Frozen test set ↗
             </a>
           </details>
@@ -753,8 +753,8 @@ export default function SourceDesk() {
               Editing sources invalidates results and unloads the model to clear
               pending work.
             </p>
-            <a href="/models/manifest.json">Pinned asset hashes ↗</a> ·{" "}
-            <a href="/evidence/architecture.txt">Architecture ↗</a>
+            <a href={`${import.meta.env.BASE_URL}models/manifest.json`}>Pinned asset hashes ↗</a> ·{" "}
+            <a href={`${import.meta.env.BASE_URL}evidence/architecture.txt`}>Architecture ↗</a>
           </details>
         </div>
       </section>
