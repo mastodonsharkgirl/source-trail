@@ -10,10 +10,27 @@ for (const width of [360, 390, 768, 1440])
     page.on("request", (r) => requests.push(r.url()));
     await page.goto(prefix);
     await page.evaluate(() => document.fonts.ready);
-    await page.screenshot({path:info.outputPath(`initial-${width}.png`),fullPage:true});
+    await page.screenshot({
+      path: info.outputPath(`initial-${width}.png`),
+      fullPage: true,
+    });
     await expect(
-      page.getByRole("heading", { name: "What belongs in your story?" }),
+      page.getByRole("heading", { name: "Start with a few words." }),
     ).toBeVisible();
+    await page
+      .getByRole("button", { name: "Inspect the answer", exact: true })
+      .click();
+    await page.evaluate(() => window.scrollTo(0,0));
+    await page.screenshot({
+      path: info.outputPath(`inspected-${width}.png`),
+      fullPage: true,
+    });
+    await page
+      .getByText(
+        "Optional experiment: generate your own story on this device",
+        { exact: true },
+      )
+      .click();
     await page.getByRole("button", { name: "View supplied passages" }).click();
     await expect(page.getByRole("dialog")).toContainText(
       "No generation request was made",
@@ -47,6 +64,11 @@ test("source versions, export, reset, keyboard and privacy", async ({
   const requests: string[] = [];
   page.on("request", (r) => requests.push(r.url() + (r.postData() || "")));
   await page.goto(prefix);
+  await page
+    .getByText("Optional experiment: generate your own story on this device", {
+      exact: true,
+    })
+    .click();
   await page.getByRole("button", { name: "Open Meadow Atlas" }).click();
   await page
     .getByLabel("Source text", { exact: true })
@@ -86,6 +108,11 @@ test("download disclosure and no-WebGPU fallback", async ({ page }) => {
     Object.defineProperty(navigator, "gpu", { value: undefined }),
   );
   await page.goto(prefix);
+  await page
+    .getByText("Optional experiment: generate your own story on this device", {
+      exact: true,
+    })
+    .click();
   await page
     .getByRole("button", { name: "Set up local story generation" })
     .click();

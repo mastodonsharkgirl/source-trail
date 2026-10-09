@@ -16,6 +16,7 @@ import { preflight } from "./gpu";
 import manifest from "../../MODEL_MANIFEST.json";
 import GenerationWorker from "./generation.worker?worker";
 import Horizon from "./Horizon";
+import RecordedWalkthrough from "./RecordedWalkthrough";
 type State = "idle" | "loading" | "ready" | "writing" | "error";
 const base = import.meta.env.BASE_URL;
 export default function StoryLab() {
@@ -24,9 +25,7 @@ export default function StoryLab() {
   const [run, setRun] = useState<Run>(() => sampleRun(initialAtlas())),
     [history, setHistory] = useState<Run[]>([]);
   const [state, setState] = useState<State>("idle"),
-    [status, setStatus] = useState(
-      "Start with the authored example. No download needed.",
-    ),
+    [status, setStatus] = useState(""),
     [error, setError] = useState("");
   const [consent, setConsent] = useState(false),
     [drawer, setDrawer] = useState<"supplied" | "related" | "sources" | null>(
@@ -380,180 +379,174 @@ export default function StoryLab() {
       </header>
       <main id="lab">
         <section className="story-intro">
-          <p className="kicker">A LITTLE FICTION. AN INSPECTABLE TRAIL.</p>
+          <p className="kicker">FOLLOW ONE REAL ANSWER BACK TO ITS SOURCES.</p>
           <h1>
-            Create something.
+            An answer sounds right.
             <br />
-            <em>Follow it back.</em>
+            <em>Does the evidence agree?</em>
           </h1>
           <p className="intro-copy">
-            Choose a few ideas, build a short story, then inspect the passages
-            the model was given.
+            See what a model received, what it wrote, and where it went wrong. A
+            one-minute walkthrough. Nothing to install.
           </p>
-          <div className="local-note">
-            <span aria-hidden="true">✦</span> Your words stay on this device{" "}
-            <span>Meadow Atlas is authored fiction</span>
-          </div>
         </section>
-        <section className="creation" aria-labelledby="choose-title">
-          <div className="word-stage">
-            <div className="step-heading">
-              <span>01 / GATHER</span>
+        <RecordedWalkthrough
+          selected={selected}
+          ordered={ordered}
+          changeWords={changeWords}
+          restore={() => {
+            if (busy) cancel();
+            setSelected(["rabbit", "bridge", "sun"]);
+          }}
+        />
+        <details className="live-experiment" id="experiment">
+          <summary>
+            Optional experiment: generate your own story on this device
+          </summary>
+          <p>
+            The walkthrough above is a saved real run. This separate experiment
+            uses your selected words and can generate a new paragraph after a
+            model download.
+          </p>
+          <section className="creation" aria-labelledby="choose-title">
+            <div className="word-stage">
+              <h2 id="choose-title">Try your selected ideas.</h2>
+              <p>
+                {selected.join(", ") || "Choose three to five words above."}
+              </p>
               <button
                 className="text-button"
                 onClick={() => setShuffle((s) => s + 5)}
               >
-                Shuffle arrangement ↻
+                Shuffle word arrangement ↻
               </button>
-            </div>
-            <h2 id="choose-title">What belongs in your story?</h2>
-            <p>Pick three to five ideas. These are prompts, not evidence.</p>
-            <div className="word-field" aria-label="Story ideas">
-              {ordered.map((word, i) => (
-                <button
-                  className={`word-tablet tablet-${i % 4}`}
-                  key={word}
-                  aria-pressed={selected.includes(word)}
-                  onClick={() => changeWords(word)}
-                >
-                  <span aria-hidden="true">
-                    {selected.includes(word) ? "✦" : "＋"}
-                  </span>
-                  {word}
-                </button>
-              ))}
-            </div>
-            <div className="selection-line">
-              <span>{selected.length} of 5 selected</span>
               <button
-                className="text-button"
-                onClick={() => {
-                  if (busy) cancel();
-                  setSelected(["rabbit", "bridge", "sun"]);
-                }}
+                className="primary-action"
+                disabled={busy || selected.length < 3}
+                onClick={generate}
               >
-                Use example
+                {state === "ready"
+                  ? "Build a story on this device"
+                  : "Set up local story generation"}{" "}
+                <span aria-hidden="true">↗</span>
               </button>
-            </div>
-            <button
-              className="primary-action"
-              disabled={busy || selected.length < 3}
-              onClick={generate}
-            >
-              {state === "ready"
-                ? "Build a story on this device"
-                : "Set up local story generation"}{" "}
-              <span aria-hidden="true">↗</span>
-            </button>
-            {busy && (
-              <button className="secondary-action" onClick={() => cancel()}>
-                Cancel{" "}
-                {state === "loading" ? "download / preparation" : "generation"}
-              </button>
-            )}
-            <p className="small-note">
-              Known limitation: this small model has contradicted supplied rules
-              in testing. Treat generated stories as drafts.
-            </p>
-            <p className="small-note">
-              Optional model download · about 470 MB of public assets · WebGPU
-              required
-            </p>
-            <p className="status" role="status" aria-live="polite">
-              {status}
-            </p>
-            {error && (
-              <p role="alert" className="error">
-                {error}
-              </p>
-            )}
-          </div>
-          <article className="reading-page" aria-labelledby="story-title">
-            <div className="step-heading">
-              <span>02 / READ</span>
-              <span className="run-tag">
-                {run.kind === "authored-sample"
-                  ? "Authored example · no AI run"
-                  : "Generated locally · needs review"}
-              </span>
-            </div>
-            <div className="story-ornament" aria-hidden="true">
-              ☼
-            </div>
-            <h2 id="story-title">
-              {run.kind === "authored-sample"
-                ? "A crossing into morning"
-                : "A story from your ideas"}
-            </h2>
-            <p className="reading-instruction">
-              Select a sentence to find related passages.
-            </p>
-            <div className="story-paragraph">
-              {run.text.match(/[^.!?]+[.!?]+|[^.!?]+$/g)?.map((s, i) => (
-                <button
-                  key={i}
-                  className="sentence"
-                  onClick={() => open("related", s.trim())}
-                >
-                  {s.trim()}{" "}
+              {busy && (
+                <button className="secondary-action" onClick={() => cancel()}>
+                  Cancel{" "}
+                  {state === "loading"
+                    ? "download / preparation"
+                    : "generation"}
                 </button>
-              ))}
+              )}
+              <p className="small-note">
+                Known limitation: this small model has contradicted supplied
+                rules in testing. Treat generated stories as drafts.
+              </p>
+              <p className="small-note">
+                Optional model download · about 470 MB of public assets · WebGPU
+                required
+              </p>
+              {error && (
+                <p role="alert" className="error">
+                  {error}
+                </p>
+              )}
             </div>
-            {run.creativeTwist && (
-              <div className="twist">
-                <span>Creative detail · authored, deliberately unmapped</span>
-                <p>{run.creativeTwist}</p>
+            <article className="reading-page" aria-labelledby="story-title">
+              <div className="step-heading">
+                <span>02 / READ</span>
+                <span className="run-tag">
+                  {run.kind === "authored-sample"
+                    ? "Authored example · no AI run"
+                    : "Generated locally · needs review"}
+                </span>
               </div>
-            )}
-            <div className="story-signoff">
-              <span aria-hidden="true">⌁</span>
-              <p>
+              <div className="story-ornament" aria-hidden="true">
+                ☼
+              </div>
+              <h2 id="story-title">
                 {run.kind === "authored-sample"
-                  ? "Written as a teaching example. No passages were sent to a model."
-                  : "Generated fiction can contradict its sources. Review the supplied passages."}
+                  ? "A crossing into morning"
+                  : "A story from your ideas"}
+              </h2>
+              <p className="reading-instruction">
+                Select a sentence to find related passages.
               </p>
+              <div className="story-paragraph">
+                {run.text.match(/[^.!?]+[.!?]+|[^.!?]+$/g)?.map((s, i) => (
+                  <button
+                    key={i}
+                    className="sentence"
+                    onClick={() => open("related", s.trim())}
+                  >
+                    {s.trim()}{" "}
+                  </button>
+                ))}
+              </div>
+              {run.creativeTwist && (
+                <div className="twist">
+                  <span>Creative detail · authored, deliberately unmapped</span>
+                  <p>{run.creativeTwist}</p>
+                </div>
+              )}
+              <div className="story-signoff">
+                <span aria-hidden="true">⌁</span>
+                <p>
+                  {run.kind === "authored-sample"
+                    ? "Written as a teaching example. No passages were sent to a model."
+                    : "Generated fiction can contradict its sources. Review the supplied passages."}
+                </p>
+              </div>
+              {run.revision !== pack.revision && (
+                <p className="superseded">
+                  Older source snapshot. The source pack has changed; this story
+                  retains its original evidence.
+                </p>
+              )}
+              <div className="reading-actions">
+                <button onClick={() => open("supplied")}>
+                  View supplied passages ↗
+                </button>
+                <button onClick={() => open("related")}>
+                  Find related passages
+                </button>
+                <button
+                  disabled={!!run.creativeTwist}
+                  onClick={() =>
+                    setRun((r) => ({ ...r, creativeTwist: TWIST }))
+                  }
+                >
+                  Add a creative twist
+                </button>
+                <button onClick={exportRun}>Export this run ↓</button>
+              </div>
+            </article>
+          </section>
+          <section className="trail-bar">
+            <div>
+              <span className="kicker">03 / FOLLOW THE TRAIL</span>
+              <h2>
+                A source is a starting point.
+                <br />
+                <em>It isn’t a seal of truth.</em>
+              </h2>
             </div>
-            {run.revision !== pack.revision && (
-              <p className="superseded">
-                Older source snapshot. The source pack has changed; this story
-                retains its original evidence.
-              </p>
-            )}
-            <div className="reading-actions">
-              <button onClick={() => open("supplied")}>
-                View supplied passages ↗
-              </button>
-              <button onClick={() => open("related")}>
-                Find related passages
-              </button>
-              <button
-                disabled={!!run.creativeTwist}
-                onClick={() => setRun((r) => ({ ...r, creativeTwist: TWIST }))}
-              >
-                Add a creative twist
-              </button>
-              <button onClick={exportRun}>Export this run ↓</button>
-            </div>
-          </article>
-        </section>
-        <section className="trail-bar">
-          <div>
-            <span className="kicker">03 / FOLLOW THE TRAIL</span>
-            <h2>
-              A source is a starting point.
-              <br />
-              <em>It isn’t a seal of truth.</em>
-            </h2>
-          </div>
-          <p>
-            See exact excerpts and versions. Supplied context shows what the
-            model received; related text does not prove it used a passage or
-            supported every detail.
-          </p>
-          <button className="secondary-action" onClick={() => open("sources")}>
-            Open Meadow Atlas ↗
-          </button>
-        </section>
+            <p>
+              See exact excerpts and versions. Supplied context shows what the
+              model received; related text does not prove it used a passage or
+              supported every detail.
+            </p>
+            <button
+              className="secondary-action"
+              onClick={() => open("sources")}
+            >
+              Open Meadow Atlas ↗
+            </button>
+          </section>
+        </details>
+        <p className="status" role="status" aria-live="polite">
+          {status}
+        </p>
         <section className="work-bridge">
           <div>
             <p className="kicker">FROM A MEADOW TO A WORKDAY</p>
@@ -695,7 +688,7 @@ export default function StoryLab() {
         </p>
         <p>
           Your words are never sent to a hosted model. Downloading does contact
-          the public asset hosts. The authored example works without this
+          the public asset hosts. The recorded walkthrough works without this
           download.
         </p>
         <div className="session-actions">

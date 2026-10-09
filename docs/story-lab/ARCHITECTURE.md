@@ -3,7 +3,10 @@
 ## Preserved baseline
 `/baseline/` retains the original SourceDesk, pinned MiniLM assets, source pack, calibration threshold and raw evaluation. Its page and search Worker response CSP permit same-origin connections only. The pre-upgrade live deployment is not modified by this branch.
 
-## Story flow
+## Default recorded walkthrough
+`RecordedWalkthrough.tsx` renders the first actual saved run from unchanged generation-evaluation.json. Output, selected words, exact supplied passages and prompt remain tied to that immutable record. Manually authored claim assessments are labelled as manual examples, not automatic verification. Glass word changes perform lexical retrieval against the original atlas only, visibly labelled as a preview; they cannot modify the recording. The existing editable pack, authored sample and generator are a separate optional experiment. No generator Worker or model asset is requested by this default flow.
+
+## Optional live story flow
 `src/story/atlas.json` holds8 authored fictional notes,7 current and1 archived. `core.ts` filters current sources before lexical retrieval, retains exact source offsets and copies the full pack into each run. Prompts are words, not evidence. Generated text never enters the pack.
 
 `StoryLab.tsx` owns in-memory selected words, versioned edits and a bounded run history. The dedicated generator Worker uses pinned WebLLM and the exact pinned tokenizer. It renders a complete Qwen template into a text-completion request; the runtime applies no additional template or system prefix to text completions (verified against installed0.2.85 source). The same full string is tokenized, budgeted, exported and sent. Whole lowest-ranked passages are dropped until prompt+256 output fits4096; dropped IDs are visible. Token count is compared with runtime usage during real validation.

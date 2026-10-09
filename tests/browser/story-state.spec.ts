@@ -63,6 +63,11 @@ test("two runs retain their own source revisions after reopening and export", as
     } as typeof Worker;
   });
   await page.goto(prefix);
+  await page
+    .getByText("Optional experiment: generate your own story on this device", {
+      exact: true,
+    })
+    .click();
   const setup = async () => {
     await page
       .getByRole("button", { name: "Set up local story generation" })

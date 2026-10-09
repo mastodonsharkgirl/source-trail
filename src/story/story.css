@@ -1,4 +1,191 @@
 @import "tailwindcss";
+.recorded-trail,
+.live-experiment {
+  max-width: 1280px;
+  margin: 0 auto 3rem;
+  padding: 0 5%;
+}
+.recorded-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #d2ebe833;
+}
+.recorded-banner strong {
+  color: #ebd9ae;
+}
+.recorded-banner span {
+  font-size: 0.85rem;
+}
+.walkthrough-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr;
+  gap: 2rem;
+  padding-top: 2rem;
+  align-items: start;
+}
+.walk-step {
+  min-width: 0;
+}
+.walk-step h2 {
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+}
+.walk-step > p {
+  line-height: 1.55;
+}
+.walk-step .word-field {
+  min-height: 0;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.walk-step .word-tablet {
+  padding: 0.5rem 0.65rem;
+  font-size: 0.85rem;
+}
+.recorded-source {
+  border-top: 1px solid #d2ebe833;
+  padding: 0.8rem 0;
+}
+.recorded-source summary {
+  cursor: pointer;
+  min-height: 44px;
+  line-height: 1.4;
+}
+.recorded-source summary span {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+.recorded-source blockquote {
+  margin: 0.5rem 0;
+  line-height: 1.65;
+}
+.recorded-source small {
+  font-size: 0.72rem;
+  color: #b5cbc7;
+}
+.recorded-reading {
+  background: #f2eddc;
+  color: #273d39;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+.recorded-reading .recorded-output {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.65;
+}
+.recorded-reading .small-note,
+.recorded-reading .run-tag {
+  color: #465852;
+}
+.recorded-reading .primary-action,
+.recorded-reading .primary-action:hover {
+  background: #173b49;
+  color: #f2eddc;
+  width: 100%;
+}
+.recorded-reading .kicker { color: #465852; }
+.recorded-assessment {
+  padding: 2rem 0;
+  scroll-margin-top: 1rem;
+}
+.assessment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.assessment-grid article {
+  border: 1px solid #c5d7ca66;
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 0;
+}
+.assessment-grid h3 {
+  color: #ebd9ae;
+  font-weight: 600;
+}
+.assessment-grid blockquote {
+  font-family: Fraunces, Georgia, serif;
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+.assessment-grid p {
+  line-height: 1.6;
+}
+.assessment-grid small {
+  font-size: 0.8rem;
+}
+.walkaway {
+  font-size: 1.15rem;
+  margin: 1.5rem 0 0;
+}
+.recorded-provenance {
+  margin: 1.5rem 0;
+}
+.recorded-provenance summary,
+.live-experiment > summary {
+  min-height: 44px;
+  padding: 0.75rem 0;
+  cursor: pointer;
+}
+.recorded-provenance p {
+  line-height: 1.6;
+}
+.recorded-provenance pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.8rem;
+}
+.retrieval-preview {
+  border-left: 2px solid #ebd9ae;
+  padding-left: 0.8rem;
+}
+.retrieval-preview p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.live-experiment {
+  border-top: 1px solid #d2ebe833;
+  padding-top: 1rem;
+}
+.live-experiment .creation,
+.live-experiment .trail-bar {
+  padding-left: 0;
+  padding-right: 0;
+}
+main > .status {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+@media (max-width: 1000px) {
+  .walkthrough-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .recorded-reading {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 600px) {
+  .walkthrough-grid,
+  .assessment-grid {
+    grid-template-columns: 1fr;
+  }
+  .recorded-reading {
+    grid-column: auto;
+  }
+  .recorded-trail {
+    padding: 0 6%;
+  }
+}
+@media (forced-colors: active) {
+  .recorded-reading,
+  .assessment-grid article {
+    border: 1px solid CanvasText;
+  }
+}
 :root {
   font-family: "Geist Variable", Arial, sans-serif;
   color: #e9f2ee;
@@ -214,7 +401,7 @@ main,
   color: #c6d8d5;
 }
 .story-intro h1 {
-  font-size: clamp(3.3rem, 6.8vw, 6.2rem);
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
   line-height: 1.02;
   letter-spacing: -4px;
   margin: 26px 0 22px;

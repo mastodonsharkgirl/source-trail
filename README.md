@@ -1,10 +1,10 @@
 # Source Trail Story Lab
 
-Create something. Follow it back to the sources.
+An answer sounds right. Does the evidence agree?
 
-Story Lab combines stable selectable glass words, the authored fictional Meadow Atlas, a model-free example, optional on-device Qwen generation, and inspection of exact supplied context. The original operational-note Evidence Desk remains at `/baseline/`, including its original MiniLM retrieval model, frozen fixture and historical evaluation.
+Story Lab opens with an explicitly labelled recorded real Qwen run: ideas, exact supplied evidence, then actual output. One inspection action reveals manually reviewed examples of support, conflict and missing evidence. No model download is needed. Glass words preview retrieval locally; changing them never changes or relabels the recorded output. Optional live generation and the authored sandbox example sit behind secondary experiment controls. The original operational-note Evidence Desk remains at `/baseline/`, including its original MiniLM retrieval model, frozen fixture and historical evaluation.
 
-**Generated stories need review.** In real testing, the small Qwen model contradicted an explicit bridge rule even though the exact rule was supplied. Another edited-source run omitted that rule during retrieval. These failures are preserved in [raw story evaluation](docs/story-lab/evaluation.json). This product does not verify truth, recover training sources, detect plagiarism or prove causal source use. The authored sample remains the default.
+**Generated stories need review.** In real testing, the small Qwen model contradicted an explicit bridge rule even though the exact rule was supplied. Another edited-source run omitted that rule during retrieval. These failures are preserved in [raw story evaluation](docs/story-lab/evaluation.json). This product does not verify truth, recover training sources, detect plagiarism or prove causal source use. The recorded real-run walkthrough is the default.
 
 ## Run
 
@@ -50,6 +50,6 @@ The baseline remains unchanged in meaning:16 held-out questions, semantic ungate
 
 The separate [Python/LangChain companion](tools/python_rag/README.md) runs actual framework components. Its default local vocabulary vectors are lexical. Optional Ollama embedding/chat adapters require already-installed models; live adapter inference remains unverified. Physical mobile GPU, broad device support and hosted prefix headers require separate verification. No production adoption is claimed.
 
-[Review log](REVIEW_LOG.md), [learning guide](LEARNING_GUIDE.md), [new architecture](docs/story-lab/ARCHITECTURE.md), and [preserved baseline architecture](docs/ARCHITECTURE.md).
+[Recovery review](docs/story-lab/RECOVERY_REVIEW.md), [original review log](REVIEW_LOG.md), [learning guide](LEARNING_GUIDE.md), [new architecture](docs/story-lab/ARCHITECTURE.md), and [preserved baseline architecture](docs/ARCHITECTURE.md).
 
 Authored code is MIT. Qwen, MiniLM, WebLLM and tokenizer components use their separate Apache-2.0 terms; ONNX/Three.js are MIT; bundled Geist/Fraunces fonts carry their font licenses. Implementation was generated/edited with Codex; Saran supplied product decisions. Learning exercises remain uncompleted unless separately observed.
