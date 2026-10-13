@@ -94,7 +94,7 @@ describe('policy fixture contracts', () => {
     expect(cases.get('held-remote-days')?.requiredFacts).toEqual(['Remote work A requires only a manager to record the schedule.', 'Remote work B requires only a security reviewer to record the schedule.']);
     expect(cases.get('held-remote-manager')?.requiredFacts).toEqual(['Remote work A requires a manager email before the first remote day.', 'Remote work B requires only a team-calendar entry and forbids a manager email.']);
     expect(cases.get('held-remote-security')?.requiredFacts).toEqual(['Remote work A permits only a manager to approve the schedule.', 'Remote work B permits a manager or security reviewer to approve the schedule.']);
-    expect(cases.get('held-remote-status')?.requiredFacts).toEqual(['Remote work A permits only a manager to approve the schedule.', 'Remote work B permits a manager or security reviewer to approve the schedule.']);
+    expect(cases.get('held-remote-status')?.requiredFacts).toEqual(['Only a manager may approve under remote work A.', 'Only a security reviewer may approve under remote work B.']);
     for (const id of ['held-remote-days', 'held-remote-manager', 'held-remote-security', 'held-remote-status']) {
       expect(cases.get(id)?.answerable).toBe(false);
       expect(cases.get(id)?.expectedReason).toBe('conflicting_evidence');
