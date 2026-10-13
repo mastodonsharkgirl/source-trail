@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "policy-lab-fictional-v3",
+  "version": "policy-lab-fictional-v4",
   "documents": [
     {
       "id": "cedar-travel-current",
@@ -78,7 +78,7 @@
       "id": "cedar-remote-a",
       "title": "Cedar remote work A",
       "version": "2026-10",
-      "text": "Cedar employees may work remotely two days each week when their manager has recorded the schedule.\n\nRemote work A requires the schedule record to name two chosen weekdays.\n\nRemote work A requires a manager email before the first remote day.\n\nRemote work A says only a manager may approve the schedule.",
+      "text": "Cedar employees may work remotely two days each week when their manager has recorded the schedule.\n\nRemote work A requires the schedule record to name two chosen weekdays.\n\nRemote work A requires a manager email before the first remote day.\n\nRemote work A requires only a manager to record and approve the schedule.",
       "tenant": "cedar",
       "allowedRoles": [
         "employee",
@@ -96,7 +96,7 @@
       "id": "cedar-remote-b",
       "title": "Cedar remote work B",
       "version": "2026-10",
-      "text": "Cedar employees may work remotely three days each week after a manager records the schedule. This rule has equal authority to remote work A.\n\nRemote work B requires a security reviewer to record the schedule and name three chosen weekdays.\n\nRemote work B requires a team-calendar entry before the first remote day.\n\nRemote work B says a manager or security reviewer may approve the schedule.",
+      "text": "Cedar employees may work remotely three days each week after a manager records the schedule. This rule has equal authority to remote work A.\n\nRemote work B requires only a security reviewer to record the schedule and name three chosen weekdays.\n\nRemote work B requires only a team-calendar entry before the first remote day and forbids a manager email as approval.\n\nRemote work B says a manager or security reviewer may approve the schedule.",
       "tenant": "cedar",
       "allowedRoles": [
         "employee",
@@ -782,7 +782,7 @@
     {
       "caseId": "held-remote-days",
       "input": {
-        "query": "Who records the schedule condition in Cedar remote work A and B?",
+        "query": "Which role must record a Cedar remote schedule?",
         "principal": {
           "tenant": "cedar",
           "role": "employee"
@@ -797,17 +797,17 @@
       ],
       "expectedReason": "conflicting_evidence",
       "requiredFacts": [
-        "Remote work A requires a manager-recorded schedule.",
-        "Remote work B requires a manager-recorded schedule."
+        "Remote work A requires only a manager to record the schedule.",
+        "Remote work B requires only a security reviewer to record the schedule."
       ],
       "prohibitedAssertions": [],
-      "rationale": "This case isolates the shared recording condition before the conflicting detail cases.",
+      "rationale": "The equally authoritative rules require mutually exclusive schedule recorders.",
       "intentFamily": "held-remote-recording-condition"
     },
     {
       "caseId": "held-remote-manager",
       "input": {
-        "query": "What approval is required before the first remote day?",
+        "query": "What sole approval record is required before Cedar’s first remote day?",
         "principal": {
           "tenant": "cedar",
           "role": "manager"
@@ -822,11 +822,11 @@
       ],
       "expectedReason": "conflicting_evidence",
       "requiredFacts": [
-        "Remote work A requires a manager email.",
-        "Remote work B requires a team-calendar entry."
+        "Remote work A requires a manager email before the first remote day.",
+        "Remote work B requires only a team-calendar entry and forbids a manager email."
       ],
       "prohibitedAssertions": [],
-      "rationale": "The rules conflict on pre-first-day approval evidence.",
+      "rationale": "The equally authoritative rules prescribe mutually exclusive approval records.",
       "intentFamily": "held-remote-approval-channel"
     },
     {
@@ -857,7 +857,7 @@
     {
       "caseId": "held-remote-status",
       "input": {
-        "query": "Are the Cedar remote-work policies equally authoritative despite their schedule conflict?",
+        "query": "Who alone may approve a Cedar remote schedule?",
         "principal": {
           "tenant": "cedar",
           "role": "employee"
@@ -872,10 +872,11 @@
       ],
       "expectedReason": "conflicting_evidence",
       "requiredFacts": [
-        "Remote work B says it has equal authority to remote work A."
+        "Remote work A permits only a manager to approve.",
+        "Remote work B permits a manager or security reviewer to approve."
       ],
       "prohibitedAssertions": [],
-      "rationale": "The conflict has no supersession relationship or authority tie-breaker.",
+      "rationale": "The equally authoritative rules give incompatible approver sets.",
       "intentFamily": "held-remote-authority-status"
     },
     {

@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "version": "policy-lab-fictional-v3",
+  "notice": "Fictional evaluation rubric. Expected labels are scorer-only inputs and must not enter retrieval or generation requests. Required facts and prohibited assertions are complete, human-readable statements rather than substring fragments."
+}
