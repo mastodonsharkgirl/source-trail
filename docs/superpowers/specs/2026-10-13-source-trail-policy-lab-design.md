@@ -1,7 +1,7 @@
 # Source Trail Policy Lab: local evaluation specification
 
 - Date: 13 October 2026.
-- Stage: written specification for user review; implementation is not approved yet.
+- Stage: user-approved specification; implementation plan and execution method await review.
 - Repository: `C:/Users/Kanak/Documents/Saran Websites/repos/source-trail`.
 - Branch: `codex/source-trail-policy-evaluation`.
 - Preserved release base: `fd3e4371fc0f7fa99dc1b6118a66134a20e177ba`.
@@ -13,7 +13,8 @@ should be able to compare three evidence-selection methods, inspect the exact
 documents supplied to a local language model, and understand why an answer is
 supported, wrong, or withheld. Preserve the original retrieval desk and Story Lab.
 
-The user approved this direction and requested this written specification. Their
+The user approved this direction and then approved the written specification at
+commit `7438ecd` on 13 October 2026. Their
 instructions require local work, factual portfolio claims, and plain explanations
 they can learn to defend. After review of this document, the next stage is a
 written implementation plan and execution-method selection. No new product code,
