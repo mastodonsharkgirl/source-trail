@@ -91,13 +91,19 @@ describe('policy fixture contracts', () => {
 
   it('pins each held-out conflict to a distinct incompatible source pair', () => {
     const cases = new Map(validateFixture(fixture).heldOut.map((policyCase) => [policyCase.caseId, policyCase]));
-    expect(cases.get('held-remote-days')?.requiredFacts).toEqual(['Remote work A requires only a manager to record the schedule.', 'Remote work B requires only a security reviewer to record the schedule.']);
-    expect(cases.get('held-remote-manager')?.requiredFacts).toEqual(['Remote work A requires a manager email before the first remote day.', 'Remote work B requires only a team-calendar entry and forbids a manager email.']);
-    expect(cases.get('held-remote-security')?.requiredFacts).toEqual(['Remote work A permits only a manager to approve the schedule.', 'Remote work B permits a manager or security reviewer to approve the schedule.']);
-    expect(cases.get('held-remote-status')?.requiredFacts).toEqual(['Only a manager may approve under remote work A.', 'Only a security reviewer may approve under remote work B.']);
-    for (const id of ['held-remote-days', 'held-remote-manager', 'held-remote-security', 'held-remote-status']) {
-      expect(cases.get(id)?.answerable).toBe(false);
-      expect(cases.get(id)?.expectedReason).toBe('conflicting_evidence');
+    const passages = new Map(preparePolicyCorpus(fixture.documents).passages.map((passage) => [passage.id, passage.text]));
+    const expectations = [
+      ['held-remote-days', ['cedar-remote-a:2', 'cedar-remote-b:2'], ['Only a manager records the schedule.', 'Only a security reviewer records the schedule.']],
+      ['held-remote-manager', ['cedar-remote-a:3', 'cedar-remote-b:3'], ['A manager email is required as the approval record before the first remote day.', 'a manager email is not accepted.']],
+      ['held-remote-security', ['cedar-remote-a:4', 'cedar-remote-b:4'], ['Only a manager approves an ordinary remote schedule.', 'A manager or security reviewer may approve an ordinary remote schedule.']],
+      ['held-remote-status', ['cedar-remote-a:4', 'cedar-remote-b:4'], ['Only a security reviewer approves an emergency schedule change.', 'Only a manager approves an emergency schedule change.']],
+    ] as const;
+    for (const [caseId, ids, quotes] of expectations) {
+      expect(cases.get(caseId)?.relevantIds).toEqual(ids);
+      expect(cases.get(caseId)?.answerable).toBe(false);
+      expect(cases.get(caseId)?.expectedReason).toBe('conflicting_evidence');
+      expect(passages.get(ids[0])).toContain(quotes[0]);
+      expect(passages.get(ids[1])).toContain(quotes[1]);
     }
   });
 });

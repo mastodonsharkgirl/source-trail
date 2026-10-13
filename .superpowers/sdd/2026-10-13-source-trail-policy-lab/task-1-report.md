@@ -72,3 +72,16 @@ The preceding v3 fact map is superseded. It described compatible or directly ans
 The final four held-out cases are each non-answerable with `conflicting_evidence`; their source pairs are asserted exactly in `tests/policy-documents.test.ts`. Their fact intents are distinct from the two development conflict cases. The duplicate-ID test now preserves the obsolete supersession target while replacing a different document, and asserts the duplicate-specific `repeats the id` error. Rubric entries were converted to complete assessment statements; archived JSON uses the recursive LF `.gitattributes` rule.
 
 Final commands and results: `npm test -- tests/policy-documents.test.ts` passed 14/14; `node scripts/freeze-policy-fixture.mjs --check` confirmed the v5 manifest above; `git diff --check` passed; `npm run check` completed with zero errors, warnings, or hints. No inference or full QA ran in this report-only follow-up.
+
+## Review round 3 — final v6 source audit
+
+The v5 fixture, rubric, and manifest were archived byte-for-byte under `docs/policy-lab/versions/policy-lab-fictional-v5/` before active `policy-lab-fictional-v6` was created. The v6 freeze checker confirmed fixture SHA-256 `b31ff93acc678f5ea2f9154b684b1fe2dde7166456427af3198f5d1dd206a3e1`.
+
+| Case | IDs resolved by test | Literal source conflict |
+| --- | --- | --- |
+| `held-remote-days` | `cedar-remote-a:2`, `cedar-remote-b:2` | “Only a manager records the schedule.” / “Only a security reviewer records the schedule.” |
+| `held-remote-manager` | `cedar-remote-a:3`, `cedar-remote-b:3` | “A manager email is required as the approval record before the first remote day.” / “a manager email is not accepted.” |
+| `held-remote-security` | `cedar-remote-a:4`, `cedar-remote-b:4` | “Only a manager approves an ordinary remote schedule.” / “A manager or security reviewer may approve an ordinary remote schedule.” |
+| `held-remote-status` | `cedar-remote-a:4`, `cedar-remote-b:4` | “Only a security reviewer approves an emergency schedule change.” / “Only a manager approves an emergency schedule change.” |
+
+The focused regression test now builds a corpus from the fixture, resolves each case's relevant IDs, and checks its actual supplied passage text separately from the case disposition. The four held-out facets are recorder identity, approval record, ordinary-schedule approver, and emergency-change approver; development continues to cover weekly allowance and named-weekday count. Final commands: freeze `--write`/`--check` passed, focused tests passed 14/14, `npm run check` reported zero diagnostics, and `git diff --check` passed. No inference or full QA ran.
