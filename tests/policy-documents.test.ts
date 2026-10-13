@@ -23,7 +23,7 @@ describe('policy fixture contracts', () => {
   });
 
   it.each([
-    ['duplicate document IDs', (documents: any[]) => [{ ...documents[0] }, { ...documents[0] }, ...documents.slice(1)]],
+    ['duplicate document IDs', (documents: any[]) => documents.map((document, index) => index === 1 ? { ...documents[0] } : document)],
     ['unknown roles', (documents: any[]) => [{ ...documents[0], allowedRoles: ['intern'] }, ...documents.slice(1)]],
     ['invalid effective dates', (documents: any[]) => [{ ...documents[0], effectiveOn: '2026-02-30' }, ...documents.slice(1)]],
     ['cross-tenant supersession', (documents: any[]) => [{ ...documents[0], supersedes: ['harbour-travel-current'] }, ...documents.slice(1)]],
@@ -43,11 +43,47 @@ describe('policy fixture contracts', () => {
     const malformed = structuredClone(fixture);
     malformed.heldOut[0]!.relevantIds = ['cedar-export-current:1'];
     expect(() => validateFixture(malformed)).toThrow(/available|relevant/i);
+
+    const nonexistent = structuredClone(fixture);
+    nonexistent.heldOut[0]!.relevantIds = ['cedar-travel-current:99'];
+    expect(() => validateFixture(nonexistent)).toThrow(/available|relevant/i);
   });
 
   it('rejects a fixture whose frozen split no longer has the approved group counts', () => {
     const malformed = structuredClone(fixture);
-    malformed.heldOut[0]!.group = 'conflict';
+    malformed.heldOut[0] = { ...malformed.heldOut[0]!, group: 'conflict', answerable: false, expectedReason: 'conflicting_evidence', relevantIds: ['cedar-remote-a:1', 'cedar-remote-b:1'], requiredFacts: ['Cedar remote work A allows two days.', 'Cedar remote work B allows three days.'] };
     expect(() => validateFixture(malformed)).toThrow(/held-out.*approved group counts/i);
+  });
+
+  it('rejects malformed rubric strings, date drift, split-family overlap, and incoherent dispositions', () => {
+    const malformedRubric = structuredClone(fixture);
+    malformedRubric.heldOut[0]!.requiredFacts = [42 as any];
+    expect(() => validateFixture(malformedRubric)).toThrow(/rubric/i);
+
+    const dateDrift = structuredClone(fixture);
+    dateDrift.heldOut[0]!.input.asOf = '2026-10-14';
+    expect(() => validateFixture(dateDrift)).toThrow(/2026-10-13/i);
+
+    const familyOverlap = structuredClone(fixture);
+    familyOverlap.heldOut[0]!.intentFamily = familyOverlap.development[0]!.intentFamily;
+    expect(() => validateFixture(familyOverlap)).toThrow(/intent family/i);
+
+    const incoherent = structuredClone(fixture);
+    incoherent.heldOut[0]!.expectedReason = 'missing_evidence';
+    expect(() => validateFixture(incoherent)).toThrow(/answerable.*supported/i);
+  });
+
+  it('returns deeply frozen provenance and exact UTF-8 document hashes', () => {
+    const corpus = preparePolicyCorpus(withRepeatedUnicodeText());
+    expect(corpus.passages[0]!.documentSha256).toBe('431729d6f6d6fe1d17281cbcf8b77170d52ef555207dd5fa010e8b231bc81ba2');
+    expect(Object.isFrozen(corpus.documents[0]!)).toBe(true);
+    expect(Object.isFrozen(corpus.documents[0]!.allowedRoles)).toBe(true);
+    expect(Object.isFrozen(corpus.passages[0]!.supersedes)).toBe(true);
+    expect(() => { (corpus.documents[0] as any).text = 'changed'; }).toThrow();
+    expect(() => { (corpus.documents[0]!.allowedRoles as any).push('intern'); }).toThrow();
+
+    const frozen = validateFixture(fixture);
+    expect(Object.isFrozen(frozen.heldOut[0]!.input.principal)).toBe(true);
+    expect(() => { (frozen.heldOut[0]!.requiredFacts as any).push('changed'); }).toThrow();
   });
 });

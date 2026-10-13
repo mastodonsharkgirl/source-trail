@@ -9,7 +9,16 @@ const tenants = new Set<Tenant>(['cedar', 'harbour']);
 const roles = new Set<Role>(['employee', 'manager', 'security']);
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 const identifier = /^[a-z0-9][a-z0-9-]{0,63}$/;
+const evaluationDate = '2026-10-13';
 const exactDate = (value: unknown): value is string => typeof value === 'string' && datePattern.test(value) && !Number.isNaN(new Date(`${value}T00:00:00Z`).valueOf()) && new Date(`${value}T00:00:00Z`).toISOString().slice(0, 10) === value;
+
+function deeplyFreeze<T>(value: T): T {
+  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
+    Object.values(value).forEach(deeplyFreeze);
+    Object.freeze(value);
+  }
+  return value;
+}
 
 function object(value: unknown, name: string): asserts value is Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${name} must be an object.`);
@@ -26,7 +35,7 @@ function document(value: unknown, index: number): PolicyDocument {
   if (!exactDate(candidate.effectiveOn) || (candidate.expiresOn !== null && !exactDate(candidate.expiresOn))) throw new Error(`Document ${candidate.id} has an invalid calendar date.`);
   if (candidate.expiresOn !== null && candidate.expiresOn < candidate.effectiveOn) throw new Error(`Document ${candidate.id} expires before it becomes effective.`);
   if (!Array.isArray(candidate.supersedes) || !candidate.supersedes.every((id) => typeof id === 'string' && identifier.test(id))) throw new Error(`Document ${candidate.id} has invalid supersession metadata.`);
-  return { ...candidate, allowedRoles: [...candidate.allowedRoles], supersedes: [...candidate.supersedes] };
+  return deeplyFreeze({ ...candidate, allowedRoles: [...candidate.allowedRoles], supersedes: [...candidate.supersedes] });
 }
 
 function sha256(value: string): string { return createHash('sha256').update(value, 'utf8').digest('hex'); }
@@ -62,10 +71,10 @@ export function preparePolicyCorpus(documents: unknown): PolicyCorpus {
       if (start < 0) throw new Error(`Could not locate passage ${passage.id} in its original document.`);
       const end = start + passage.text.length;
       searchFrom = end;
-      passages.push(Object.freeze({ ...passage, start, end, documentSha256: documentHash, tenant: item.tenant, allowedRoles: [...item.allowedRoles], policyKey: item.policyKey, authority: item.authority, status: item.status, effectiveOn: item.effectiveOn, expiresOn: item.expiresOn, supersedes: [...item.supersedes] }));
+      passages.push(deeplyFreeze({ ...passage, start, end, documentSha256: documentHash, tenant: item.tenant, allowedRoles: [...item.allowedRoles], policyKey: item.policyKey, authority: item.authority, status: item.status, effectiveOn: item.effectiveOn, expiresOn: item.expiresOn, supersedes: [...item.supersedes] }));
     }
   }
-  return Object.freeze({ documents: Object.freeze(parsed), passages: Object.freeze(passages), revision: `policy-${sha256(JSON.stringify(parsed)).slice(0, 12)}` });
+  return deeplyFreeze({ documents: parsed, passages, revision: `policy-${sha256(JSON.stringify(parsed)).slice(0, 12)}` });
 }
 
 function visibleTo(principal: Principal, document: PolicyDocument): boolean { return document.tenant === principal.tenant && document.allowedRoles.includes(principal.role); }
@@ -75,14 +84,20 @@ function policyCase(value: unknown, corpus: PolicyCorpus, split: string): GoldCa
   if (!identifier.test(candidate.caseId ?? '') || typeof candidate.intentFamily !== 'string' || !candidate.intentFamily.trim()) throw new Error(`${split} case has an invalid identity.`);
   if (!['current', 'superseded', 'conflict', 'unavailable', 'injection'].includes(candidate.group) || typeof candidate.answerable !== 'boolean' || !['supported', 'missing_evidence', 'conflicting_evidence', 'unsafe_request'].includes(candidate.expectedReason)) throw new Error(`${candidate.caseId} has an invalid disposition.`);
   object(candidate.input, `${candidate.caseId} input`);
-  if (typeof candidate.input.query !== 'string' || !candidate.input.query.trim() || !tenants.has(candidate.input.principal?.tenant) || !roles.has(candidate.input.principal?.role) || !exactDate(candidate.input.asOf)) throw new Error(`${candidate.caseId} has an invalid request.`);
-  if (!Array.isArray(candidate.relevantIds) || !Array.isArray(candidate.requiredFacts) || !Array.isArray(candidate.prohibitedAssertions) || typeof candidate.rationale !== 'string') throw new Error(`${candidate.caseId} has an invalid rubric.`);
+  if (typeof candidate.input.query !== 'string' || !candidate.input.query.trim() || !tenants.has(candidate.input.principal?.tenant) || !roles.has(candidate.input.principal?.role) || candidate.input.asOf !== evaluationDate) throw new Error(`${candidate.caseId} must use the fixed evaluation date ${evaluationDate}.`);
+  if (!Array.isArray(candidate.relevantIds) || !Array.isArray(candidate.requiredFacts) || !Array.isArray(candidate.prohibitedAssertions) || !candidate.relevantIds.every((item) => typeof item === 'string' && item.trim()) || !candidate.requiredFacts.every((item) => typeof item === 'string' && item.trim()) || !candidate.prohibitedAssertions.every((item) => typeof item === 'string' && item.trim()) || typeof candidate.rationale !== 'string' || !candidate.rationale.trim()) throw new Error(`${candidate.caseId} has an invalid rubric.`);
   const passageById = new Map(corpus.passages.map((passage) => [passage.id, passage]));
   for (const id of candidate.relevantIds) {
     const passage = passageById.get(id);
     if (!passage || !visibleTo(candidate.input.principal, passage) || passage.status !== 'current' || passage.effectiveOn > candidate.input.asOf || (passage.expiresOn !== null && passage.expiresOn < candidate.input.asOf)) throw new Error(`${candidate.caseId} references unavailable relevant evidence.`);
   }
-  return structuredClone(candidate);
+  if (candidate.answerable && (candidate.expectedReason !== 'supported' || candidate.relevantIds.length === 0)) throw new Error(`${candidate.caseId} is answerable only with supported, available evidence.`);
+  if (!candidate.answerable && candidate.expectedReason === 'supported') throw new Error(`${candidate.caseId} cannot be unsupported with a supported reason.`);
+  if (candidate.expectedReason === 'missing_evidence' && candidate.relevantIds.length !== 0) throw new Error(`${candidate.caseId} must not label evidence as missing while listing relevant evidence.`);
+  if (candidate.expectedReason === 'conflicting_evidence' && candidate.relevantIds.length < 2) throw new Error(`${candidate.caseId} needs both sides of conflicting evidence.`);
+  const expected = candidate.group === 'current' || candidate.group === 'superseded' ? 'supported' : candidate.group === 'conflict' ? 'conflicting_evidence' : candidate.group === 'unavailable' ? 'missing_evidence' : null;
+  if (expected !== null && candidate.expectedReason !== expected) throw new Error(`${candidate.caseId} has an incoherent group disposition.`);
+  return deeplyFreeze(structuredClone(candidate));
 }
 
 export function validateFixture(value: unknown): PolicyFixture {
@@ -99,5 +114,7 @@ export function validateFixture(value: unknown): PolicyFixture {
   if (heldOut.filter((item) => item.answerable).length !== 14) throw new Error('Held-out split must contain fourteen answerable cases.');
   const ids = [...development, ...heldOut].map((item) => item.caseId);
   if (new Set(ids).size !== ids.length) throw new Error('Policy fixture repeats a case id.');
-  return Object.freeze({ schemaVersion: 1, version: candidate.version, documents: [...corpus.documents], development, heldOut });
+  const developmentFamilies = new Set(development.map((item) => item.intentFamily));
+  if (heldOut.some((item) => developmentFamilies.has(item.intentFamily))) throw new Error('Development and held-out cases must not share an intent family.');
+  return deeplyFreeze({ schemaVersion: 1, version: candidate.version, documents: [...corpus.documents], development, heldOut });
 }

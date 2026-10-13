@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "fixtureSha256": "f1b2a5e8a7535ac1d1ca8ba648a2cead340255a3d31c85f1a07ad7b604c48e19",
-  "rubricSha256": "3506baacab1ccd670e0ab39bdde4051242e16bf05cbe1cd504e1ffb402b92432",
+  "fixtureSha256": "2d742f0fad108ce0ec53da2fbf601d090052094499ab376e6ac562c948f3eb7f",
+  "rubricSha256": "211dce0282f30fe6b0d2fb59bd4eef7bf575625ee3c99b8cf8bbdab8cfa4175b",
   "counts": {
     "documents": 12,
     "development": 12,
