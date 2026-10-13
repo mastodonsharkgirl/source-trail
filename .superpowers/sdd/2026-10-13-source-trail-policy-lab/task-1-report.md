@@ -25,4 +25,4 @@ The fixture is explicitly fictional and contains no real credentials, tenant dat
 
 ## Commit
 
-`774a34d` — `feat: freeze policy lab fixture and contracts`.
+`56d7a5b` — `feat: freeze policy lab fixture and contracts`.
