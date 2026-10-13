@@ -23,7 +23,7 @@ describe('policy fixture contracts', () => {
   });
 
   it.each([
-    ['duplicate document IDs', (documents: any[]) => documents.map((document, index) => index === 1 ? { ...documents[0] } : document)],
+    ['duplicate document IDs', (documents: any[]) => documents.map((document, index) => index === 2 ? { ...documents[0] } : document)],
     ['unknown roles', (documents: any[]) => [{ ...documents[0], allowedRoles: ['intern'] }, ...documents.slice(1)]],
     ['invalid effective dates', (documents: any[]) => [{ ...documents[0], effectiveOn: '2026-02-30' }, ...documents.slice(1)]],
     ['cross-tenant supersession', (documents: any[]) => [{ ...documents[0], supersedes: ['harbour-travel-current'] }, ...documents.slice(1)]],
@@ -31,7 +31,9 @@ describe('policy fixture contracts', () => {
     ['more than twenty-four passages', (documents: any[]) => documents.map((document, index) => index === 0 ? { ...document, text: Array.from({ length: 14 }, () => 'A bounded policy passage.').join('\n\n') } : document)],
     ['more than sixteen KiB of text', (documents: any[]) => [{ ...documents[0], text: 'é'.repeat(8_193) }, ...documents.slice(1)]],
   ])('rejects %s', (_name, mutate) => {
-    expect(() => preparePolicyCorpus(mutate(baseDocuments()))).toThrow();
+    const attempt = () => preparePolicyCorpus(mutate(baseDocuments()));
+    if (_name === 'duplicate document IDs') expect(attempt).toThrow(/repeats the id/i);
+    else expect(attempt).toThrow();
   });
 
   it('rejects cyclic supersession and unavailable gold references', () => {
@@ -85,5 +87,17 @@ describe('policy fixture contracts', () => {
     const frozen = validateFixture(fixture);
     expect(Object.isFrozen(frozen.heldOut[0]!.input.principal)).toBe(true);
     expect(() => { (frozen.heldOut[0]!.requiredFacts as any).push('changed'); }).toThrow();
+  });
+
+  it('pins each held-out conflict to a distinct incompatible source pair', () => {
+    const cases = new Map(validateFixture(fixture).heldOut.map((policyCase) => [policyCase.caseId, policyCase]));
+    expect(cases.get('held-remote-days')?.requiredFacts).toEqual(['Remote work A requires only a manager to record the schedule.', 'Remote work B requires only a security reviewer to record the schedule.']);
+    expect(cases.get('held-remote-manager')?.requiredFacts).toEqual(['Remote work A requires a manager email before the first remote day.', 'Remote work B requires only a team-calendar entry and forbids a manager email.']);
+    expect(cases.get('held-remote-security')?.requiredFacts).toEqual(['Remote work A permits only a manager to approve the schedule.', 'Remote work B permits a manager or security reviewer to approve the schedule.']);
+    expect(cases.get('held-remote-status')?.requiredFacts).toEqual(['Remote work A permits only a manager to approve the schedule.', 'Remote work B permits a manager or security reviewer to approve the schedule.']);
+    for (const id of ['held-remote-days', 'held-remote-manager', 'held-remote-security', 'held-remote-status']) {
+      expect(cases.get(id)?.answerable).toBe(false);
+      expect(cases.get(id)?.expectedReason).toBe('conflicting_evidence');
+    }
   });
 });
