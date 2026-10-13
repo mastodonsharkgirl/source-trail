@@ -34,3 +34,24 @@ Archived the exact v1 fixture, rubric, and manifest under `docs/policy-lab/versi
 - RED: added contract tests failed because rubric arrays accepted non-strings and returned provenance was mutable; the exact UTF-8 hash test also exposed an initially incorrect independently supplied expected value.
 - GREEN: `npm test -- tests/policy-documents.test.ts` passed 13/13 after enforcing fixed `2026-10-13` dates, non-empty rubric strings, coherent group/reason/evidence combinations, cross-split intent-family exclusion, and deep immutability of documents, nested metadata, passages, cases, inputs, principals, and rubric arrays.
 - The old active manifest correctly refused a differing overwrite. After checking it matched the v1 archive, it was replaced by a new write-once active v2 manifest. `node scripts/freeze-policy-fixture.mjs --write` and `--check` passed with active fixture hash `2d742f0fad108ce0ec53da2fbf601d090052094499ab376e6ac562c948f3eb7f` and rubric hash `211dce0282f30fe6b0d2fb59bd4eef7bf575625ee3c99b8cf8bbdab8cfa4175b`.
+
+## Fix round 2 — exercised v3 evidence
+
+Archived v2 byte-for-byte under `docs/policy-lab/versions/policy-lab-fictional-v2/` before creating active `policy-lab-fictional-v3`; its new manifest check passed with fixture hash `91f6eea1ea3280db25e5b94d1fe4650669169f579f06a8790fbe63086dcc1417`.
+
+| Case | Distinct fact actually exercised |
+| --- | --- |
+| `dev-replaced-travel` | Current 500-credit receipt threshold (`travel-current:2`) |
+| `dev-current-travel` | Original booking reference within one day (`travel-current:3`) |
+| `held-travel-replaced` | Replaced three-day booking window (`travel-current:1`) |
+| `held-travel-archive` | Former 300-credit receipt threshold (`travel-current:2`) |
+| `held-travel-value` | Former two-working-day itinerary deadline (`travel-current:3`) |
+| `held-travel-source` | Manager-recorded standard-fare exception (`travel-current:4`) |
+| `dev-remote-conflict` | Two versus three weekly remote days (`remote-a:1`, `remote-b:1`) |
+| `dev-remote-resolution` | Two versus three named weekdays (`remote-a:2`, `remote-b:2`) |
+| `held-remote-days` | Manager versus security schedule recorder (`remote-a:1`, `remote-b:1`) |
+| `held-remote-manager` | Manager email versus team-calendar entry (`remote-a:3`, `remote-b:3`) |
+| `held-remote-security` | Manager-only versus security-reviewer approval (`remote-a:4`, `remote-b:4`) |
+| `held-remote-status` | Equal authority with no supersession tie-breaker (`remote-a:1`, `remote-b:1`) |
+
+Focused fixture tests passed 13/13, `npm run check` returned zero diagnostics, and `git diff --check` passed. No inference ran.

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "fixtureSha256": "2d742f0fad108ce0ec53da2fbf601d090052094499ab376e6ac562c948f3eb7f",
+  "rubricSha256": "211dce0282f30fe6b0d2fb59bd4eef7bf575625ee3c99b8cf8bbdab8cfa4175b",
+  "counts": {
+    "documents": 12,
+    "development": 12,
+    "heldOut": 24
+  }
+}
