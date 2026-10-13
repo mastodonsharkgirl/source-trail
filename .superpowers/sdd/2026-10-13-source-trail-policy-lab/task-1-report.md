@@ -55,3 +55,20 @@ Archived v2 byte-for-byte under `docs/policy-lab/versions/policy-lab-fictional-v
 | `held-remote-status` | Equal authority with no supersession tie-breaker (`remote-a:1`, `remote-b:1`) |
 
 Focused fixture tests passed 13/13, `npm run check` returned zero diagnostics, and `git diff --check` passed. No inference ran.
+
+## Review round 2 and final v5 evidence
+
+The preceding v3 fact map is superseded. It described compatible or directly answerable held-out remote-work questions and must not be used as current evidence. Version v3 was preserved under `docs/policy-lab/versions/policy-lab-fictional-v3/` before v4; v4 was then preserved under `docs/policy-lab/versions/policy-lab-fictional-v4/` before active `policy-lab-fictional-v5` was frozen. The active v5 manifest confirms fixture SHA-256 `1b9a7bc393b8987e993d8cbdbabc2ac2ec009e415cb5bb5f2a850b7dee954476`.
+
+| Current case | Exact supplied facts requiring abstention |
+| --- | --- |
+| `dev-remote-conflict` | Remote work A allows two weekly days; B allows three. |
+| `dev-remote-resolution` | A requires two named weekdays; B requires three. |
+| `held-remote-days` | A requires only a manager to record the schedule; B requires only a security reviewer. |
+| `held-remote-manager` | A requires a manager email before the first remote day; B requires only a team-calendar entry and forbids manager email. |
+| `held-remote-security` | A permits only a manager to approve the schedule; B permits a manager or security reviewer. |
+| `held-remote-status` | A permits only a manager to approve under remote work A; B permits only a security reviewer under remote work B. |
+
+The final four held-out cases are each non-answerable with `conflicting_evidence`; their source pairs are asserted exactly in `tests/policy-documents.test.ts`. Their fact intents are distinct from the two development conflict cases. The duplicate-ID test now preserves the obsolete supersession target while replacing a different document, and asserts the duplicate-specific `repeats the id` error. Rubric entries were converted to complete assessment statements; archived JSON uses the recursive LF `.gitattributes` rule.
+
+Final commands and results: `npm test -- tests/policy-documents.test.ts` passed 14/14; `node scripts/freeze-policy-fixture.mjs --check` confirmed the v5 manifest above; `git diff --check` passed; `npm run check` completed with zero errors, warnings, or hints. No inference or full QA ran in this report-only follow-up.
