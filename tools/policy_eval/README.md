@@ -24,8 +24,12 @@ py -3.14 -m compileall -q tools/policy_eval
 After the real experiment prerequisites are prepared and compute is available:
 
 ```powershell
+py -3.14 -m tools.policy_eval.preparation --development
+# Commit calibration, retrieval records and the initial protocol before generation.
 py -3.14 -m tools.policy_eval.runner --stage smoke --run-id policy-v7-smoke
 py -3.14 -m tools.policy_eval.runner --stage development --run-id policy-v7-dev-1
+py -3.14 -m tools.policy_eval.preparation --lock
+# Commit the exact locked protocol before opening the held-out sweep.
 py -3.14 -m tools.policy_eval.runner --stage held-out --run-id policy-v7-held
 ```
 
@@ -47,6 +51,10 @@ hashes the prompt and strict schema/contract source bytes. `calibration.json` mu
 bind the same fixture and threshold; its full bytes are bound by the protocol.
 Held-out additionally requires the calibration and locked protocol to match Git.
 The calibration procedure and measured evidence are supplied by later tasks.
+The preparation CLI uses only the 12 development inputs and the shared TypeScript
+threshold function. It records each candidate and outcome, actual encoder asset
+hashes/sizes, separate timings, runtime metadata and the source commit. It refuses
+automatic reruns of started calibration. Encoder CPU inference uses one thread.
 
 ## Fixed model boundary
 

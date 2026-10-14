@@ -464,11 +464,12 @@ def execute(stage, run_id, *, resume=False):
             by_id = {c["caseId"]: c for c in contexts["cases"]}
             settings = {**protocol, "protocolHash": protocol_hash, "runId": run_id}
             phase = "generation"
-            for row in allocation["rows"]:
+            for index, row in enumerate(allocation["rows"]):
                 if store.row_state(run_id, row) != "missing":
                     continue
                 record = store.start_row(run_id, row)
                 result = run_case(by_id[row["caseId"]], row["method"], settings, client, record=record)
+                print(f"{stage} {index + 1}/{len(allocation['rows'])} {row['caseId']} {row['method']}: {result['status']} ({result['runtime']['generatorCalls']} model call)", flush=True)
                 if result["status"] in ("runtime_error", "context_error", "interrupted"):
                     return 1  # Stop resource/contract failures; preserve every started row.
         except (OSError, ValueError, OllamaError, KeyboardInterrupt) as error:
