@@ -27,7 +27,7 @@ async function substitutePolicyData(
     const body = await response.text();
     const serialized = serializeProps(
       { data: replacement, base: prefix, selectedRun: pointer },
-      { displayName: "PolicyLab", hydrate: "load" },
+      { displayName: "PolicyLab", hydrate: "load", astroStaticSlot: true },
     )
       .replaceAll("&", "&amp;")
       .replaceAll('"', "&quot;");
@@ -78,7 +78,7 @@ test("actual partial-run fixture keeps missing generation and retained runtime f
   await page.goto(`${prefix}policy-lab/`);
   await expect(page.getByText(partial.runId, { exact: true })).toBeVisible();
   await page
-    .getByLabel("Saved case", { exact: true })
+    .getByRole("combobox", { name: "Saved case", exact: true })
     .selectOption("dev-orientation");
   await expect(
     page.getByRole("region", { name: "Lexical retrieval", exact: true }),
@@ -162,7 +162,7 @@ test("saved case changes, disclosures and export keep all methods together", asy
   const selected = records[1];
   await page.goto(`${prefix}policy-lab/`);
   await page
-    .getByLabel("Saved case", { exact: true })
+    .getByRole("combobox", { name: "Saved case", exact: true })
     .selectOption(selected.caseId);
   for (const method of ["lexical", "semantic", "full-context"] as const) {
     const panel = page.getByRole("region", {
@@ -198,10 +198,10 @@ test("filters never keep an answer from an excluded case", async ({ page }) => {
   for (const tenant of tenants) {
     for (const role of roles) {
       await page
-        .getByLabel("Fictional tenant", { exact: true })
+        .getByRole("combobox", { name: "Fictional tenant", exact: true })
         .selectOption(tenant);
       await page
-        .getByLabel("Recorded role", { exact: true })
+        .getByRole("combobox", { name: "Recorded role", exact: true })
         .selectOption(role);
       const matching = filterRecordedCases(report, {
         tenant,
@@ -217,7 +217,7 @@ test("filters never keep an answer from an excluded case", async ({ page }) => {
         await expect(page.locator(".policy-method")).toHaveCount(0);
       } else {
         const id = await page
-          .getByLabel("Saved case", { exact: true })
+          .getByRole("combobox", { name: "Saved case", exact: true })
           .inputValue();
         const record = matching.find((c) => c.caseId === id)!;
         expect(record).toBeDefined();

@@ -93,8 +93,10 @@ Lab adds `/policy-lab/`. Paths support `/tools/source-trail/` through the existi
 base setting. Policy styles are scoped to its page and reuse the paper/cobalt
 identity, native selects and disclosures. The only new transition is brief button
 colour feedback, disabled for reduced motion. No new rendering runtime was added.
-Its generated CSP permits same-origin connections. Actual response headers and
-rendered layouts still require root/prefix browser verification.
+Its generated CSP permits same-origin connections. Root and portfolio-prefix
+headers and recorded interactions passed browser verification. Policy screenshots
+at 320, 390, 768 and 1440 pixels were inspected; root/prefix captures were
+byte-identical at each width. Local response checks do not verify a deployment.
 
 ## Alternatives and unbuilt responsibilities
 

@@ -1,86 +1,60 @@
-# Policy Lab local handoff — implementation checkpoint
+# Policy Lab local handoff
 
-**The release is not complete.** Source, deterministic tests and a truthful
-pending page are prepared. Real Policy Lab evaluation and rendered root/prefix
-acceptance remain deferred under the shared-compute reservation. No further
-implementation approval is being requested by this handoff.
+Actual evaluation and local root/prefix browser acceptance are complete. Final whole-change review is pending on this candidate. The branch remains local and preserves Story Lab and the original retrieval desk.
 
-Source candidate: `80046b4649d3846e97b190b62135875c4c445a94` on
-`codex/source-trail-policy-evaluation`. The following handoff commit contains
-documentation only; obtain its exact ID with `git log -1 --oneline`. Original
-release/worktree: `fd3e4371fc0f7fa99dc1b6118a66134a20e177ba`, preserved.
+Actual source/evidence commit: 02e6e17 on codex/source-trail-policy-evaluation. The following candidate contains test acceptance repairs and final documentation. Its exact identity and review outcome will be recorded by a subsequent documentation-only handoff commit, avoiding a self-referential hash. Protected release/separate Story Lab worktree: fd3e4371fc0f7fa99dc1b6118a66134a20e177ba.
 
-## Current deliverables
+## Deliverables and exact evidence
 
-- [Approved specification](../superpowers/specs/2026-10-13-source-trail-policy-lab-design.md)
-  and [implementation plan](../superpowers/plans/2026-10-13-source-trail-policy-lab.md).
-- Frozen v7 fictional fixture, shared eligibility/selection, bounded local Python
-  runner, strict assessment/reporting and immutable selected-export support.
-- `/policy-lab/` source with recorded-only controls, source/raw-output inspection,
-  explicit export and an unavailable manifest until a real run is selected.
-- [Architecture](ARCHITECTURE.md), [evaluation status](EVALUATION.md),
-  [assessment guide](ASSESSMENT_GUIDE.md), [walkthrough](WALKTHROUGH.md),
-  [claim ledger](CLAIM_LEDGER.md) and [verification](VERIFICATION.md).
+- [Approved specification](../superpowers/specs/2026-10-13-source-trail-policy-lab-design.md) and [implementation plan](../superpowers/plans/2026-10-13-source-trail-policy-lab.md).
+- Frozen v7 corpus, shared eligibility/selection, real calibration, bounded runner, locked protocol, raw attempts, separate assessments and immutable reports; earlier failures retained.
+- Selected run policy-v7-held: 24 cases ×3 methods, 72 rows, 64 valid outputs, 5 gate skips, 3 rejected outputs. Report SHA-256:2b2f3eb6d19ea407cd5366ac0cd79b648b57af980f75f40d81cfd597988f00fc.
+- Recorded-only viewer with filters, exact source/raw inspection and case export; no automatic inference/download.
+- [Architecture](ARCHITECTURE.md), [evaluation](EVALUATION.md), [assessment guide](ASSESSMENT_GUIDE.md), [walkthrough](WALKTHROUGH.md), [claim ledger](CLAIM_LEDGER.md), [verification](VERIFICATION.md), [decisions](DECISIONS.md).
 
-## Routes and integration ownership
+## Routes and ownership
 
 | View | Root route | Portfolio-prefixed route |
 | --- | --- | --- |
-| Story Lab | `/` | `/tools/source-trail/` |
-| Original retrieval desk | `/baseline/` | `/tools/source-trail/baseline/` |
-| Policy Lab | `/policy-lab/` | `/tools/source-trail/policy-lab/` |
+| Story Lab | / | /tools/source-trail/ |
+| Original desk | /baseline/ | /tools/source-trail/baseline/ |
+| Policy Lab | /policy-lab/ | /tools/source-trail/policy-lab/ |
 
-Keep `SOURCE_TRAIL_BASE` consistent between build and serving. Generated page and
-worker headers remain scoped; Policy Lab uses same-origin-only connections. Its
-methodology lives at `evidence/policy-lab/methodology.txt`; selected reports will
-live beside it only after real export. Serve those paths beneath the same base.
-The pending page does not expose links to nonexistent reports.
+Keep SOURCE_TRAIL_BASE identical for build/serving. Generated page/Worker headers are scoped; Policy Lab connections are same-origin only. Methodology, selected pointer, reports and whitelisted raw evidence are under evidence/policy-lab/ beneath that base. methodology.txt and report.md have explicit plain-text headers. Do not silently broaden the route's CSP during integration.
 
-The portfolio integration owner controls deployment, header merging and any
-registry/copy update. Nothing here authorises publication or changes another
-repository. Root `domains.yaml`, portfolio/career files, DNS and the existing
-hosted baseline were not edited.
+The portfolio owner controls integration, header merging, deployment and registry updates. Root domains.yaml, portfolio/career files, DNS and the hosted baseline were not edited. Local checks do not revalidate or advance existing deployment state.
 
-## Reproduce the lightweight checks now
+## Check saved evidence without model calls
 
-From this repository, using its installed dependencies:
+From this repository with installed dependencies:
 
 ```powershell
 npm run policy:fixture
 npm run policy:preservation
+npm run policy:report:check
+npm run policy:export:check
 npm run policy:coherence
 npm run test:policy -- --maxWorkers=1
 py -3.14 -m unittest discover -s tools/policy_eval/tests -p 'test_*.py' -v
-npm run check
 ```
 
-These checks do not start actual models. Current observed results are in the
-verification record. Synthetic test outputs must never be promoted into product
-data. Keep all immutable attempts and budget files once real processing starts.
+These checks read saved evidence or synthetic tests. Do not rerun held-out to improve a score, retry started samples, overwrite attempts or change the frozen rubric.
 
-## Remaining sequence after compute becomes available
+## Local preview
 
-1. Complete the actual evaluation sequence in [EVALUATION.md](EVALUATION.md),
-   retaining failures and respecting the stage/budget limits.
-2. Produce and assess the selected real report; run `policy:report:check`,
-   `policy:export:check` and `policy:coherence`.
-3. Run root `npm run qa`, then a prefixed build and browser suite sequentially.
-   Restore the previous base environment value afterward. Use an isolated port
-   and `reuseExistingServer: false`; do not stop another project to free a port.
-4. Inspect actual screenshots/keyboard/export states and both preserved journeys.
-   Case-interaction browser tests currently skip honestly because no real selected
-   run exists. A skip is an unmet acceptance criterion, not a pass.
-5. Run fresh baseline drift verification, final whole-change review and preservation
-   checks. Record the final source/evidence commit and remaining limitations.
+For root paths (retain the prior environment setting if needed):
 
-Do not rerun held-out evaluation to improve a score or retry a started sample.
-If the runtime fails, retain an explicitly partial report and its failure reason.
+```powershell
+$env:SOURCE_TRAIL_BASE='/'
+npm run build
+$env:PORT='4734'
+node scripts/serve.mjs
+```
+
+Open http://127.0.0.1:4734/policy-lab/. Story Lab and the desk use the same port. For integration review build/serve with SOURCE_TRAIL_BASE='/tools/source-trail/' and open its prefixed route. Check the port is free; do not stop another workflow to claim it. Acceptance suites used port 4733 with server reuse disabled and leave no acceptance server running.
+
+Root QA passed 73 unit tests, zero Astro diagnostics and 36 browser tests; the prefixed build passed another 36. Fresh baseline drift remains threshold 0.577271/Recall@3=0.923. Mobile/tablet/desktop inspection and all 13 protected blobs passed. See verification for scope and retained initial failures.
 
 ## Proposed portfolio/registry wording
 
-Current truthful wording is in [CLAIM_LEDGER.md](CLAIM_LEDGER.md). A registry may
-describe this as “local Policy Lab implementation; real evaluation/browser QA
-pending,” but the change is only proposed here for its owner. Preserve the original
-Story Lab and retrieval identities, existing release evidence and zero new
-deployment/custom-domain claims. No professional-experience duration or customer
-impact claim is inferred from this project.
+Use qualified copy in [CLAIM_LEDGER.md](CLAIM_LEDGER.md). Proposed registry status: “local Policy Lab evaluated and browser-verified; integration/publication not performed.” This proposal does not write another repository. Preserve original identities/historical release evidence. No employment duration, customers, adoption, production security or business impact is inferred.

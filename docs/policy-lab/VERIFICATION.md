@@ -1,53 +1,44 @@
-# Local verification checkpoint
+# Local verification record
 
-Source candidate: `80046b4649d3846e97b190b62135875c4c445a94` on
-`codex/source-trail-policy-evaluation`. Recorded 15 October 2026. This document
-separates source/test evidence from remaining release requirements.
+Recorded 15 October 2026 on codex/source-trail-policy-evaluation. Actual evidence is committed at 02e6e17; final candidate and review identities are recorded in the handoff/review record. These are local results.
 
 | Check | Observed result |
 | --- | --- |
-| `npm run test:policy -- --maxWorkers=1` | Exit 0; 48 tests in four files passed. No real encoder or model call. |
-| `py -3.14 -m unittest discover -s tools/policy_eval/tests -p 'test_*.py' -v` | Exit 0; 58 synthetic Python tests passed in one process. |
-| `npm run check` | Exit 0; 48 files, zero errors, warnings or hints. |
-| `py -3.14 -m compileall -q tools/policy_eval` | Passed after report fixes. |
-| `npm run policy:fixture` | Exit 0; frozen v7 fixture/rubric manifest confirmed. |
-| `npm run policy:preservation` | Exit 0; all 13 protected Git blobs match release `fd3e4371fc0f7fa99dc1b6118a66134a20e177ba`. |
-| `npm run policy:coherence` | Exit 0; pending manifest and absence of stale selected artifacts confirmed. |
-| Git attributes for run/export paths | `text: unset`; exact evidence bytes survive checkout line-ending settings. |
-| Source scan of new viewer entry/components | No inference, network, persistent-storage or HTML-execution APIs found. Source check only. |
-| Separate Story Lab worktree | Clean; remains at `fd3e437` on its Story Lab branch. |
+| Actual encoder/model preflight | Six MiniLM files hashed from bytes, 37,974,266bytes; installed Qwen digest/template and Ollama metadata checked before/after generation. |
+| Actual generation/assessment | 108 calls across stages;72 held rows: 64 valid,5 gates, 3 rejected. All108 emitted responses separately agent-assessed. |
+| npm run test:policy -- --maxWorkers=1 | Exit 0;51 tests. Synthetic transport/temp-file tests are not model measurements. |
+| Python unittest discovery | Exit 0;61 tests, including actual-calibration-byte binding regression; synthetic test records. |
+| Root npm run qa | Exit 0; Astro 49 files/zero diagnostics, 73 unit tests in 11 files, build/header audit,36 browser tests (40.0s). |
+| Prefixed build and npm run test:e2e | Both exit0; 36 browser tests (40.6s) under /tools/source-trail/. |
+| policy:fixture | Exit 0; v7 fixture/rubric hashes match frozen manifest. |
+| policy:report:check, policy:export:check, policy:coherence | Exit 0 against actual selected report, raw records, calibration and immutable selected identity. |
+| policy:preservation | Exit 0; all 13 protected Git blobs match fd3e4371fc0f7fa99dc1b6118a66134a20e177ba. |
+| Original npm run evaluate -- --check | Exit 0; threshold 0.577271 and held semantic ungated Recall@3=0.923 unchanged; actual encoder check, no rewrite. |
+| Separate Story Lab worktree | Clean at fd3e437 on codex/source-trail-story-lab; no edits there. |
+| Evidence line endings | Run/export Git attributes unset text; exact snapshot bytes retained. |
 
-The last source changes after the full focused suites were Git attributes and
-documentation. Coherence was rerun after attributes changed. Original nav diffs
-contain only Policy Lab links; visual fit has not yet been inspected.
+Full browser runs were sequential, one worker, owned port 4733, reuseExistingServer:false. Prior base environment values were restored. No unrelated process was stopped. No renewed large Story Lab GPU download was needed. Browser results include the original actual MiniLM flow and recorded Story Lab source/history/export journeys.
 
-## Review record
+## Browser behavior and rendered inspection
 
-The serial read-only reviewer initially found three Important reporting issues:
-lost prepared retrieval for missing generation, transferable assessments, and
-incomplete saved-model/template binding. Regression tests demonstrated the issues;
-fixes passed the tests. The subsequent source review confirmed all three addressed.
+Policy checks cover all three rows changing together, all tenant/role filter combinations, empty results, keyboard disclosures/skip focus, exact case-download readback, rejection/partial data and corrupt-data fail-closed state. Error tests alter test responses only, never product files. Requests were watched for model/Worker/tokenizer/loopback targets; storage hooks fail on visitor writes. New-route same-origin CSP and plain-text report headers passed at both bases. Local checks do not verify a host.
 
-The viewer review found one Important gap: selected snapshot identity was not
-bound to the bundled page and case download. A local build/page coherence check,
-explicit selected hash in downloads and mismatch regressions address it. Those
-fixes passed tests and type checking; they have not had independent re-review.
-No Critical finding was reported in these scoped reviews.
+Policy screenshots at 320/390/768/1440 were inspected. Root/prefix image bytes were identical at each width. Mobile/tablet panels stack; desktop uses three columns. Visible labels separate accepted, rejected and assessed output. The narrow metric table intentionally scrolls inside a focusable region; no document-level overflow. Captures show a keyboard-focused skip link; its blue overlay is a focus state. Native controls and reduced-motion state stayed usable. No new ambient animation was added.
 
-## Unperformed acceptance checks
+Prefixed Story Lab inspected at 390/768/1440 with saved answer/source inspection: dark teal identity, responsive idea/evidence/answer layout and explicit contradiction review remain legible. Prefixed retrieval desk inspected at 320/768/1440 after text matching: current/archive labels, highlighted source and export remain visible; the mobile pack collapses and results stack. No substantive visual defect observed. This is author visual judgment, not a usability study.
 
-- Actual installed-asset hashing, MiniLM development calibration, Qwen smoke and
-  development/held-out generation, real source-support assessment and report export.
-- `policy:report:check` and `policy:export:check` against an actual selected run.
-  There is no pointer to check yet; a pending-manifest check is not a substitute.
-- `npm run qa`, fresh root/prefix builds and Playwright suites, including the
-  original recorded Story Lab journey and retrieval desk.
-- Actual response CSP, browser network/storage behavior, export download readback,
-  keyboard use, 320/390/768/1440 layouts and reduced-motion visual inspection.
-- Fresh original `npm run evaluate -- --check`, which performs real embeddings.
-- Final whole-change review including raw evidence and screenshots.
+Ignored local artifacts: output/policy-qa-root.log, output/policy-build-prefixed.log, output/policy-browser-prefixed.log, output/policy-baseline-drift.log, both browser-results JSONs and output/policy-visual-{root,prefixed}/. Test results retain prefixed Story/desk screenshots. These are local logs/captures, not invented screenshots.
 
-These remain deferred under the existing shared-compute reservation. No such
-work was silently run, and no screenshot, deployment or performance result is
-claimed. Local commits exist; push, CI, hosted preview and custom-domain actions
-were not performed by this workstream.
+## Retained failures and fixes
+
+Initial development length-stopped at 256 tokens; raw output and 31 never-started rows remain. The sole allowed prompt change requested short answers/quotes; the second run completed and was locked before held-out. No held-out rerun/tuning occurred.
+
+Scoped reviews found prepared-context loss, transferable assessments, saved-model binding gaps and missing selected-export identity. Failing regressions preceded fixes. A later source review confirmed the first three addressed; export fixes were verified by regressions. Self-review additionally bound actual calibration bytes and the retrieval sidecar: RED observed, then the 61-test Python suite passed.
+
+Initial acceptance exposed missing Astro fixture slot metadata, Node24 JSON import attributes and a label locator including nested select text. Test-only repairs use existing serialization/JSON-read patterns and semantic combobox locators; assertions retained. Full root/prefix suites subsequently passed. Initial failure logs/traces remain under output/policy-root-initial-failures/ and the initial QA log.
+
+## Final review and external limits
+
+Fresh whole-change read-only review is pending on this candidate; findings and any regression-tested fixes will be appended before closure. Historical partial-status ledger entries are not current claims. See [decisions](DECISIONS.md) for deviations and their costs.
+
+Independent human answer assessment, broad source-injection testing, physical mobile GPU validation, broad device timing/memory benchmarks and hosted headers are unperformed. Push, CI, deployment, DNS, portfolio/registry writes and custom-domain changes were not performed by this workstream.

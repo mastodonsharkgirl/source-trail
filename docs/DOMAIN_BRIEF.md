@@ -8,11 +8,12 @@ The additional Policy Lab route at `/policy-lab/` presents a recorded real local
 evaluation: a fictional policy corpus, shared eligibility/selection, bounded
 Python/Ollama runner, assessment/reporting and recorded-only evidence viewer.
 The selected run is `policy-v7-held`, with all72 expected case/method rows,
-including5 gate skips and3 rejected outputs. Root/prefix browser acceptance is
-being completed. Preserve the original Story Lab/retrieval identity and historical
+including5 gate skips and3 rejected outputs. Root and portfolio-prefix browser
+checks passed, with rendered mobile, tablet and desktop inspection. Preserve the
+original Story Lab/retrieval identity and historical
 measurements. See `docs/policy-lab/PORTFOLIO_HANDOFF.md` and
 `docs/policy-lab/VERIFICATION.md` for
-the remaining acceptance work; public fictional filtering is not production
+the local verification and review status; public fictional filtering is not production
 authorisation.
 
 Astro static output, React interaction islands, one lazy decorative Three.js horizon, a dedicated WebLLM Worker and original Transformers.js/ONNX WASM Worker. No accounts, uploads, analytics, paid inference, remote user-text processing or persistent visitor-content storage. Explicit export is local; public model caches consume disk.

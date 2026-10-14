@@ -15,8 +15,9 @@ raw failures, gate decisions and source-support assessments. Assessed supported
 yield is 8/14 lexical, 5/14 semantic and 6/14 full-context answerable cases.
 These are main-agent judgments on a small authored corpus, not independent
 validation or enterprise accuracy. Opening the viewer starts no inference.
-The existing Story Lab and original retrieval records remain separate. Root/prefix
-browser acceptance is being completed; see the [local handoff](docs/policy-lab/PORTFOLIO_HANDOFF.md)
+The existing Story Lab and original retrieval records remain separate. Root and
+portfolio-prefix builds each passed 36 browser tests, with rendered inspection;
+see the [local handoff](docs/policy-lab/PORTFOLIO_HANDOFF.md)
 and [verification record](docs/policy-lab/VERIFICATION.md) for the actual status.
 
 Node24.11–25 and npm:

@@ -1,36 +1,28 @@
 # Policy Lab claim ledger
 
-Checkpoint: 15 October 2026. Source candidate
-`80046b4649d3846e97b190b62135875c4c445a94`. This is a local implementation
-checkpoint, not a release accepted through model and browser verification.
+Recorded 15 October 2026. Actual evidence source: 02e6e17; subsequent test/documentation changes and final review identities are recorded in [the handoff](PORTFOLIO_HANDOFF.md) and [verification](VERIFICATION.md).
 
-| Claim | Evidence | Current status and limit |
+| Claim | Evidence | Status and limit |
 | --- | --- | --- |
-| A separate Policy Lab scenario is specified | Approved specification and implementation plan under `docs/superpowers/` | Specified; user approved continuation. |
-| It preserves the original retrieval and Story Lab evidence/core | `scripts/check-policy-preservation.mjs`; 13 protected Git blobs match `fd3e437` | Verified locally. Small navigation additions still need rendered regression QA. |
-| Eligibility precedes ranking/context assembly | `src/policy/eligibility.ts`, `retrieval.ts`; focused tests | Verified with deterministic inputs. Public fictional filtering is not production authorisation. |
-| Real semantic retrieval and local Qwen comparison are measured | Actual calibration/protocol/run files | Not done. No Policy Lab model-quality or performance score may be claimed. |
-| The runner retains failures and prevents automatic retries | `tools/policy_eval/runner.py` and synthetic tests | Tested contract/persistence behavior; actual runtime compatibility is pending. |
-| Reports retain expected denominators and prepared context | `report.py`; missing/interrupted/failed-row tests | Tested with synthetic records, not a completed real report. |
-| Assessments cannot transfer between differing contexts | `assessment.py`; run/case/method/context/output/rubric regressions | Tested. Agent assessment is not independent human validation. |
-| The viewer reads stored cases and renders text literally | `viewer.ts`, React components; 8 viewer unit tests | Source and server-render tests pass. Actual browser interaction/appearance remain unverified. |
-| Case downloads identify their selected snapshot | Build coherence check, required SelectedRun and export regressions | Local consistency tests pass. Real browser download readback is pending. |
-| Current page has no measured results | Unavailable manifest; absent run/calibration/protocol/selection files | Verified locally; no synthetic test response appears in product data. |
-| Output disclosure resistance is measured | No restricted-only sentinel exists in v7 | Not applicable. The public marker cannot prove disclosure or its absence. |
-| Production readiness, customer adoption or business impact | No evidence in this experiment | Not claimed. |
+| A separate local Policy Lab exists | Approved spec/plan, page source, root/prefix tests | Implemented and locally verified; no publication. |
+| Story Lab and the retrieval desk are preserved | 13 protected Git blobs; full browser suites; baseline drift check | Protected bytes unchanged; navigation inspected. Separate Story Lab worktree clean at fd3e437. |
+| Eligibility precedes selection | Shared modules and deterministic tests | Explicit role, tenant, date and full-graph supersession. Fictional filtering is not production authorisation. |
+| Real semantic retrieval was measured | Actual asset hashes, development retrieval, calibration, held contexts | Pinned MiniLM CPU inference; threshold 0.5231281314904553 is specific to this fixture. |
+| Real local Qwen generation was compared | Four immutable run directories and locked protocol | 108 calls total; one held-out sweep, 72 expected rows. Installed metadata reports 2.0B/Q4_K_M despite the qwen3:1.7b tag. |
+| Supported yield is 8/14 lexical, 5/14 semantic, 6/14 full context | Selected report and context-bound assessments | GPT-6 main-agent judgments on 14 answerable cases; not independent or human validation. Strict actor/deadline judgments are disclosed. |
+| Failures remain visible | All raw stages and reports | Held: 64 valid outputs, 5 gates, 3 rejected outputs. Initial dev length-stop and 31 never-started rows retained. Completeness is not success. |
+| Assessments bind exact saved contexts | Schema/regressions and actual records | Run/case/method/context/output/rubric identities bound; judgment can still be imperfect. |
+| Viewer uses recorded evidence only | Browser request/storage checks, static imports, CSP | No model request/download or visitor-storage write observed in Policy Lab. Legacy optional models retain separate deliberate controls. |
+| Exports identify the selected snapshot | Coherence gate and exact download readback | Bundled/public/local report bound to selected hash; local integrity, not a trust service. |
+| Methods solved conflicts reliably | Actual conflict group | Not claimed: useful conflict abstention 0/4 for every method. |
+| Broad source-injection/disclosure resistance is measured | Warning-only source; no restricted-only sentinel | Not established. Unsafe user requests are assessed separately; public marker presence is not proof. |
+| Root/prefix layouts and interactions work locally | 36 browser tests per build, inspected screenshots | Automated Chromium and author visual inspection; not broad-device, physical-mobile-GPU or hosted-header verification. |
+| Production readiness, adoption or business impact | No customer/production evidence | Not claimed. |
 
-Implementation and documentation were generated/edited with Codex. Saran supplied
-the product direction, local-only scope and approval to continue. Do not turn
-assisted implementation into an unsupported claim of independently writing every
-component, completing learning exercises, customer discovery or production use.
+Implementation, documentation and assessments were generated/edited with Codex. Saran supplied direction, local-only scope and approvals. Do not describe assisted implementation as independently writing every component, completed learning exercises, customer discovery or production use.
 
-## Suitable wording at this checkpoint
+## Evidence-supported portfolio wording
 
-“Building a local policy-evidence experiment that compares lexical retrieval,
-semantic retrieval and full eligible context. The fixture, bounded runner,
-reporting checks and recorded viewer are implemented and locally unit-tested;
-real model evaluation and browser acceptance are still pending.”
+“Built an AI-assisted local policy-evidence experiment comparing lexical retrieval, semantic retrieval and full eligible context. Retained raw outputs and failures, reviewed answers against their exact supplied sources, and created a recorded viewer for tracing the same question across all three methods. In this small fictional held-out set, assessed supported yield was8/14,5/14 and6/14 respectively; none of the methods produced useful conflict abstentions.”
 
-After real evaluation, replace the pending clause with the actual retained
-results and limitations. Do not promise a target score, security guarantee,
-latency improvement or enterprise adoption before evidence exists.
+Keep sample size and assessment qualifier alongside results. Do not infer general accuracy, latency improvement, security guarantees, customers or impact.
