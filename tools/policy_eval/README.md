@@ -99,8 +99,10 @@ py -3.14 -m tools.policy_eval.runner --stage held-out --run-id policy-v7-held --
 
 Explicit resume completes only preallocated **never-started** rows. It cannot
 retry a started row, change its configuration, or overwrite any record. Saved
-contexts have a separate content hash and are revalidated against case identities
-on resume. A resource/contract failure stops the current batch. Pipeline failure
+allocations bind the exact source commit; resume also verifies saved protocol
+bytes and executable/runtime provenance. Saved contexts have a separate content
+hash and are revalidated against canonical frozen passage/document identities,
+exact spans, bytes and metadata on resume. A resource/contract failure stops the current batch. Pipeline failure
 records retain phase, error and observed attempt count; no automatic retry occurs.
 Do not remove budget or partial-run files to obtain another attempt.
 

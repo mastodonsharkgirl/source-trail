@@ -1,11 +1,18 @@
 """Explicitly synthetic fixtures: never evaluation evidence."""
 import copy
+import hashlib
 import json
 
 DIGEST = "a" * 64
 INPUT = {"query": "What is the fictional rule?", "principal": {"tenant": "cedar", "role": "employee"}, "asOf": "2026-10-13"}
-PASSAGE = {"id": "synthetic-current-p1", "sourceId": "synthetic-current", "title": "Synthetic fixture", "version": "1", "text": "Use the synthetic blue form.", "start": 0, "end": 28, "documentSha256": "b" * 64, "tenant": "cedar", "allowedRoles": ["employee"], "policyKey": "form", "authority": "owner", "status": "current", "effectiveOn": "2026-01-01", "expiresOn": None, "supersedes": []}
+PASSAGE = {"id": "synthetic-current:1", "sourceId": "synthetic-current", "title": "Synthetic fixture", "version": "1", "text": "Use the synthetic blue form.", "start": 0, "end": 28, "documentSha256": hashlib.sha256(b"Use the synthetic blue form.").hexdigest(), "tenant": "cedar", "allowedRoles": ["employee"], "policyKey": "form", "authority": "owner", "status": "current", "effectiveOn": "2026-01-01", "expiresOn": None, "supersedes": []}
 ANSWER = {"decision": "answer", "answer": "Use the synthetic blue form.", "reasonCode": "supported", "citations": [{"passageId": PASSAGE["id"], "quote": PASSAGE["text"]}]}
+
+
+def fixture():
+    doc = {k: v for k, v in PASSAGE.items() if k not in ("sourceId", "start", "end", "documentSha256")}
+    doc["id"] = PASSAGE["sourceId"]
+    return {"documents": [copy.deepcopy(doc)]}
 
 
 def prepared():

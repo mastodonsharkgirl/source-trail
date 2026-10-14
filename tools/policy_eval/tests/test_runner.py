@@ -6,7 +6,7 @@ import sys
 import tempfile
 import unittest
 
-from tools.policy_eval.tests.helpers import DIGEST, INPUT, PASSAGE, SyntheticTransport, prepared
+from tools.policy_eval.tests.helpers import DIGEST, INPUT, PASSAGE, SyntheticTransport, prepared, fixture
 
 PROTOCOL = {"runId": "synthetic-run", "fixtureHash": "f" * 64, "protocolHash": "e" * 64, "modelDigest": DIGEST}
 
@@ -112,14 +112,14 @@ class RunnerTests(unittest.TestCase):
             path = Path(temp) / "contexts.json"
             contexts = {"schemaVersion": 1, "fixtureHash": "f" * 64, "cases": [prepared()], "encoder": {"synthetic": True}}
             self.runner.save_contexts(path, contexts)
-            self.assertEqual(self.runner.read_contexts(path, "f" * 64, [{"caseId": "synthetic-case", "input": INPUT}]), contexts)
+            self.assertEqual(self.runner.read_contexts(path, "f" * 64, [{"caseId": "synthetic-case", "input": INPUT}], fixture()), contexts)
             with self.assertRaises(ValueError):
-                self.runner.read_contexts(path, "c" * 64, [{"caseId": "synthetic-case", "input": INPUT}])
+                self.runner.read_contexts(path, "c" * 64, [{"caseId": "synthetic-case", "input": INPUT}], fixture())
             altered = copy.deepcopy(contexts)
             altered["cases"][0]["input"]["query"] = "altered"
             path.write_bytes(json.dumps(altered).encode())
             with self.assertRaises(ValueError):
-                self.runner.read_contexts(path, "f" * 64, [{"caseId": "synthetic-case", "input": INPUT}])
+                self.runner.read_contexts(path, "f" * 64, [{"caseId": "synthetic-case", "input": INPUT}], fixture())
 
     def test_stage_order_requires_successful_smoke_and_finished_development(self):
         with tempfile.TemporaryDirectory() as temp, self.runner.RunStore(Path(temp)) as store:
@@ -157,9 +157,52 @@ class RunnerTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 self.runner.validate_run_id(value)
 
-    def allocate(self, store, stage, run_id, protocol="e" * 64, resume=False):
+    def allocate(self, store, stage, run_id, protocol="e" * 64, resume=False, source="a" * 40):
         ids = [f"synthetic-{i}" for i in range(24 if stage == "held-out" else 12)]
-        return store.allocate(stage, run_id, "synthetic-fixture-v1", "f" * 64, protocol, ids, resume=resume)
+        return store.allocate(stage, run_id, "synthetic-fixture-v1", "f" * 64, protocol, ids, source_commit=source, resume=resume)
+
+    def test_resume_refuses_different_source_commit_or_saved_protocol_bytes(self):
+        protocol_bytes = b'{"synthetic":true}\n'
+        import hashlib
+        digest = hashlib.sha256(protocol_bytes).hexdigest()
+        with tempfile.TemporaryDirectory() as temp, self.runner.RunStore(Path(temp)) as store:
+            allocation = self.allocate(store, "smoke", "smoke", protocol=digest)
+            provenance = {"sourceCommit": "a" * 40, "sourceDirty": False, "createdAt": "synthetic"}
+            self.runner.bind_run_metadata(Path(temp) / "smoke", protocol_bytes, provenance, allocation)
+            with self.assertRaises(ValueError):
+                self.allocate(store, "smoke", "smoke", protocol=digest, source="b" * 40, resume=True)
+            (Path(temp) / "smoke" / "protocol.json").write_bytes(b"changed")
+            with self.assertRaises(ValueError):
+                self.runner.bind_run_metadata(Path(temp) / "smoke", protocol_bytes, provenance, allocation)
+
+    def test_forged_rank_exclusion_and_rehashed_saved_sources_are_rejected(self):
+        cases = [{"caseId": "synthetic-case", "input": INPUT}]
+        for mutate in [lambda s: s["ranked"][0].update(id="invented:1"), lambda s: s["excluded"].append({"id": "invented", "reason": "role"}), lambda s: s["supplied"][0].update(documentSha256="e" * 64)]:
+            contexts = {"schemaVersion": 1, "fixtureHash": "f" * 64, "cases": [prepared()], "encoder": {"synthetic": True}}
+            mutate(contexts["cases"][0]["selections"][0])
+            invoke = lambda _: json.dumps(contexts).encode()
+            with self.assertRaises(ValueError):
+                self.runner.prepare_cases(fixture(), cases, "f" * 64, .5, invoke=invoke)
+            with tempfile.TemporaryDirectory() as temp:
+                path = Path(temp) / "contexts.json"
+                self.runner.save_contexts(path, contexts)  # A matching sidecar alone is insufficient.
+                with self.assertRaises(ValueError):
+                    self.runner.read_contexts(path, "f" * 64, cases, fixture())
+
+    def test_canonical_identity_retains_repeated_crlf_unicode_source_spans(self):
+        source = fixture()
+        source["documents"][0]["text"] = "  é🙂\r\n\r\né🙂  "
+        passages = self.runner.canonical_passages(source)
+        first, second = passages["synthetic-current:1"], passages["synthetic-current:2"]
+        self.assertEqual((first["start"], first["end"], first["text"]), (2, 5, "é🙂"))
+        self.assertEqual((second["start"], second["end"], second["text"]), (9, 12, "é🙂"))
+
+    def test_development_adjustment_has_auditable_type_and_sequence(self):
+        self.runner.validate_development_adjustment(None, 0)
+        self.runner.validate_development_adjustment("Development case X showed missing context; threshold changed.", 1)
+        for value, count in [("unsolicited adjustment", 0), (True, 1), (1, 1), ({"note": "vague"}, 1), (None, 1), ("  ", 1)]:
+            with self.subTest(value=value, count=count), self.assertRaises(ValueError):
+                self.runner.validate_development_adjustment(value, count)
 
     def test_persistent_allocation_limits_span_protocol_variants(self):
         with tempfile.TemporaryDirectory() as temp:
