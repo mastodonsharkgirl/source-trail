@@ -1,3 +1,6 @@
 docs/superpowers/specs/source-trail-fixture.json -text
 docs/story-lab/fixture.json -text
 docs/policy-lab/**/*.json text eol=lf
+docs/policy-lab/runs/** -text
+src/data/policy-evaluation.json -text
+public/evidence/policy-lab/** -text
