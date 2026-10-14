@@ -577,9 +577,31 @@ export function validateRecordedReport(value: unknown): RunReport {
   return value as RunReport;
 }
 
+export interface SelectedRun {
+  schemaVersion: 1;
+  runId: string;
+  reportSha256: string;
+}
+
+function validateSelectedRun(value: unknown, runId: string): SelectedRun {
+  const pointer = object(value);
+  requireValue(
+    pointer.schemaVersion === 1 &&
+      pointer.runId === runId &&
+      Object.keys(pointer).sort().join(",") ===
+        "reportSha256,runId,schemaVersion",
+    "selected report identity mismatch",
+  );
+  hash(pointer.reportSha256);
+  return pointer as unknown as SelectedRun;
+}
+
 export function validatePolicyData(
   value: unknown,
-): { evidenceKind: "recorded"; report: RunReport } | PendingEvaluation {
+  selectedRun: SelectedRun | null = null,
+):
+  | { evidenceKind: "recorded"; report: RunReport; selectedRun: SelectedRun }
+  | PendingEvaluation {
   const data = object(value);
   if ("evidenceKind" in data) {
     requireValue(
@@ -590,9 +612,18 @@ export function validatePolicyData(
       "invalid pending manifest",
     );
     text(data.reason);
+    requireValue(
+      selectedRun === null,
+      "pending manifest has a selected report",
+    );
     return data as unknown as PendingEvaluation;
   }
-  return { evidenceKind: "recorded", report: validateRecordedReport(value) };
+  const report = validateRecordedReport(value);
+  return {
+    evidenceKind: "recorded",
+    report,
+    selectedRun: validateSelectedRun(selectedRun, report.runId),
+  };
 }
 
 export function filterRecordedCases(
@@ -616,7 +647,12 @@ export function filterRecordedCases(
     );
 }
 
-export function buildCaseExport(report: RunReport, caseId: string): string {
+export function buildCaseExport(
+  report: RunReport,
+  caseId: string,
+  selectedRun: SelectedRun,
+): string {
+  const pointer = validateSelectedRun(selectedRun, report.runId);
   const record = filterRecordedCases(report, {
     tenant: null,
     role: null,
@@ -629,6 +665,7 @@ export function buildCaseExport(report: RunReport, caseId: string): string {
         schemaVersion: 1,
         label: "Recorded local evaluation — fictional data",
         runId: report.runId,
+        selectedRun: pointer,
         split: report.split,
         provenance: report.provenance,
         record,

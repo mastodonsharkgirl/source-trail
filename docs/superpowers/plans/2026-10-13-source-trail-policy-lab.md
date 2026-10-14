@@ -277,7 +277,7 @@ present in allowed input. Reject such sentinel contamination when freezing data.
 **Files:** Policy-interface row in file map. Extend CSP/evidence copy rules only for this route and its generated report.
 
 **Interfaces:**
-- `viewer.ts`: `validateRecordedReport(value: unknown): RunReport`, `filterRecordedCases(report: RunReport, filters: { tenant: string | null; role: string | null; group: string | null }): RecordedCase[]`, and `buildCaseExport(report: RunReport, caseId: string): string`.
+- `viewer.ts`: `validateRecordedReport(value: unknown): RunReport`, `filterRecordedCases(report: RunReport, filters: { tenant: string | null; role: string | null; group: string | null }): RecordedCase[]`, and `buildCaseExport(report: RunReport, caseId: string, selectedRun: SelectedRun): string`. `SelectedRun` carries schemaVersion, runId and reportSha256; the build verifies exact bundled/public/snapshot bytes and pointer identity before passing it to the viewer.
 - `RecordedCase = { caseId: string; input: QueryInput; rows: RunRow[] }`, grouped by one immutable input identity; missing method rows remain explicit.
 - `PolicyLab({ report }: { report: RunReport })`; `CaseComparison({ record }: { record: RecordedCase })`; `SourceInspection({ row }: { row: RunRow })`. No inference import or endpoint setting is exposed to these components.
 

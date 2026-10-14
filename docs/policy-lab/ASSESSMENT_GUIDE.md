@@ -119,6 +119,7 @@ Checks recompute the report from raw records and compare the selected snapshot:
 npm run policy:report:check
 py -3.14 -m tools.policy_eval.export
 npm run policy:export:check
+npm run policy:coherence
 ```
 
 Export writes only local browser data and public evidence files inside this
@@ -128,3 +129,7 @@ into the recorded page. No selected pointer or generated results have been
 created at this implementation stage. The browser data file currently contains
 only an explicit unavailable manifest. Real exports will replace that manifest
 and place the selected report/evidence under `public/evidence/policy-lab/`.
+The build also runs the local coherence check: bundled/public report bytes,
+selected run ID/hash, local pointer and immutable snapshot must agree. The
+current unavailable manifest requires no stale selected report artifacts.
+Case downloads carry the selected report's SHA-256 alongside their exact rows.

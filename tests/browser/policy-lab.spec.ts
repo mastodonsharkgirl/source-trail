@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import data from "../../src/data/policy-evaluation.json";
+import { checkPolicyExport } from "../../scripts/check-policy-export.mjs";
 import {
   buildCaseExport,
   filterRecordedCases,
@@ -9,7 +10,8 @@ import {
 } from "../../src/policy/viewer";
 
 const prefix = process.env.SOURCE_TRAIL_BASE || "/";
-const verified = validatePolicyData(data);
+const selectedRun = checkPolicyExport();
+const verified = validatePolicyData(data, selectedRun);
 const report = verified.evidenceKind === "recorded" ? verified.report : null;
 
 test("Policy Lab displays its true evidence state without inference or persistent writes", async ({
@@ -106,7 +108,7 @@ test("saved case changes, disclosures and export keep all methods together", asy
   await page.getByRole("button", { name: "Export this recorded case" }).click();
   const download = await downloading;
   expect(await readFile((await download.path())!, "utf8")).toBe(
-    buildCaseExport(report, selected.caseId),
+    buildCaseExport(report, selected.caseId, selectedRun!),
   );
 });
 

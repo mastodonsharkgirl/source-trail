@@ -8,9 +8,17 @@ import {
   METHODS,
   validatePolicyData,
 } from "./viewer";
-import type { CaseFilters, RunReport } from "./viewer";
+import type { CaseFilters, RunReport, SelectedRun } from "./viewer";
 
-function RecordedViewer({ report, base }: { report: RunReport; base: string }) {
+function RecordedViewer({
+  report,
+  base,
+  selectedRun,
+}: {
+  report: RunReport;
+  base: string;
+  selectedRun: SelectedRun;
+}) {
   const [filters, setFilters] = useState<CaseFilters>({
     tenant: null,
     role: null,
@@ -32,7 +40,7 @@ function RecordedViewer({ report, base }: { report: RunReport; base: string }) {
     if (!selected) return;
     try {
       const url = URL.createObjectURL(
-        new Blob([buildCaseExport(report, selected.caseId)], {
+        new Blob([buildCaseExport(report, selected.caseId, selectedRun)], {
           type: "application/json;charset=utf-8",
         }),
       );
@@ -293,17 +301,19 @@ function RecordedViewer({ report, base }: { report: RunReport; base: string }) {
 export default function PolicyLab({
   data,
   base,
+  selectedRun = null,
 }: {
   data: unknown;
   base: string;
+  selectedRun?: SelectedRun | null;
 }) {
   const validated = useMemo(() => {
     try {
-      return { value: validatePolicyData(data), error: false };
+      return { value: validatePolicyData(data, selectedRun), error: false };
     } catch {
       return { value: null, error: true };
     }
-  }, [data]);
+  }, [data, selectedRun]);
   if (validated.error || !validated.value)
     return (
       <section className="policy-empty" role="alert">
@@ -332,5 +342,11 @@ export default function PolicyLab({
         </a>
       </section>
     );
-  return <RecordedViewer report={validated.value.report} base={base} />;
+  return (
+    <RecordedViewer
+      report={validated.value.report}
+      base={base}
+      selectedRun={validated.value.selectedRun}
+    />
+  );
 }

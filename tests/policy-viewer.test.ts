@@ -236,12 +236,28 @@ describe("recorded Policy Lab viewer", () => {
   it("exports the exact case and complete provenance without modifying the report", () => {
     const report = validateRecordedReport(syntheticReport());
     const before = JSON.stringify(report);
-    const exported = JSON.parse(buildCaseExport(report, "synthetic-0"));
+    const pointer = {
+      schemaVersion: 1 as const,
+      runId: report.runId,
+      reportSha256: "f".repeat(64),
+    };
+    const exported = JSON.parse(
+      buildCaseExport(report, "synthetic-0", pointer),
+    );
+    expect(exported.selectedRun).toEqual(pointer);
     expect(exported.record.rows).toEqual(report.rows.slice(0, 3));
     expect(exported.provenance).toEqual(report.provenance);
     expect(exported.record.input).toEqual(report.rows[0].input);
     expect(JSON.stringify(report)).toBe(before);
-    expect(() => buildCaseExport(report, "unknown")).toThrow();
+    expect(() => buildCaseExport(report, "unknown", pointer)).toThrow();
+    expect(() =>
+      buildCaseExport(report, "synthetic-0", {
+        ...pointer,
+        runId: "wrong-run",
+      }),
+    ).toThrow();
+    expect(() => validatePolicyData(report)).toThrow();
+    expect(validatePolicyData(report, pointer).evidenceKind).toBe("recorded");
   });
   it("renders markup-like text literally and labels missing methods", () => {
     const report = validateRecordedReport(syntheticReport());
