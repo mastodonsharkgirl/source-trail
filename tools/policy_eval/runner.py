@@ -427,7 +427,7 @@ def load_experiment(stage):
     threshold = protocol["threshold"]
     if type(threshold) not in (float, int) or not math.isfinite(threshold) or calibration.get("threshold") != threshold or calibration.get("fixtureHash") != fixture_hash:
         raise ValueError("Calibration threshold/fixture mismatch")
-    return fixture, protocol, sha256(files["protocol.json"]), {"sourceCommit": git("rev-parse", "HEAD").decode().strip(), "sourceDirty": False, "pythonVersion": platform.python_version(), "platform": platform.platform(), "processor": platform.processor() or None, "hardwareMeasurement": "Not measured", "createdAt": now()}
+    return fixture, protocol, sha256(files["protocol.json"]), {"sourceCommit": git("rev-parse", "HEAD").decode().strip(), "sourceDirty": False, "evidenceKind": "local-runtime", "pythonVersion": platform.python_version(), "platform": platform.platform(), "processor": platform.processor() or None, "hardwareMeasurement": "Not measured", "createdAt": now()}
 
 
 def execute(stage, run_id, *, resume=False):

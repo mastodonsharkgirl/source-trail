@@ -1,0 +1,189 @@
+import copy
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import tempfile
+import unittest
+
+from tools.policy_eval.tests.test_assessment import gold_case, row
+from tools.policy_eval.tests.helpers import DIGEST, PASSAGE, fixture, prepared, SyntheticTransport
+
+PROVENANCE = {"runId": "synthetic-report", "split": "held-out", "fixtureHash": "f" * 64, "rubricHash": "b" * 64, "protocolHash": "e" * 64, "modelDigest": DIGEST, "sourceCommit": "a" * 40, "evidenceKind": "synthetic-test", "attempts": []}
+
+
+class ReportTests(unittest.TestCase):
+    def setUp(self):
+        self.assertIsNotNone(importlib.util.find_spec("tools.policy_eval.report"), "report is not implemented")
+        from tools.policy_eval import report
+        self.module = report
+        self.gold = [gold_case(f"synthetic-{i}", i < 14) for i in range(24)]
+
+    def test_partial_grid_keeps_all_24_cases_and_14_10_denominators(self):
+        report = self.module.build_report([row()], self.gold, PROVENANCE)
+        metrics = report["metrics"]["semantic"]
+        self.assertEqual((metrics["expectedCases"], metrics["answerableTotal"], metrics["abstainExpectedTotal"]), (24, 14, 10))
+        self.assertEqual(metrics["answerableAcceptance"], {"numerator": 1, "denominator": 14, "value": 1 / 14})
+        self.assertEqual(metrics["supportedAnswerYield"]["numerator"], 0)
+        self.assertEqual(metrics["statusCounts"]["missing"], 23)
+        self.assertEqual(len(report["rows"]), 72)
+        self.assertEqual(report["completion"], "partial")
+
+    def test_macro_recall_and_micro_coverage_are_distinct(self):
+        first, second = gold_case("first"), gold_case("second")
+        second["relevantIds"] = [PASSAGE["id"], "synthetic:2", "synthetic:3"]
+        result = self.module.build_report([row("first"), row("second")], [first, second], {**PROVENANCE, "split": "development"})
+        metrics = result["metrics"]["semantic"]
+        self.assertAlmostEqual(metrics["recallAt3"]["value"], (1 + 1 / 3) / 2)
+        self.assertEqual(metrics["contextCoverageMicro"], {"numerator": 2, "denominator": 4, "value": .5})
+        self.assertIsNone(result["metrics"]["full-context"]["recallAt3"])
+
+    def test_zero_denominators_and_no_generation_are_explicitly_unavailable(self):
+        result = self.module.build_report([], [gold_case("missing", False)], {**PROVENANCE, "split": "development"})
+        self.assertEqual(result["completion"], "unavailable")
+        metrics = result["metrics"]["semantic"]
+        self.assertEqual(metrics["supportedAnswerYield"], {"numerator": 0, "denominator": 0, "value": None})
+        self.assertEqual(metrics["runtime"]["generationMs"], {"n": 0, "p50": None, "p95": None})
+
+    def test_parser_failures_do_not_become_correct_abstentions(self):
+        value, gold = row(), gold_case(answerable=False)
+        value.update(status="validation_error", rawResponse='{"decision":"abstain"}', parsedResponse=None, validationErrors=["missing fields"])
+        metrics = self.module.build_report([value], [gold], {**PROVENANCE, "split": "development"})["metrics"]["semantic"]
+        self.assertEqual(metrics["correctAbstention"]["numerator"], 0)
+        self.assertEqual(metrics["rawDispositionCounts"]["abstain"], 1)
+
+    def test_gate_latencies_are_not_zero_model_samples_and_ungated_rank_survives(self):
+        value = row()
+        value.update(status="gate_abstained", rawResponse=None, parsedResponse=None)
+        value["selection"].update(supplied=[], gate="abstain", gateReason="below threshold")
+        value["runtime"].update(generatorCalls=0, generationMs=None)
+        metrics = self.module.build_report([value], [gold_case()], {**PROVENANCE, "split": "development"})["metrics"]["semantic"]
+        self.assertEqual(metrics["recallAt3"]["value"], 1)
+        self.assertEqual(metrics["contextCoverageMacro"]["value"], 0)
+        self.assertEqual(metrics["runtime"]["generationMs"]["n"], 0)
+
+    def test_runtime_percentiles_use_median_and_nearest_rank(self):
+        self.assertEqual(self.module.distribution([1, 2, 3, 4]), {"n": 4, "p50": 2.5, "p95": 4})
+
+    def test_boundary_audit_uses_full_fixture_graph_not_selector_exclusions(self):
+        original = fixture()["documents"][0]
+        replacement = {**copy.deepcopy(original), "id": "replacement", "allowedRoles": ["security"], "supersedes": [original["id"]]}
+        forbidden = self.module.forbidden_document_ids([original, replacement], gold_case()["input"])
+        self.assertEqual(set(forbidden), {original["id"], "replacement"})
+        gold = gold_case()
+        gold["forbiddenDocumentIds"] = forbidden
+        result = self.module.build_report([row()], [gold], {**PROVENANCE, "split": "development"})
+        self.assertEqual(result["metrics"]["semantic"]["contextBoundaryViolations"]["numerator"], 1)
+
+    def test_duplicate_wrong_input_and_hash_tampering_are_rejected(self):
+        with self.assertRaises(ValueError):
+            self.module.build_report([row(), row()], self.gold, PROVENANCE)
+        for mutate in [lambda r: r.update(fixtureHash="c" * 64), lambda r: r["input"].update(query="changed"), lambda r: r["parsedResponse"].update(answer="silently rewritten")]:
+            value = row()
+            mutate(value)
+            with self.assertRaises(ValueError):
+                self.module.build_report([value], self.gold, PROVENANCE)
+
+    def test_assessed_support_is_separate_from_valid_citations(self):
+        value = row()
+        value["assessment"] = {"outputHash": hashlib.sha256(value["rawResponse"].encode()).hexdigest(), "rubricHash": "b" * 64, "assessor": {"type": "agent", "name": "Synthetic reviewer", "model": "synthetic"}, "support": "supported", "reasonCorrect": True, "instructionCompliance": "not_applicable", "notes": "Synthetic support assessment only."}
+        result = self.module.build_report([value], [gold_case()], {**PROVENANCE, "split": "development"})
+        self.assertEqual(result["metrics"]["semantic"]["supportedAnswerYield"]["numerator"], 1)
+
+    def test_incoherent_gate_and_relabelled_validation_failure_are_rejected(self):
+        for mutate in [lambda r: r.update(status="gate_abstained", rawResponse=None, parsedResponse=None), lambda r: r.update(status="validation_error", parsedResponse=None)]:
+            value = row()
+            mutate(value)
+            with self.assertRaises(ValueError):
+                self.module.build_report([value], [gold_case()], {**PROVENANCE, "split": "development"})
+
+    def test_smoke_denominator_uses_only_three_preallocated_pairs(self):
+        cases = [gold_case(f"synthetic-{i}") for i in range(3)]
+        pairs = [{"caseId": case["caseId"], "method": method} for case, method in zip(cases, ("lexical", "semantic", "full-context"))]
+        result = self.module.build_report([], cases, {**PROVENANCE, "split": "smoke", "expectedPairs": pairs})
+        self.assertEqual(len(result["rows"]), 3)
+        self.assertEqual(result["metrics"]["semantic"]["expectedCases"], 1)
+
+    def test_report_json_and_markdown_are_deterministic(self):
+        result = self.module.build_report([row()], self.gold, PROVENANCE)
+        with tempfile.TemporaryDirectory() as temp:
+            self.module.write_report(result, Path(temp))
+            first = (Path(temp) / "report.json").read_bytes()
+            self.module.write_report(result, Path(temp))
+            self.assertEqual(first, (Path(temp) / "report.json").read_bytes())
+            self.assertIn("14", (Path(temp) / "report.md").read_text())
+
+    def test_export_rejects_synthetic_results_and_changed_pointer_hash(self):
+        from tools.policy_eval.export import validate_export
+        report = self.module.build_report([row()], self.gold, PROVENANCE)
+        pointer = {"schemaVersion": 1, "runId": "synthetic-report", "reportSha256": hashlib.sha256(self.module.encode(report)).hexdigest()}
+        with self.assertRaises(ValueError):
+            validate_export(report, pointer)
+        report["provenance"]["evidenceKind"] = "local-runtime"
+        with self.assertRaises(ValueError):
+            validate_export(report, pointer)
+
+    def create_saved_run(self, root):
+        from tools.policy_eval.runner import RunStore, encode, sha256, save_contexts, run_case, bind_run_metadata
+        from tools.policy_eval.ollama import LocalOllamaClient
+        data = {**fixture(), "version": "synthetic-v1", "development": self.gold[:12], "heldOut": self.gold}
+        root.mkdir(exist_ok=True)
+        fixture_bytes, rubric_bytes = encode(data), b'{"notice":"synthetic"}\n'
+        fixture_hash, rubric_hash = sha256(fixture_bytes), sha256(rubric_bytes)
+        (root / "fixture.json").write_bytes(fixture_bytes)
+        (root / "rubric.json").write_bytes(rubric_bytes)
+        (root / "manifest.json").write_bytes(encode({"schemaVersion": 1, "fixtureSha256": fixture_hash, "rubricSha256": rubric_hash}))
+        protocol = {"modelDigest": DIGEST, "fixtureHash": fixture_hash, "rubricHash": rubric_hash}
+        protocol_bytes = encode(protocol)
+        protocol_hash = sha256(protocol_bytes)
+        with RunStore(root / "runs") as store:
+            allocation = store.allocate("development", "synthetic-report", "synthetic-v1", fixture_hash, protocol_hash, [c["caseId"] for c in self.gold[:12]], source_commit="a" * 40)
+            directory = root / "runs" / "synthetic-report"
+            bind_run_metadata(directory, protocol_bytes, {"sourceCommit": "a" * 40, "sourceDirty": False, "createdAt": "synthetic", "evidenceKind": "synthetic-test"}, allocation)
+            cases = []
+            for gold in self.gold[:12]:
+                case = prepared()
+                case["caseId"] = gold["caseId"]
+                cases.append(case)
+            save_contexts(directory / "contexts.json", {"schemaVersion": 1, "fixtureHash": fixture_hash, "cases": cases, "encoder": {"synthetic": True}})
+            (directory / "model.json").write_bytes(encode({"digest": DIGEST, "runtimeVersion": "synthetic"}))
+            record = store.start_row("synthetic-report", allocation["rows"][0])
+            run_case(cases[0], allocation["rows"][0]["method"], {**protocol, "runId": "synthetic-report", "protocolHash": protocol_hash}, LocalOllamaClient(transport=SyntheticTransport()), record=record)
+        return directory
+
+    def test_load_recomputes_from_raw_records_and_rejects_changed_saved_answer(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            directory = self.create_saved_run(root)
+            result = self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+            self.assertEqual(result["completion"], "partial")
+            self.assertEqual(len(result["provenance"]["attempts"]), 1)
+            output = next(directory.glob("rows/*/output.json"))
+            data = json.loads(output.read_bytes())
+            data["rawResponse"] += " "
+            output.write_text(json.dumps(data))
+            with self.assertRaises(ValueError):
+                self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+
+    def test_started_row_without_output_is_interrupted_not_retried_or_hidden(self):
+        from tools.policy_eval.runner import RunStore
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            directory = self.create_saved_run(root)
+            allocation = json.loads((directory / "allocation.json").read_bytes())
+            with RunStore(root / "runs") as store:
+                store.start_row("synthetic-report", allocation["rows"][1])
+            result = self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+            self.assertEqual(sum(r["status"] == "interrupted" for r in result["rows"]), 1)
+            self.assertEqual(len(result["rows"]), 36)
+
+    def test_saved_runtime_cannot_be_changed_independently_of_wire_response(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            directory = self.create_saved_run(root)
+            output = next(directory.glob("rows/*/output.json"))
+            data = json.loads(output.read_bytes())
+            data["runtime"]["generationMs"] = 999
+            output.write_text(json.dumps(data))
+            with self.assertRaises(ValueError):
+                self.module.load_recorded_run("synthetic-report", evidence_dir=root)

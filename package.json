@@ -15,6 +15,8 @@
     "evaluate": "node --experimental-strip-types scripts/evaluate.mjs",
     "policy:fixture": "node scripts/freeze-policy-fixture.mjs",
     "test:policy": "vitest run tests/policy-documents.test.ts tests/policy-retrieval.test.ts",
+    "policy:report:check": "py -3.14 -m tools.policy_eval.report --check",
+    "policy:export:check": "py -3.14 -m tools.policy_eval.export --check",
     "prebuild": "npm run prepare-model && node scripts/prepare-generator.mjs",
     "test:e2e": "playwright test",
     "dev": "astro dev",
