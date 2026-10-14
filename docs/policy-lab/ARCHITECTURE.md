@@ -2,7 +2,7 @@
 
 Policy Lab is a local experiment and a recorded evidence viewer. Its source is
 implemented and real local model evaluation is recorded. Root/prefix browser
-acceptance is being completed. See [verification](VERIFICATION.md) for the current
+acceptance passed locally. See [verification](VERIFICATION.md) for the current
 measured boundary.
 
 ## What runs where

@@ -180,6 +180,89 @@ class ReportTests(unittest.TestCase):
             self.assertEqual(sum(r["status"] == "interrupted" for r in result["rows"]), 1)
             self.assertEqual(len(result["rows"]), 36)
 
+    def test_allocated_directory_before_start_marker_keeps_interrupted_denominator(self):
+        from tools.policy_eval.runner import RunStore
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            directory = self.create_saved_run(root)
+            pair = json.loads((directory / "allocation.json").read_bytes())["rows"][1]
+            with RunStore(root / "runs") as store:
+                row_dir = store.row_path("synthetic-report", pair)
+                row_dir.mkdir()
+                self.assertEqual(store.row_state("synthetic-report", pair), "interrupted")
+                with self.assertRaises(FileExistsError):
+                    store.start_row("synthetic-report", pair)
+            result = self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+            value = next(r for r in result["rows"] if r["caseId"] == pair["caseId"] and r["method"] == pair["method"])
+            self.assertEqual(len(result["rows"]), 36)
+            self.assertEqual(value["status"], "interrupted")
+            self.assertEqual(value["runtime"]["generatorCalls"], 0)
+            self.assertTrue(value["evidence"]["contextPrepared"])
+            self.assertIsNone(value["rawResponse"])
+            self.assertIsNone(value["parsedResponse"])
+            self.assertIn("start marker", " ".join(value["validationErrors"]).lower())
+            self.assertEqual(result["metrics"][pair["method"]]["expectedCases"], 12)
+
+    def create_response_interruption(self, root, wire=None):
+        from tools.policy_eval.runner import RunStore, run_case, sha256
+        from tools.policy_eval.ollama import LocalOllamaClient
+        directory = self.create_saved_run(root)
+        pair = json.loads((directory / "allocation.json").read_bytes())["rows"][1]
+        protocol_bytes = (directory / "protocol.json").read_bytes()
+        protocol = {**json.loads(protocol_bytes), "runId": "synthetic-report", "protocolHash": sha256(protocol_bytes)}
+        case = prepared()
+        case["caseId"] = pair["caseId"]
+        with RunStore(root / "runs") as store:
+            save = store.start_row("synthetic-report", pair)
+            def interrupted_save(name, data):
+                save(name, wire if name == "response.bin" and wire is not None else data)
+                if name == "response.bin":
+                    raise RuntimeError("Synthetic process stop after durable wire write")
+            with self.assertRaisesRegex(RuntimeError, "Synthetic process stop"):
+                run_case(case, pair["method"], protocol, LocalOllamaClient(transport=SyntheticTransport()), record=interrupted_save)
+            self.assertEqual(store.row_state("synthetic-report", pair), "interrupted")
+            with self.assertRaises(FileExistsError):
+                store.start_row("synthetic-report", pair)
+            row_dir = store.row_path("synthetic-report", pair)
+            self.assertFalse((row_dir / "output.json").exists())
+        return directory, pair, row_dir
+
+    def test_wire_saved_before_output_keeps_raw_prompt_runtime_without_acceptance(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            directory, pair, row_dir = self.create_response_interruption(root)
+            wire_bytes = (row_dir / "response.bin").read_bytes()
+            wire = json.loads(wire_bytes)
+            request = json.loads((row_dir / "request.json").read_bytes())
+            result = self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+            value = next(r for r in result["rows"] if r["caseId"] == pair["caseId"] and r["method"] == pair["method"])
+            self.assertEqual(len(result["rows"]), 36)
+            self.assertEqual(value["status"], "interrupted")
+            self.assertEqual(value["prompt"], request["body"]["prompt"])
+            self.assertEqual(value["rawResponse"], wire["response"])
+            self.assertEqual(value["runtime"]["generatorCalls"], 1)
+            self.assertEqual(value["runtime"]["generationMs"], wire["eval_duration"] / 1e6)
+            self.assertIsNone(value["parsedResponse"])
+            self.assertIsNone(value["assessment"])
+            self.assertEqual(result["metrics"][pair["method"]]["answerableAcceptance"]["numerator"], 0)
+            self.assertEqual((row_dir / "response.bin").read_bytes(), wire_bytes)
+
+    def test_undecodable_interrupted_wire_has_explicit_retained_evidence_diagnostic(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            directory, pair, row_dir = self.create_response_interruption(root, b"\xffsynthetic-broken-wire")
+            result = self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+            value = next(r for r in result["rows"] if r["caseId"] == pair["caseId"] and r["method"] == pair["method"])
+            self.assertEqual(value["status"], "interrupted")
+            self.assertIsNone(value["rawResponse"])
+            diagnostic = " ".join(value["validationErrors"])
+            self.assertIn("retained", diagnostic.lower())
+            self.assertIn("response.bin", diagnostic)
+            wire_path = (row_dir / "response.bin").relative_to(root).as_posix()
+            self.assertIn(wire_path, result["provenance"]["artifactHashes"])
+            self.assertEqual(value["runtime"]["generatorCalls"], 1)
+            self.assertEqual(len(result["rows"]), 36)
+
     def test_saved_runtime_cannot_be_changed_independently_of_wire_response(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

@@ -262,9 +262,12 @@ def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
             continue
         if expected_row["caseId"] not in prepared:
             raise ValueError("Started row has no validated saved context")
-        started = strict_json(read(row_dir / "started.json"))
-        if any(started.get(k) != v for k, v in expected_row.items()):
-            raise ValueError("Started sample identity mismatch")
+        started_path = row_dir / "started.json"
+        start_recorded = started_path.exists()
+        if start_recorded:
+            started = strict_json(read(started_path))
+            if any(started.get(k) != v for k, v in expected_row.items()):
+                raise ValueError("Started sample identity mismatch")
         selection = next(s for s in prepared[expected_row["caseId"]]["selections"] if s["method"] == expected_row["method"])
         attempted = (row_dir / "attempt.json").exists()
         if attempted:
@@ -273,13 +276,16 @@ def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
                 raise ValueError("Attempt/model record is invalid")
         output_path = row_dir / "output.json"
         if output_path.exists():
+            if not start_recorded:
+                raise ValueError("Completed output has no saved start marker")
             row = strict_json(read(output_path))
             if any(row[k] != v for k, v in expected_row.items()) or row["selection"] != selection or row["runtime"]["generatorCalls"] != int(attempted):
                 raise ValueError("Output identity/context/call count differs from immutable records")
         else:
             row = missing_row(by_id[expected_row["caseId"]], expected_row["method"], provenance)
-            row.update(status="interrupted", selection=selection, validationErrors=["Sample started without a completed output; never retried"])
-            row["runtime"]["generatorCalls"] = int(attempted)
+            diagnostic = "Sample started without a completed output; never retried" if start_recorded else "Allocated sample directory has no completed start marker; interrupted and never retried"
+            row.update(status="interrupted", selection=selection, validationErrors=[diagnostic])
+            row["runtime"] = {"generatorCalls": int(attempted), "endToEndMs": None, "unavailable": {"all": "Interrupted before final output/timing record"}}
         if attempted:
             request = strict_json(read(row_dir / "request.json"))
             for field in ("runId", "caseId", "method", "fixtureHash", "protocolHash", "modelDigest", "input", "selection"):
@@ -290,6 +296,10 @@ def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
             body = request["body"]
             if body.get("model") != MODEL or body.get("options") != OPTIONS or body.get("raw") is not True or body.get("think") is not False or body.get("stream") is not False or body.get("keep_alive") != "30s" or body.get("format") != ANSWER_SCHEMA:
                 raise ValueError("Saved generation request violates the fixed protocol")
+            if not isinstance(body.get("prompt"), str):
+                raise ValueError("Saved generation request has no textual prompt")
+            if not output_path.exists():
+                row["prompt"] = body["prompt"]
             response_path = row_dir / "response.bin"
             if response_path.exists():
                 raw_wire = read(response_path)
@@ -297,6 +307,16 @@ def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
                     wire = strict_json(raw_wire.decode("utf-8"))
                 except (UnicodeError, ValueError):
                     wire = None
+                if not output_path.exists():
+                    wire_reference = response_path.relative_to(root).as_posix()
+                    if isinstance(wire, dict) and isinstance(wire.get("response"), str):
+                        row["rawResponse"] = wire["response"]
+                        row["runtime"] = runtime_fields(wire)
+                        row["runtime"]["endToEndMs"] = None
+                        row["runtime"]["unavailable"]["endToEndMs"] = "Interrupted before final timing record"
+                        row["validationErrors"].append(f"Saved response recovered from retained wire {wire_reference}; no completed output or accepted answer")
+                    else:
+                        row["validationErrors"].append(f"Raw response wire retained at {wire_reference}; no model response text could be decoded")
                 if row.get("rawResponse") is not None and (not isinstance(wire, dict) or wire.get("response") != row["rawResponse"]):
                     raise ValueError("Saved answer differs from immutable raw wire response")
                 if row.get("rawResponse") is not None:

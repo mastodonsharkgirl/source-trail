@@ -57,7 +57,7 @@ export default function CaseComparison({ record }: { record: RecordedCase }) {
           <details>
             <summary>Unedited model output</summary>
             {row.rawResponse === null ? (
-              <p>No raw model response was recorded.</p>
+              <p>No decoded model response is available.</p>
             ) : (
               <pre>{row.rawResponse}</pre>
             )}

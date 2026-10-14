@@ -178,7 +178,7 @@ test("saved case changes, disclosures and export keep all methods together", asy
     await expect(disclosure.locator("..")).toHaveAttribute("open", "");
     await expect(panel).toContainText(
       selected.rows.find((row) => row.method === method)!.rawResponse ??
-        "No raw model response was recorded.",
+        "No decoded model response is available.",
     );
   }
   const downloading = page.waitForEvent("download");
