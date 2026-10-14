@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-1",
+  "caseId": "dev-travel-window",
+  "method": "full-context",
+  "contextHash": "e0181ed989d5e7feaca78b54c36d558b163ef5a80355953af25d0566c3186e1a",
+  "outputHash": "d6fcee72b1949a5e588f790890c36c6a0a360fd17d4bb60f4ed7dd95d2999113",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "The answer gives the current seven-day advance rail-booking window. The exact quote from cedar-travel-current:1 states employees may claim rail travel booked at least seven days ahead, directly supporting the requested booking timing and avoiding the former three-day rule."
+}

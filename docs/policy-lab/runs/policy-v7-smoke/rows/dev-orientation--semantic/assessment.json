@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-smoke",
+  "caseId": "dev-orientation",
+  "method": "semantic",
+  "contextHash": "6cf42f285ad5dfc7b7925717cc805c211002e80deab0b28fdb562e704b0badcc",
+  "outputHash": "f62a1d9a85eb85761413eff6f5fdd148fc25d546af8f34cc2da24473ef07fb82",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "The answer gives five working days after joining, supported by the exact first sentence quoted from cedar-onboarding-current:1. The supplied source directly answers the requested orientation deadline; no unsupported addition appears."
+}

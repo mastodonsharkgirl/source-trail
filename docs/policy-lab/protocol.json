@@ -7,7 +7,7 @@
   "templateSha256": "ae370d884f108d16e7cc8fd5259ebc5773a0afa6e078b11f4ed7e39a27e0dfc4",
   "promptSha256": "98b20426c88629c36ad14e1ea369bf7cbc06b75c1c05c139e1c58abd898a2843",
   "calibrationSha256": "c2932d34feab2b79f53d6dee7bfa7454718c40778de8029549926a7546f9fd65",
-  "locked": false,
+  "locked": true,
   "options": {
     "temperature": 0,
     "seed": 17,

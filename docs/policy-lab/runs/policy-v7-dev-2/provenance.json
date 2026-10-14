@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "2f7ab2538af8114e934cc25d23a1aaf14cebb391",
+  "sourceDirty": false,
+  "evidenceKind": "local-runtime",
+  "pythonVersion": "3.14.3",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "hardwareMeasurement": "Not measured",
+  "createdAt": "2026-10-14T20:18:26.642360+00:00"
+}
