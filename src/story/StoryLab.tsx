@@ -332,6 +332,7 @@ export default function StoryLab() {
             Story Lab
           </a>
           <a href={`${base}baseline/`}>Evidence Desk ↗</a>
+          <a href={`${base}policy-lab/`}>Policy Lab ↗</a>
           <a href="#how">How it works</a>
         </nav>
         <details className="appearance">

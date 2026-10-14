@@ -9,6 +9,7 @@ let headers = `${base}*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: n
 for (const [file, route, external] of [
   ["index.html", "", true],
   ["baseline/index.html", "baseline/", false],
+  ["policy-lab/index.html", "policy-lab/", false],
 ]) {
   const html = await readFile("dist/" + file, "utf8");
   const hashes = [
@@ -31,6 +32,11 @@ if (headers.split("\n").some((l) => l.length > 2000))
   throw Error("Header exceeds 2000 characters");
 await writeFile("dist/_headers", headers);
 await mkdir("dist/evidence", { recursive: true });
+await mkdir("dist/evidence/policy-lab", { recursive: true });
+await cp(
+  "docs/policy-lab/ASSESSMENT_GUIDE.md",
+  "dist/evidence/policy-lab/methodology.txt",
+);
 for (const [from, to] of [
   ["src/data/evaluation.json", "evaluation.json"],
   [

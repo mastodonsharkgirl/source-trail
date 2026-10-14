@@ -1,0 +1,15 @@
+---
+import PolicyLab from '../policy/PolicyLab';
+import data from '../data/policy-evaluation.json';
+import '../styles/global.css';
+import '../policy/policy.css';
+import '@fontsource-variable/geist';
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><meta name="description" content="Inspect recorded local policy answers alongside their exact fictional evidence, failures and assessments." /><meta name="theme-color" content="#F3EFE5" /><meta name="robots" content="noindex, nofollow" /><title>Policy Lab — Source Trail</title><link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" /></head>
+<body class="policy-page"><a href="#policy-lab" class="skip-link">Skip to Policy Lab</a><div class="page-frame"><header class="site-header"><a class="wordmark" href={base} aria-label="Source Trail home"><span aria-hidden="true" class="brand-icon">s↗</span>source trail<span class="wordmark-period">.</span></a><nav aria-label="Product views"><a href={base}>Story Lab</a><a href={`${base}baseline/`}>Evidence Desk</a><a href={`${base}policy-lab/`} aria-current="page">Policy Lab</a></nav></header>
+<main id="policy-lab"><section class="policy-hero"><p class="eyebrow">POLICY LAB</p><p class="policy-recorded">Recorded local evaluation</p><h1>Which policy?<br /><em>Follow the evidence.</em></h1><p>A policy can be outdated, unavailable to a role, or in conflict with another rule. Compare how three saved evidence selections affect a local model’s answer.</p><p class="policy-disclosure">All documents, organisations, roles and cases are fictional. This is an evaluation of public sample data, not a production access-control system.</p><p class="policy-meta">Reading this page starts no model, download or local-service request.</p></section>
+<PolicyLab data={data} base={base} client:load />
+<noscript><p>JavaScript enables the recorded case controls when results are available. Read the <a href={`${base}evidence/policy-lab/methodology.txt`}>evaluation method</a> as plain text.</p></noscript></main>
+<footer class="site-footer"><span class="wordmark">source trail.</span><p>Read the context. Inspect the claim.</p><a href={`${base}evidence/policy-lab/methodology.txt`}>Evaluation method ↗</a></footer></div></body></html>

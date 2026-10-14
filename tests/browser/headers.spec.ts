@@ -13,6 +13,19 @@ test("actual page and worker response policies preserve baseline boundary", asyn
   expect(storyCSP).toContain("https://huggingface.co");
   expect(baselineCSP).toContain("connect-src 'self';");
   expect(baselineCSP).not.toContain("huggingface");
+  const policy = await request.get(`${prefix}policy-lab/`);
+  expect(policy.status()).toBe(200);
+  expect(policy.headers()["content-security-policy"]).toContain(
+    "connect-src 'self';",
+  );
+  expect(policy.headers()["content-security-policy"]).not.toContain(
+    "huggingface",
+  );
+  expect(
+    (
+      await request.get(`${prefix}evidence/policy-lab/methodology.txt`)
+    ).status(),
+  ).toBe(200);
   for (const name of (await readdir("dist/_source-trail")).filter(
     (n) => n.startsWith("generation.worker") || n.startsWith("search.worker"),
   )) {

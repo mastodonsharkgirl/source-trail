@@ -25,7 +25,8 @@ def export_selected_run(run_id=None, check=False):
     directory = EVIDENCE / "runs" / report["runId"] / "reports" / pointer["reportSha256"]
     if (directory / "report.json").read_bytes() != encode(report) or (directory / "report.md").read_bytes() != markdown(report).encode():
         raise ValueError("Selected report snapshot is missing or changed")
-    outputs = {REPO / "src/data/policy-evaluation.json": encode(report), REPO / "public/policy-lab/report.json": encode(report), REPO / "public/policy-lab/report.md": markdown(report).encode(), REPO / "public/policy-lab/selected-run.json": encode(pointer)}
+    public = REPO / "public/evidence/policy-lab"
+    outputs = {REPO / "src/data/policy-evaluation.json": encode(report), public / "report.json": encode(report), public / "report.md": markdown(report).encode(), public / "selected-run.json": encode(pointer)}
     for relative, digest in report["provenance"]["artifactHashes"].items():
         source = (EVIDENCE / relative).resolve()
         if not source.is_relative_to(EVIDENCE.resolve()):
@@ -33,7 +34,7 @@ def export_selected_run(run_id=None, check=False):
         content = source.read_bytes()
         if sha256(content) != digest:
             raise ValueError("Evidence changed during export")
-        outputs[REPO / "public/policy-lab/evidence" / relative] = content
+        outputs[public / "evidence" / relative] = content
     for path, content in outputs.items():
         if not path.resolve().is_relative_to(REPO.resolve()):
             raise ValueError("Export target escapes repository")

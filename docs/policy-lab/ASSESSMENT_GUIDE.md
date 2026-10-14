@@ -124,5 +124,7 @@ npm run policy:export:check
 Export writes only local browser data and public evidence files inside this
 repository. It does not deploy or publish. Synthetic-test records are rejected.
 Missing real evidence must stay explicitly unavailable; never copy a test answer
-into the recorded page. No selected pointer or generated browser data has been
-created at this implementation stage.
+into the recorded page. No selected pointer or generated results have been
+created at this implementation stage. The browser data file currently contains
+only an explicit unavailable manifest. Real exports will replace that manifest
+and place the selected report/evidence under `public/evidence/policy-lab/`.
