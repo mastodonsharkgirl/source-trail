@@ -92,8 +92,8 @@ describe('policy context methods', () => {
     const cache = new Map();
     await selectPolicyContext(corpus, employeeQuery, 'semantic', { threshold: 0, embedder: spy.embedder, embeddingCache: cache });
     await selectPolicyContext(corpus, { ...employeeQuery, query: 'Cedar onboarding' }, 'semantic', { threshold: 0, embedder: spy.embedder, embeddingCache: cache });
-    expect(spy.seen).toHaveLength(2);
-    expect(spy.seen[1]).toEqual(['Cedar onboarding']);
+    expect(spy.seen).toHaveLength(3);
+    expect(spy.seen[2]).toEqual(['Cedar onboarding']);
   });
 
   it('limits lexical context to three positive ranked passages and abstains without a hit', async () => {
@@ -121,8 +121,25 @@ describe('policy context methods', () => {
     documents[0]!.text += ' A changed fixture sentence.';
     const changed = preparePolicyCorpus(documents);
     await selectPolicyContext(changed, employeeQuery, 'semantic', { threshold: 0, embedder: spy.embedder, embeddingCache: cache });
-    expect(spy.seen[1]).toContain(changed.passages[3]!.text);
-    expect(spy.seen[1]!.length).toBeGreaterThan(1);
+    expect(spy.seen.at(-2)).toContain(changed.passages[3]!.text);
+    expect(spy.seen.at(-2)!.length).toBeGreaterThan(1);
+  });
+
+  it('separates corpus and query embedding time and records cold versus cached selection', async () => {
+    const corpus = preparePolicyCorpus(baseDocuments());
+    const embedder = {
+      async embed(texts: string[]) { return { vectors: texts.map(() => [1]), tokenCounts: texts.map(() => 3), elapsedMs: texts.length > 1 ? 7 : 3 }; },
+      async dispose() {},
+    };
+    const options = { threshold: 0, embedder, embeddingCache: new Map() };
+    const cold = await selectPolicyContext(corpus, employeeQuery, 'semantic', options);
+    const warm = await selectPolicyContext(corpus, employeeQuery, 'semantic', options);
+    expect(cold).toMatchObject({ embeddingCacheHit: false, timings: { corpusEmbeddingMs: 7, queryEmbeddingMs: 3, embeddingMs: 10 } });
+    expect(warm).toMatchObject({ embeddingCacheHit: true, timings: { corpusEmbeddingMs: null, queryEmbeddingMs: 3, embeddingMs: 3 } });
+    expect(cold.timings.selectionMs).toBeGreaterThanOrEqual(0);
+    expect(warm.ranked).toEqual(cold.ranked);
+    const lexical = await selectPolicyContext(corpus, employeeQuery, 'lexical', options);
+    expect(lexical).toMatchObject({ embeddingCacheHit: null, timings: { corpusEmbeddingMs: null, queryEmbeddingMs: null, embeddingMs: null } });
   });
 
   it('rejects scorer fields and invalid query values at the selection boundary', async () => {

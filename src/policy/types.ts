@@ -48,3 +48,29 @@ export interface GoldCase {
 }
 
 export interface PolicyFixture { schemaVersion: 1; version: string; documents: PolicyDocument[]; development: GoldCase[]; heldOut: GoldCase[]; }
+
+export type PolicyMethod = 'lexical' | 'semantic' | 'full-context';
+export interface PolicyEmbedder {
+  embed(texts: string[]): Promise<{ vectors: number[][]; tokenCounts: number[]; elapsedMs: number }>;
+  dispose(): Promise<void>;
+}
+export interface CachedPolicyEmbeddings { vectors: number[][]; tokenCounts: number[]; }
+export interface SelectionRecord {
+  method: PolicyMethod;
+  ranked: { id: string; score: number }[];
+  supplied: PolicyPassage[];
+  excluded: { id: string; reason: string }[];
+  gate: 'pass' | 'abstain';
+  gateReason: string | null;
+  embeddingCacheHit: boolean | null;
+  timings: {
+    selectionMs: number;
+    eligibilityMs: number;
+    rankingMs: number;
+    embeddingMs: number | null;
+    corpusEmbeddingMs: number | null;
+    queryEmbeddingMs: number | null;
+  };
+  queryTokenCount: number | null;
+  passageTokenCounts: Record<string, number> | null;
+}
