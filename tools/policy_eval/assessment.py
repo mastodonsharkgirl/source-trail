@@ -1,5 +1,6 @@
 """Mechanical indicators and separately authored, output-bound assessments."""
 import hashlib
+import json
 from .contracts import exact_keys, nonempty, strict_json, validate_model_answer
 
 SUPPORT = ("supported", "contradicted", "unsupported", "mixed", "unreviewed")
@@ -16,8 +17,15 @@ def output_hash(row):
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
+def context_hash(row):
+    content = json.dumps({"input": row["input"], "selection": row["selection"]}, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
+
+
 def validate_assessment(value, row, rubric_hash):
-    exact_keys(value, ("outputHash", "assessor", "rubricHash", "support", "reasonCorrect", "instructionCompliance", "notes"), "assessment")
+    exact_keys(value, ("runId", "caseId", "method", "contextHash", "outputHash", "assessor", "rubricHash", "support", "reasonCorrect", "instructionCompliance", "notes"), "assessment")
+    if any(value[field] != row[field] for field in ("runId", "caseId", "method")) or value["contextHash"] != context_hash(row):
+        raise ValueError("Assessment case, method or exact context mismatch")
     if value["outputHash"] != output_hash(row) or value["rubricHash"] != rubric_hash:
         raise ValueError("Assessment raw-output or rubric hash mismatch")
     exact_keys(value["assessor"], ("type", "name", "model"), "assessor")

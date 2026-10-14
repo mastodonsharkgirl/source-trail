@@ -7,7 +7,7 @@ from pathlib import Path
 import statistics
 
 from .assessment import assess_mechanical, validate_assessment
-from .contracts import METHODS, exact_keys, strict_json, validate_model_answer
+from .contracts import HASH, METHODS, exact_keys, nonempty, strict_json, validate_model_answer
 from .runner import EVIDENCE, encode, read_contexts, sha256, validate_run_id, write_once
 from .ollama import MODEL, OPTIONS, runtime_fields
 from .contracts import ANSWER_SCHEMA
@@ -69,7 +69,7 @@ def enrich_row(row, gold, provenance):
     selection = row.get("selection") or {}
     ranked = {p["id"] for p in selection.get("ranked", [])[:3]}
     context = {p["id"] for p in supplied}
-    result["evidence"] = {"relevantIds": list(gold["relevantIds"]), "rankedRelevant": len(relevant & ranked), "suppliedRelevant": len(relevant & context), "expectedRelevant": len(relevant)}
+    result["evidence"] = {"relevantIds": list(gold["relevantIds"]), "rankedRelevant": len(relevant & ranked), "suppliedRelevant": len(relevant & context), "expectedRelevant": len(relevant), "contextPrepared": row.get("selection") is not None, "modelCallAttempted": calls == 1, "attemptedRelevant": len(relevant & context) if calls else 0}
     forbidden_context = []
     for passage in supplied:
         principal = gold["input"]["principal"]
@@ -101,6 +101,11 @@ def method_metrics(rows, method):
     coverage = [{"caseId": r["caseId"], **ratio(r["evidence"]["suppliedRelevant"], r["evidence"]["expectedRelevant"])} for r in evidence_rows]
     metrics["contextCoverageMacro"] = {**ratio(sum(f["value"] for f in coverage), len(coverage)), "caseFractions": coverage}
     metrics["contextCoverageMicro"] = ratio(sum(f["numerator"] for f in coverage), sum(f["denominator"] for f in coverage))
+    attempted_coverage = [{"caseId": r["caseId"], **ratio(r["evidence"]["attemptedRelevant"], r["evidence"]["expectedRelevant"])} for r in evidence_rows]
+    metrics["attemptedContextCoverageMacro"] = {**ratio(sum(f["value"] for f in attempted_coverage), len(attempted_coverage)), "caseFractions": attempted_coverage}
+    metrics["attemptedContextCoverageMicro"] = ratio(sum(f["numerator"] for f in attempted_coverage), sum(f["denominator"] for f in attempted_coverage))
+    metrics["contextPreparedRows"] = sum(r["evidence"]["contextPrepared"] for r in rows)
+    metrics["contextCoverageNotice"] = "Context coverage describes saved prepared context, including never-started generation. Attempted context coverage counts only rows with a model call attempt; it does not prove server receipt. Missing selections remain zero contributions to the expected-case denominator."
     metrics["supportAmongEmittedAnswers"] = {label: {"amongEmitted": ratio(sum((r["assessment"] or {}).get("support", "unreviewed") == label for r in emitted_answers), len(emitted_answers)), "amongAllCases": ratio(sum((r["assessment"] or {}).get("support", "unreviewed") == label for r in emitted_answers), len(rows))} for label in ("supported", "contradicted", "unsupported", "mixed", "unreviewed")}
     sentinel_rows = [r for r in rows if r["mechanical"]["forbiddenSentinelsConfigured"]]
     metrics["outputBoundarySentinels"] = ratio(sum(bool(r["boundary"]["outputSentinelMatches"]) for r in sentinel_rows), len(sentinel_rows))
@@ -148,7 +153,7 @@ def markdown(report):
         lines.append(f'| {method} | {metric["expectedCases"]} | ' + " | ".join(cells) + " |")
     lines += ["", "## Per-case outcomes", "", "| Case | Method | Status | Model disposition | Support review |", "| --- | --- | --- | --- | --- |"]
     lines += [f'| {r["caseId"]} | {r["method"]} | {r["status"]} | {r["mechanical"]["rawDisposition"]} | {(r["assessment"] or {}).get("support", "unreviewed")} |' for r in report["rows"]]
-    lines += ["", "## Metric definitions and limits", "", "Recall@3 is ungated and not applicable to full context. Macro coverage averages case fractions; micro coverage counts total relevant passages supplied. p50 is the median and p95 uses nearest rank; each timing reports N in the JSON record. Skipped generation contributes no model timing sample. Full metrics, exact raw outputs, source contexts and assessment notes are in report.json.", ""]
+    lines += ["", "## Metric definitions and limits", "", "Recall@3 is ungated and not applicable to full context. Context coverage describes saved prepared context even when generation never starts. Attempted context coverage counts only model call attempts, without claiming server receipt. Macro coverage averages case fractions; micro coverage counts total relevant passages. Missing selections remain zero contributions to the expected-case denominator. p50 is the median and p95 uses nearest rank; each timing reports N in the JSON record. Skipped generation contributes no model timing sample. Full metrics, exact raw outputs, source contexts and assessment notes are in report.json.", ""]
     lines += [f"- {limit}" for limit in report["limitations"]]
     return "\n".join(lines) + "\n"
 
@@ -162,6 +167,25 @@ def write_report(report, directory):
                 raise ValueError("Refusing to overwrite a different report snapshot")
         else:
             write_once(path, content)
+
+
+def validate_saved_model(model, protocol):
+    """Validate saved preflight evidence without consulting a running model."""
+    exact_keys(model, ("model", "digest", "templateSha256", "runtimeVersion", "details", "modelInfo", "capabilities", "template"), "saved model metadata")
+    if model["model"] != MODEL or model["digest"] != protocol["modelDigest"]:
+        raise ValueError("Saved model name/digest differs from protocol")
+    template = model["template"]
+    nonempty(template, "saved model template")
+    pinned = protocol.get("templateSha256")
+    if not isinstance(pinned, str) or not HASH.fullmatch(pinned) or model["templateSha256"] != pinned or sha256(template.encode("utf-8")) != pinned:
+        raise ValueError("Saved model template differs from protocol or template bytes")
+    nonempty(model["runtimeVersion"], "saved runtime version")
+    info, details, capabilities = model["modelInfo"], model["details"], model["capabilities"]
+    if not isinstance(info, dict) or not isinstance(details, dict) or details.get("family") != "qwen3" or info.get("general.architecture") != "qwen3" or info.get("tokenizer.ggml.model") != "gpt2":
+        raise ValueError("Saved model family/tokenizer metadata is incompatible")
+    capacity = info.get("qwen3.context_length")
+    if type(capacity) is not int or capacity < 8192 or not isinstance(capabilities, list) or any(not isinstance(c, str) for c in capabilities) or not {"completion", "thinking"}.issubset(capabilities) or any(token not in template for token in ("<|im_start|>", "<|im_end|>", "<think>", "</think>")):
+        raise ValueError("Saved model context/thinking/template metadata is incompatible")
 
 
 def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
@@ -203,8 +227,8 @@ def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
     if sha256(protocol_bytes) != allocation["protocolHash"] or protocol["fixtureHash"] != fixture_hash or protocol["rubricHash"] != rubric_hash or saved_provenance["sourceCommit"] != allocation["sourceCommit"] or saved_provenance["sourceDirty"] is not False:
         raise ValueError("Saved protocol/source identity changed")
     model = strict_json(read(directory / "model.json")) if (directory / "model.json").exists() else None
-    if model is not None and model["digest"] != protocol["modelDigest"]:
-        raise ValueError("Saved model digest differs from protocol")
+    if model is not None:
+        validate_saved_model(model, protocol)
     provenance = {**saved_provenance, "runId": run_id, "split": stage, "fixtureHash": fixture_hash, "rubricHash": rubric_hash, "protocolHash": allocation["protocolHash"], "modelDigest": protocol["modelDigest"], "model": model, "attempts": [], "artifactHashes": artifacts}
     selected_ids = {r["caseId"] for r in allocation["rows"]}
     selected_cases = [c for c in cases if c["caseId"] in selected_ids]
@@ -221,6 +245,10 @@ def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
     for expected_row in allocation["rows"]:
         row_dir = directory / "rows" / f'{expected_row["caseId"]}--{expected_row["method"]}'
         if not row_dir.exists():
+            row = missing_row(by_id[expected_row["caseId"]], expected_row["method"], provenance)
+            if expected_row["caseId"] in prepared:
+                row["selection"] = copy.deepcopy(next(s for s in prepared[expected_row["caseId"]]["selections"] if s["method"] == expected_row["method"]))
+            rows.append(row)
             continue
         if expected_row["caseId"] not in prepared:
             raise ValueError("Started row has no validated saved context")

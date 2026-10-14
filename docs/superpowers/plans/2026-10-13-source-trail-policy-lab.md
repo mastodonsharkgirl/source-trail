@@ -72,7 +72,7 @@ and `citations` fields. Reject extra model fields.
 - `status` is one of `gate_abstained`, `completed`, `validation_error`, `runtime_error`, `context_error`, `interrupted`, `missing`; `assessment` starts null, never implicitly successful.
 - Optional timing/token values use null plus an availability reason, not invented zeroes. Gate skips have an explicit zero call count and null generator timings.
 - `RunReport = { schemaVersion: 1, runId, provenance, split, expectedCaseIds, rows, metrics, completion }`; `completion` is `complete`, `partial`, or `unavailable`.
-- `Assessment = { outputHash, assessor: { type: 'agent' | 'human', name, model: string | null }, rubricHash, support, reasonCorrect, instructionCompliance, notes }`; `support` is `supported`, `contradicted`, `unsupported`, `mixed`, or `unreviewed`.
+- `Assessment = { runId, caseId, method, contextHash, outputHash, assessor: { type: 'agent' | 'human', name, model: string | null }, rubricHash, support, reasonCorrect, instructionCompliance, notes }`; `support` is `supported`, `contradicted`, `unsupported`, `mixed`, or `unreviewed`. `contextHash` binds the canonical JSON of the exact input and complete selection; identical answer text cannot transfer an assessment across contexts.
 
 Before execution, read both approved spec and this plan. Do not treat example
 test outputs below as actual model evidence. Use synthetic test outputs only in

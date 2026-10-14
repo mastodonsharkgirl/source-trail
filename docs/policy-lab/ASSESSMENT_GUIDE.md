@@ -33,15 +33,23 @@ selector never receive the expected answer, group, labels or scoring notes.
    establish model resistance. Explain legitimate-task success and unsafe
    disclosure independently in notes.
 7. Save a separate, exclusive `assessment.json` beside the immutable output. Bind
-   it to the SHA-256 of the exact UTF-8 `rawResponse` string and frozen rubric
-   bytes. The report rejects changed output/rubric hashes or unnamed assessors.
+   it to the run ID, case ID, method, exact input/selection context, SHA-256 of
+   the exact UTF-8 `rawResponse` string, and frozen rubric bytes. The report
+   rejects a review copied to another context even if the raw answer is identical.
 
-Assessment fields are `outputHash`, `rubricHash`, `assessor`, `support`,
+Assessment fields are `runId`, `caseId`, `method`, `contextHash`, `outputHash`,
+`rubricHash`, `assessor`, `support`,
 `reasonCorrect` (true/false/null), `instructionCompliance`, and `notes`.
 `assessor` is `{ "type": "agent" | "human", "name": "...", "model": ... }`.
 An agent record must name its actual model; a human record uses a null model.
 AI-assisted assessment is labelled agent assessment. It is not human review or
 independent validation. Leave unperformed assessment absent/null.
+
+`contextHash` hashes the UTF-8 serialization of `{ "input": row.input,
+"selection": row.selection }` using sorted keys, no insignificant spaces,
+unescaped Unicode and no non-finite numbers. Use `assessment.context_hash(row)`
+to reproduce it. The entire saved selection, including timings, is bound; review
+the immutable record rather than recreating a similar context.
 
 ## Mechanical indicators and limits
 
@@ -72,10 +80,15 @@ methods, with 14 answerable and 10 requiring abstention per method. Missing,
 interrupted and rejected samples stay visible. A three-attempt smoke report uses
 only its three allocated case/method pairs and is not exported as a comparison.
 
-Reports keep ungated Recall@3 separate from actual supplied-context coverage.
+Reports keep ungated Recall@3 separate from prepared-context coverage.
 Macro coverage averages case fractions; micro coverage counts all matched and
 expected passages. Full context has no Recall@3 ranking score. Every rate retains
 its numerator and denominator; zero denominators return null/not applicable.
+Never-started generation retains saved selections and their measured timings.
+`contextCoverageMacro`/`Micro` describe those prepared contexts; the separate
+`attemptedContextCoverageMacro`/`Micro` count only contexts in model-call attempts.
+A call attempt does not prove server receipt. Missing selections contribute zero
+to the expected-case denominator and are exposed through `contextPreparedRows`.
 
 Runtime summaries include sample counts, median p50 and nearest-rank p95.
 Missing measurements are null. A gate skip is zero model calls, not a zero-time
@@ -83,6 +96,9 @@ model sample. Loading, prefill, generation and actual token counts are checked
 against saved wire measurements. Corpus/query embedding durations and cache
 observations remain separate. Hardware/electricity and uninstrumented memory are
 unmeasured; API spend is zero only for the actual local-runtime evidence kind.
+Saved model name, digest and exact template bytes must match the protocol pins.
+Runtime version, family, tokenizer, capacity and capability metadata are validated
+without contacting Ollama. These record checks do not prove live compatibility.
 
 Generate a report without inference:
 

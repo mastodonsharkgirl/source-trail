@@ -6,7 +6,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from tools.policy_eval.tests.test_assessment import gold_case, row
+from tools.policy_eval.tests.test_assessment import gold_case, row, assessment_record
 from tools.policy_eval.tests.helpers import DIGEST, PASSAGE, fixture, prepared, SyntheticTransport
 
 PROVENANCE = {"runId": "synthetic-report", "split": "held-out", "fixtureHash": "f" * 64, "rubricHash": "b" * 64, "protocolHash": "e" * 64, "modelDigest": DIGEST, "sourceCommit": "a" * 40, "evidenceKind": "synthetic-test", "attempts": []}
@@ -86,7 +86,7 @@ class ReportTests(unittest.TestCase):
 
     def test_assessed_support_is_separate_from_valid_citations(self):
         value = row()
-        value["assessment"] = {"outputHash": hashlib.sha256(value["rawResponse"].encode()).hexdigest(), "rubricHash": "b" * 64, "assessor": {"type": "agent", "name": "Synthetic reviewer", "model": "synthetic"}, "support": "supported", "reasonCorrect": True, "instructionCompliance": "not_applicable", "notes": "Synthetic support assessment only."}
+        value["assessment"] = assessment_record(value)
         result = self.module.build_report([value], [gold_case()], {**PROVENANCE, "split": "development"})
         self.assertEqual(result["metrics"]["semantic"]["supportedAnswerYield"]["numerator"], 1)
 
@@ -133,7 +133,8 @@ class ReportTests(unittest.TestCase):
         (root / "fixture.json").write_bytes(fixture_bytes)
         (root / "rubric.json").write_bytes(rubric_bytes)
         (root / "manifest.json").write_bytes(encode({"schemaVersion": 1, "fixtureSha256": fixture_hash, "rubricSha256": rubric_hash}))
-        protocol = {"modelDigest": DIGEST, "fixtureHash": fixture_hash, "rubricHash": rubric_hash}
+        metadata = LocalOllamaClient(transport=SyntheticTransport()).preflight(DIGEST)
+        protocol = {"modelDigest": DIGEST, "templateSha256": metadata["templateSha256"], "fixtureHash": fixture_hash, "rubricHash": rubric_hash}
         protocol_bytes = encode(protocol)
         protocol_hash = sha256(protocol_bytes)
         with RunStore(root / "runs") as store:
@@ -146,7 +147,7 @@ class ReportTests(unittest.TestCase):
                 case["caseId"] = gold["caseId"]
                 cases.append(case)
             save_contexts(directory / "contexts.json", {"schemaVersion": 1, "fixtureHash": fixture_hash, "cases": cases, "encoder": {"synthetic": True}})
-            (directory / "model.json").write_bytes(encode({"digest": DIGEST, "runtimeVersion": "synthetic"}))
+            (directory / "model.json").write_bytes(encode(metadata))
             record = store.start_row("synthetic-report", allocation["rows"][0])
             run_case(cases[0], allocation["rows"][0]["method"], {**protocol, "runId": "synthetic-report", "protocolHash": protocol_hash}, LocalOllamaClient(transport=SyntheticTransport()), record=record)
         return directory
@@ -187,3 +188,32 @@ class ReportTests(unittest.TestCase):
             output.write_text(json.dumps(data))
             with self.assertRaises(ValueError):
                 self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+
+    def test_missing_generation_keeps_measured_retrieval_but_not_delivery(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self.create_saved_run(root)
+            result = self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+            value = next(r for r in result["rows"] if r["caseId"] == "synthetic-1" and r["method"] == "semantic")
+            self.assertEqual(value["status"], "missing")
+            self.assertEqual(value["runtime"]["generatorCalls"], 0)
+            self.assertEqual(value["selection"]["ranked"][0]["id"], PASSAGE["id"])
+            self.assertEqual(value["selection"]["timings"]["queryEmbeddingMs"], 1)
+            self.assertFalse(value["evidence"]["modelCallAttempted"])
+            self.assertEqual(result["metrics"]["semantic"]["contextCoverageMacro"]["value"], 1)
+            self.assertEqual(result["metrics"]["semantic"]["attemptedContextCoverageMacro"]["value"], 0)
+            self.assertEqual(result["metrics"]["semantic"]["runtime"]["queryEmbeddingMs"]["n"], 12)
+            self.assertEqual(result["metrics"]["semantic"]["recallAt3"]["value"], 1)
+            self.assertEqual(result["metrics"]["semantic"]["answerableAcceptance"]["numerator"], 0)
+
+    def test_model_template_and_name_are_bound_to_saved_protocol(self):
+        for field, replacement in [("templateSha256", "e" * 64), ("template", "changed bytes"), ("model", "other-model"), ("runtimeVersion", ""), ("details", []), ("modelInfo", {}), ("capabilities", ["completion"])]:
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                directory = self.create_saved_run(root)
+                path = directory / "model.json"
+                model = json.loads(path.read_bytes())
+                model[field] = replacement
+                path.write_text(json.dumps(model))
+                with self.assertRaises(ValueError):
+                    self.module.load_recorded_run("synthetic-report", evidence_dir=root)
