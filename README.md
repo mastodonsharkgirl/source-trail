@@ -8,6 +8,15 @@ Story Lab opens with an explicitly labelled recorded real Qwen run: ideas, exact
 
 ## Run
 
+The separate **Policy Lab** source is now prepared at `/policy-lab/`. It compares
+saved policy-evidence selections using a fictional corpus, with a bounded local
+Python runner and recorded-only viewer. Real Policy Lab model evaluation and
+browser acceptance are still pending; the page explicitly shows no recorded run
+selected. It starts no model when opened. The existing Story Lab and original
+retrieval records remain separate. Read the [local handoff](docs/policy-lab/PORTFOLIO_HANDOFF.md)
+and [verification boundary](docs/policy-lab/VERIFICATION.md) before treating this
+branch as a completed release.
+
 Node24.11–25 and npm:
 
 ```powershell
