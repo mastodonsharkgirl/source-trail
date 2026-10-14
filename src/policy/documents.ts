@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
-import { validateSources } from '../lib/sources.js';
-import type { GoldCase, PolicyCorpus, PolicyDocument, PolicyFixture, PolicyPassage, Principal, Role, Tenant } from './types.js';
+import { validateSources } from '../lib/sources.ts';
+import type { GoldCase, PolicyCorpus, PolicyDocument, PolicyFixture, PolicyPassage, Principal, Role, Tenant } from './types.ts';
 
 // This synchronous validator is intentionally Node-only. The recorded Policy Lab
 // viewer reads frozen JSON and types, while CLI selection imports this module.

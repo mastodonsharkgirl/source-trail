@@ -13,6 +13,8 @@
     "qa": "npm run check && npm test && npm run build && npm run test:e2e",
     "prepare-model": "node scripts/prepare-model.mjs",
     "evaluate": "node --experimental-strip-types scripts/evaluate.mjs",
+    "policy:fixture": "node scripts/freeze-policy-fixture.mjs",
+    "test:policy": "vitest run tests/policy-documents.test.ts tests/policy-retrieval.test.ts",
     "prebuild": "npm run prepare-model && node scripts/prepare-generator.mjs",
     "test:e2e": "playwright test",
     "dev": "astro dev",
