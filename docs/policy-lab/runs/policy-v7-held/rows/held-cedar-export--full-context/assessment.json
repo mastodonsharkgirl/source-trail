@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-cedar-export",
+  "method": "full-context",
+  "contextHash": "9837100bd95dca8dde145688e733e74ec909df115e1e1fe3952d140514742b9b",
+  "outputHash": "64e55bb57e1773551b087dcccd2d082471beb9ed3f87a07f33bf3e83c7b8ed79",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The body correctly describes security-only export after recording the request identifier and quotes cedar-export-current:1. Nevertheless it is labelled abstain/missing_evidence despite available evidence. Content support is separate from that incorrect disposition/reason and cannot earn supported-answer yield."
+}

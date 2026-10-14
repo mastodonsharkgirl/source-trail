@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-employee-export",
+  "method": "lexical",
+  "contextHash": "d781ed45b516fd4bdd030ac46bf3d355b8886c9e6d1ce9ddad234f234dda9cfe",
+  "outputHash": "5e37d733331e51baec2614763d6a47a6c7dad3822a0ba2b6297176886b67c53e",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "unsupported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "The missing_evidence reason is appropriate because the security-only export source is excluded. The body nevertheless invents employee export permission under unspecified conditions; no supplied passage grants it. Abstention decision/reason must not conceal the unsupported permission claim."
+}

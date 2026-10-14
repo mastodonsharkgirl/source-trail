@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-remote-security",
+  "method": "semantic",
+  "contextHash": "3d9e2a98089b8440528f3d1100d2647c848e9f1d407c5b427ee0ada50e88fe8a",
+  "outputHash": "ce2cc81e557d1090ad7fcbb44a402b162060258340cba93010b8ba4cb9b8d385",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The manager-or-security clause is supported by supplied remote-b:4, but the incompatible manager-only remote-a:4 is absent from the semantic context. The response omits the required conflict and falsely uses missing_evidence while stating one rule. The omitted relevant passage is a retrieval limitation, not proof that the model saw it."
+}

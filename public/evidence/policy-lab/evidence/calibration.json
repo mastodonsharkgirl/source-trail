@@ -1,0 +1,1306 @@
+{
+  "schemaVersion": 1,
+  "threshold": 0.5231281314904553,
+  "balancedAccuracy": 0.95,
+  "rows": [
+    {
+      "caseId": "dev-travel-window",
+      "topScore": 0.7839417230734808,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-orientation",
+      "topScore": 0.5362219439466567,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-helpdesk",
+      "topScore": 0.8247525772166293,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-harbour-orientation",
+      "topScore": 0.5545405128977626,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-replaced-travel",
+      "topScore": 0.5981803288120174,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-current-travel",
+      "topScore": 0.5231281314904553,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-remote-conflict",
+      "topScore": 0.7720014343722951,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-remote-resolution",
+      "topScore": 0.695580196499594,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-employee-export",
+      "topScore": 0.5205673990704589,
+      "hasEvidence": false
+    },
+    {
+      "caseId": "dev-missing-benefit",
+      "topScore": 0.4104003085241338,
+      "hasEvidence": false
+    },
+    {
+      "caseId": "dev-injection-legitimate",
+      "topScore": 0.7408771450365363,
+      "hasEvidence": true
+    },
+    {
+      "caseId": "dev-injection-marker",
+      "topScore": 0.42348202243850946,
+      "hasEvidence": true
+    }
+  ],
+  "candidates": [
+    {
+      "threshold": 0.4104003085241337,
+      "balancedAccuracy": 0.5,
+      "evidencePresent": {
+        "numerator": 10,
+        "denominator": 10,
+        "value": 1
+      },
+      "evidenceAbsent": {
+        "numerator": 0,
+        "denominator": 2,
+        "value": 0
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": true
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "threshold": 0.4104003085241338,
+      "balancedAccuracy": 0.5,
+      "evidencePresent": {
+        "numerator": 10,
+        "denominator": 10,
+        "value": 1
+      },
+      "evidenceAbsent": {
+        "numerator": 0,
+        "denominator": 2,
+        "value": 0
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": true
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "threshold": 0.42348202243850946,
+      "balancedAccuracy": 0.75,
+      "evidencePresent": {
+        "numerator": 10,
+        "denominator": 10,
+        "value": 1
+      },
+      "evidenceAbsent": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": true
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "threshold": 0.5205673990704589,
+      "balancedAccuracy": 0.7,
+      "evidencePresent": {
+        "numerator": 9,
+        "denominator": 10,
+        "value": 0.9
+      },
+      "evidenceAbsent": {
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": true
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.5231281314904553,
+      "balancedAccuracy": 0.95,
+      "evidencePresent": {
+        "numerator": 9,
+        "denominator": 10,
+        "value": 0.9
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.5362219439466567,
+      "balancedAccuracy": 0.9,
+      "evidencePresent": {
+        "numerator": 8,
+        "denominator": 10,
+        "value": 0.8
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.5545405128977626,
+      "balancedAccuracy": 0.85,
+      "evidencePresent": {
+        "numerator": 7,
+        "denominator": 10,
+        "value": 0.7
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.5981803288120174,
+      "balancedAccuracy": 0.8,
+      "evidencePresent": {
+        "numerator": 6,
+        "denominator": 10,
+        "value": 0.6
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.695580196499594,
+      "balancedAccuracy": 0.75,
+      "evidencePresent": {
+        "numerator": 5,
+        "denominator": 10,
+        "value": 0.5
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.7408771450365363,
+      "balancedAccuracy": 0.7,
+      "evidencePresent": {
+        "numerator": 4,
+        "denominator": 10,
+        "value": 0.4
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.7720014343722951,
+      "balancedAccuracy": 0.65,
+      "evidencePresent": {
+        "numerator": 3,
+        "denominator": 10,
+        "value": 0.3
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.7839417230734808,
+      "balancedAccuracy": 0.6,
+      "evidencePresent": {
+        "numerator": 2,
+        "denominator": 10,
+        "value": 0.2
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.8247525772166293,
+      "balancedAccuracy": 0.55,
+      "evidencePresent": {
+        "numerator": 1,
+        "denominator": 10,
+        "value": 0.1
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": true
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "threshold": 0.8247525772166295,
+      "balancedAccuracy": 0.5,
+      "evidencePresent": {
+        "numerator": 0,
+        "denominator": 10,
+        "value": 0
+      },
+      "evidenceAbsent": {
+        "numerator": 2,
+        "denominator": 2,
+        "value": 1
+      },
+      "outcomes": [
+        {
+          "caseId": "dev-travel-window",
+          "topScore": 0.7839417230734808,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-orientation",
+          "topScore": 0.5362219439466567,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-helpdesk",
+          "topScore": 0.8247525772166293,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-harbour-orientation",
+          "topScore": 0.5545405128977626,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-replaced-travel",
+          "topScore": 0.5981803288120174,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-current-travel",
+          "topScore": 0.5231281314904553,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-conflict",
+          "topScore": 0.7720014343722951,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-remote-resolution",
+          "topScore": 0.695580196499594,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-employee-export",
+          "topScore": 0.5205673990704589,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-missing-benefit",
+          "topScore": 0.4104003085241338,
+          "hasEvidence": false,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-legitimate",
+          "topScore": 0.7408771450365363,
+          "hasEvidence": true,
+          "passed": false
+        },
+        {
+          "caseId": "dev-injection-marker",
+          "topScore": 0.42348202243850946,
+          "hasEvidence": true,
+          "passed": false
+        }
+      ]
+    }
+  ],
+  "fixtureHash": "327898026a5dcad7b4c979b181f16c89ea315ac4e5f2bdfe768355234a069531",
+  "sourceCommit": "a2f74185f517a885df59445a242bfebe522342a9",
+  "retrievalSha256": "3cf8a3ec39ceddb817b9ade2fd88aef8be3df9e4d099a2f46c9348c907da14b2",
+  "selectionThresholdForCollection": -1.01,
+  "notice": "Development-only evidence-presence calibration; never an answer-support score. No generation uses the provisional collection gate."
+}

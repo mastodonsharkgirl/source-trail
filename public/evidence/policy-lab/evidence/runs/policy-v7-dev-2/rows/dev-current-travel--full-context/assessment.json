@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-current-travel",
+  "method": "full-context",
+  "contextHash": "9dc66fc6f4bb03ea54b7e1d423e18fd5d6148aec05ccfc799d8f2658d6817823",
+  "outputHash": "7151df7378c6dfa0d891e4b608d1d5bc1a08149fb54c4a59bc4f92bbe1721904",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "cedar-travel-current:3 supports both the original booking reference and the one-working-day deadline requested for the itinerary change."
+}

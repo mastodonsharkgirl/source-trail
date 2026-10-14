@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-harbour-onboarding",
+  "method": "lexical",
+  "contextHash": "44c9db4d65789b368cde1cbd3a7770af0a8d10a1231af65829fe96088d690089",
+  "outputHash": "3f89a1fbca6ef7acea788715a3095392f8000aa0ec05b7abcf99d83733a58d86",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "harbour-onboarding-current:1 sets a completion deadline within ten working days of joining. The answer says orientation takes ten working days, turning an upper deadline into an exact duration and omitting its joining anchor; full context partly qualifies it as completed within the period. The correct source quote remains, but the body does not faithfully preserve the deadline/duration distinction. This is a strict agent judgment, not human validation."
+}

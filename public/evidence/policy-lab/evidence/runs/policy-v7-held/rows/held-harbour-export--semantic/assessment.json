@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-harbour-export",
+  "method": "semantic",
+  "contextHash": "583c0f122226e0daaf5e71a5b24842603dcc30d0b78898747bc017e1b92b6044",
+  "outputHash": "84e337fc71fdc5f0dfa15f957147d10ef8e47f3672199f1b85174d97d7ef226b",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "harbour-export-current:1 requires a recorded review ticket before Harbour security exports synthetic records. The body and exact quote preserve that precondition."
+}

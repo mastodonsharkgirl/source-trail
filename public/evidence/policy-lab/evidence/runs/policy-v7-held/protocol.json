@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "fixtureHash": "327898026a5dcad7b4c979b181f16c89ea315ac4e5f2bdfe768355234a069531",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "threshold": 0.5231281314904553,
+  "modelDigest": "8f68893c685c3ddff2aa3fffce2aa60a30bb2da65ca488b61fff134a4d1730e7",
+  "templateSha256": "ae370d884f108d16e7cc8fd5259ebc5773a0afa6e078b11f4ed7e39a27e0dfc4",
+  "promptSha256": "98b20426c88629c36ad14e1ea369bf7cbc06b75c1c05c139e1c58abd898a2843",
+  "calibrationSha256": "c2932d34feab2b79f53d6dee7bfa7454718c40778de8029549926a7546f9fd65",
+  "locked": true,
+  "options": {
+    "temperature": 0,
+    "seed": 17,
+    "num_predict": 256,
+    "num_ctx": 8192
+  },
+  "methodOrder": "cyclic",
+  "developmentAdjustment": "The first development sweep stopped at dev-orientation/full-context after the model enumerated unrelated whole-paragraph citations and reached the fixed 256-token cap. Use one common prompt asking for a short answer and only short quotations supporting requested facts. Keep every supplied passage, model, gate, schema, seed, token/context caps and timeout unchanged. Preserve the original partial sweep; this is the sole permitted development adjustment before held-out."
+}

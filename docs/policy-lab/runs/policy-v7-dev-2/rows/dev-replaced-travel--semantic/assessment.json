@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-replaced-travel",
+  "method": "semantic",
+  "contextHash": "0b2be36ba7f23eda6d6981351c60e15dac450d9609d96915420fb0ab45964b0e",
+  "outputHash": "90d2952b28ededc703ccb63055f41fef459efe8ea487d2463afb574a6cc88b97",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "cedar-travel-current:2 states that claims above 500 fictional credits require an itemised receipt. The answer correctly uses the replacement threshold, not the old 300 value."
+}

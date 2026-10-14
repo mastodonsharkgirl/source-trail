@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-harbour-export",
+  "method": "full-context",
+  "contextHash": "62b5079edf0e26807d01b0bad16a63505bef082181eda614b2bd70b4cb7e2dab",
+  "outputHash": "3e8e4cebd276a603693706ef4d30a7d733a481c79d1c51f07032ca5b0a93b26b",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The review-ticket-before-export condition is present, but the answer additionally says security must record synthetic records after the ticket. harbour-export-current:1 permits exporting records after a recorded ticket; it does not require that additional record-creation step."
+}

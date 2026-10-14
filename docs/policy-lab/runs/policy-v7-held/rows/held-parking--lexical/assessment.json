@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-parking",
+  "method": "lexical",
+  "contextHash": "6c2238a8bebccd9f786e202046a033dda36bfa2ec8f43bf0adc556dee7d3ea21",
+  "outputHash": "090387371c91bc1c345b25dffc239ea28a0ca4444a7ce33e1bab9bbc4c9ee34d",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "Neither supplied Harbour passage specifies a parking allowance. The response correctly abstains and says the fact is unspecified, without inventing an amount or procedure. Fictional refers to this authored scenario, not evidence of a real allowance."
+}

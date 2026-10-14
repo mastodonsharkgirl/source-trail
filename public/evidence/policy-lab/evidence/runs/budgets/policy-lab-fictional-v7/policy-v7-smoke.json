@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "runId": "policy-v7-smoke",
+  "stage": "smoke",
+  "fixtureVersion": "policy-lab-fictional-v7",
+  "fixtureHash": "327898026a5dcad7b4c979b181f16c89ea315ac4e5f2bdfe768355234a069531",
+  "protocolHash": "1a93193559a9d45a11a1f9194f91523600ffdd1f8777ddd57a504d92b9d4b077",
+  "sourceCommit": "96757f54231a3546fafcd2fcd8878bd260f61d8c",
+  "rows": [
+    {
+      "caseId": "dev-travel-window",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-orientation",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-helpdesk",
+      "method": "full-context"
+    }
+  ]
+}

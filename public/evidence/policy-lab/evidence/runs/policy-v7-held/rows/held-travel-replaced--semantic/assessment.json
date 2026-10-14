@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-replaced",
+  "method": "semantic",
+  "contextHash": "c83b6338f09542008df89b59a1819b1cecc9fb62a262c7ee796a56237c71b5b6",
+  "outputHash": "f29f9b8908becb17f1bfb77fe97308eb2b5df993e84e6a5e6ec84eb24304b7f3",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The response says the policy does not establish whether the former window is still used. Supplied travel-current:1 explicitly says the current seven-day rule replaces the former three-day window. Full context even quotes that exact replacement sentence."
+}

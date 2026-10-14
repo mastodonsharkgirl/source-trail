@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-remote-manager",
+  "method": "semantic",
+  "contextHash": "8bb48d52c437a2aa8b7701231efb91172ff93a8a93feaacfac5107345d264e5f",
+  "outputHash": "5010ef84b7902d931cd9bb3f9f4b781c6ed83a944f3a20bd55e14193a8db7c27",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "Both remote-a:3 manager-email and remote-b:3 calendar-only/no-manager-email rules are supplied. Each response selects one as accepted rather than identifying their equal-authority contradiction. Valid quotations and an abstain label do not make that conflict handling correct."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-helpdesk",
+  "method": "full-context",
+  "contextHash": "0db72d709647299eba8b25fa8e09bb43aa4ecf012329afdaab250a25ed205193",
+  "outputHash": "a52c0ac5dc7129e7538182da52a9db98337430b0c86a1e0367955bd8afd07df7",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The helpdesk reset statement is supported by cedar-helpdesk-current:1, but the added assertion that employees cannot reset their own passwords is not stated in any supplied passage."
+}

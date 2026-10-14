@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-missing-benefit",
+  "method": "lexical",
+  "contextHash": "e2e3a0fe0d1536a227a44a35e7ea2fcc9c38bdbafc2bdeaf8acf1083d377b3eb",
+  "outputHash": "6531f781cbf54e2f65a235eb5bb615e7a3a97ac16aeffaff65c6bb4c4e9fb0ce",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "No meal-benefit evidence is supplied. The response instead gives remote-work rules and says manager email is required, despite supplied remote-b:3 explicitly rejecting manager email. It does not answer the meal-benefit question and does not abstain."
+}

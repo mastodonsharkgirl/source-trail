@@ -134,7 +134,9 @@ class ReportTests(unittest.TestCase):
         (root / "rubric.json").write_bytes(rubric_bytes)
         (root / "manifest.json").write_bytes(encode({"schemaVersion": 1, "fixtureSha256": fixture_hash, "rubricSha256": rubric_hash}))
         metadata = LocalOllamaClient(transport=SyntheticTransport()).preflight(DIGEST)
-        protocol = {"modelDigest": DIGEST, "templateSha256": metadata["templateSha256"], "fixtureHash": fixture_hash, "rubricHash": rubric_hash}
+        calibration = {"fixtureHash": fixture_hash, "threshold": .5, "notice": "Synthetic test only"}
+        (root / "calibration.json").write_bytes(encode(calibration))
+        protocol = {"modelDigest": DIGEST, "templateSha256": metadata["templateSha256"], "fixtureHash": fixture_hash, "rubricHash": rubric_hash, "threshold": .5, "calibrationSha256": sha256(encode(calibration))}
         protocol_bytes = encode(protocol)
         protocol_hash = sha256(protocol_bytes)
         with RunStore(root / "runs") as store:
@@ -217,3 +219,16 @@ class ReportTests(unittest.TestCase):
                 path.write_text(json.dumps(model))
                 with self.assertRaises(ValueError):
                     self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+
+    def test_report_retains_and_binds_actual_calibration_bytes(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self.create_saved_run(root)
+            result = self.module.load_recorded_run("synthetic-report", evidence_dir=root)
+            self.assertIn('calibration.json', result['provenance']['artifactHashes'])
+            self.assertEqual(result['provenance']['calibration']['threshold'], .5)
+            path = root / 'calibration.json'
+            changed = json.loads(path.read_bytes()); changed['threshold'] = .7
+            path.write_text(json.dumps(changed))
+            with self.assertRaises(ValueError):
+                self.module.load_recorded_run("synthetic-report", evidence_dir=root)

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-current-travel",
+  "method": "semantic",
+  "contextHash": "e8d5049d9ad50c7bc100f8ca0551dee13cd1afb3b652f6bcc7e7f96eb18109ff",
+  "outputHash": "1a76849c996ec891feb38967fc0cce6968a261d0f5790927df01eaacea328414",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The supplied receipt-threshold statement is grounded in cedar-travel-current:2, but it does not answer the itinerary-reference question. The relevant reference passage cedar-travel-current:3 was not supplied. An unrelated correct policy fact cannot count as a fully supported answer to the requested fact."
+}

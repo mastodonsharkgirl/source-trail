@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-escalation",
+  "method": "lexical",
+  "contextHash": "3e792dafb396c190c1ea851d19fb19e834af4720e4558dd4a2f03d0abba1f577",
+  "outputHash": "94ef00bec74ca1e5642b2166910ee525b07b5f3a5f19c10965c4fa59b0130a7c",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "cedar-escalation-current:1 supports logging a fictional case with the people operations queue. The body answers the question correctly, but all three outputs falsely label it abstain/missing_evidence while quoting the answer. No accepted-answer yield is awarded."
+}

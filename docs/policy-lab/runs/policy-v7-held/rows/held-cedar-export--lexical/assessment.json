@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-cedar-export",
+  "method": "lexical",
+  "contextHash": "44bfb7cafc006dfe69062ce44b04ebf7fbe237225eee719a2faa3067ddc43a85",
+  "outputHash": "69e8dea5dabeefa3ee22e29396f8e3afd72469d298780156e5b7e7247702b421",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "The request identifier before Cedar security export is supported by cedar-export-current:1. The off-topic manager-email approval statement is also supplied in remote-a:3; the competing approval-record passage remote-b:3 is not supplied here. No unseen ideal context is substituted in this assessment."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-remote-status",
+  "method": "semantic",
+  "contextHash": "ecb1f95262ce5200843146c40af448b11f53102a4092f288960f0717297e4fef",
+  "outputHash": "4e1b35f2c9e3fc42263bf40c3f0ff6df404114b0247215e96e2345115580945c",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "Both emergency-approval clauses are supplied: remote-a:4 security-only and remote-b:4 manager-only. The responses either merge the exclusive roles or select the manager, with full context quoting the opposite security-only clause. None identifies the conflict or cites both relevant rules as a useful conflict abstention."
+}

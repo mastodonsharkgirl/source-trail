@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-orientation",
+  "method": "semantic",
+  "contextHash": "d8542da8dd7fb639885a73256b638ba7dea058f1d45e56ecd0f6ff5a06ec62ce",
+  "outputHash": "c7cb381165e67d3274df5308466750d538900a7d86079123a4c205edc00b108d",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "cedar-onboarding-current:1 directly supports the five-working-day orientation deadline. The answer adds no unsupported fact."
+}

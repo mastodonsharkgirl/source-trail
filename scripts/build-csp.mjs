@@ -30,6 +30,8 @@ for (const file of await readdir("dist/_source-trail"))
     headers += `${base}_source-trail/${file}\n  Content-Security-Policy: ${policy([], file.startsWith("generation.worker"))}\n`;
 if (headers.split("\n").some((l) => l.length > 2000))
   throw Error("Header exceeds 2000 characters");
+for (const file of ["methodology.txt", "report.md"])
+  headers += `${base}evidence/policy-lab/${file}\n  Content-Type: text/plain; charset=utf-8\n`;
 await writeFile("dist/_headers", headers);
 await mkdir("dist/evidence", { recursive: true });
 await mkdir("dist/evidence/policy-lab", { recursive: true });

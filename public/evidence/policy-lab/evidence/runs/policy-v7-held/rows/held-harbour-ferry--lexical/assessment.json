@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-harbour-ferry",
+  "method": "lexical",
+  "contextHash": "6442acc9d0f93b858d1083fe83f5a6d1d42d4a2919d15de49598fc043b98db88",
+  "outputHash": "554270315c06e730320ede70f34f74ef2f4a77e62e200768408553b295291e65",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "harbour-travel-current:1 explicitly sets fourteen days of advance ferry booking. All methods supply and quote that tenant-specific requirement, without substituting Cedar rail timing."
+}

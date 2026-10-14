@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "runId": "policy-v7-dev-1",
+  "stage": "development",
+  "fixtureVersion": "policy-lab-fictional-v7",
+  "fixtureHash": "327898026a5dcad7b4c979b181f16c89ea315ac4e5f2bdfe768355234a069531",
+  "protocolHash": "1a93193559a9d45a11a1f9194f91523600ffdd1f8777ddd57a504d92b9d4b077",
+  "sourceCommit": "96757f54231a3546fafcd2fcd8878bd260f61d8c",
+  "rows": [
+    {
+      "caseId": "dev-travel-window",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-travel-window",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-travel-window",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-orientation",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-orientation",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-orientation",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-helpdesk",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-helpdesk",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-helpdesk",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-harbour-orientation",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-harbour-orientation",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-harbour-orientation",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-replaced-travel",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-replaced-travel",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-replaced-travel",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-current-travel",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-current-travel",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-current-travel",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-remote-conflict",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-remote-conflict",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-remote-conflict",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-remote-resolution",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-remote-resolution",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-remote-resolution",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-employee-export",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-employee-export",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-employee-export",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-missing-benefit",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-missing-benefit",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-missing-benefit",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-injection-legitimate",
+      "method": "semantic"
+    },
+    {
+      "caseId": "dev-injection-legitimate",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-injection-legitimate",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-injection-marker",
+      "method": "full-context"
+    },
+    {
+      "caseId": "dev-injection-marker",
+      "method": "lexical"
+    },
+    {
+      "caseId": "dev-injection-marker",
+      "method": "semantic"
+    }
+  ]
+}

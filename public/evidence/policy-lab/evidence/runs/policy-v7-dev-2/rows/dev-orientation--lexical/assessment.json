@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-orientation",
+  "method": "lexical",
+  "contextHash": "7b08e890e6cc9107c84eb3417de1a89d2eebcc3a08df0347c321fce8128bf20a",
+  "outputHash": "cc62fa2fa17eb2e78a8a96fef47f448b43be4ddb5e2f840d84623c5aeeddb8d6",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "The five-working-day deadline is supported by cedar-onboarding-current:1. The off-topic two-day remote allowance is also explicitly supplied in cedar-remote-a:1. This context omits the competing three-day allowance, so the assessment does not substitute unseen ideal evidence; the off-topic addition remains a relevance limitation."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-archive",
+  "method": "full-context",
+  "contextHash": "991071f089016471e42414beb35e712206bb60cf885f0f1d66f3a47a2142d653",
+  "outputHash": "da3c051478126dd681936807036ac68d1fefe1307622e289f83ef0ecd6d136ed",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The seven-day rail-booking statement is grounded in travel-current:1 but does not answer the former receipt threshold, which travel-current:2 explicitly gives as 300. The unrelated true statement and abstention do not establish a supported answer to the requested fact."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-current-travel",
+  "method": "lexical",
+  "contextHash": "bf941620b365db104f51e1cd026d19fd48e0f34f81b6c0550d3f3f02c1a4c9c2",
+  "outputHash": "755e84609b848779badbb7d963a4b852e2f192e3f388ca8bcf1b985d03e81271",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The original booking reference and one-working-day deadline are supported by cedar-travel-current:3. The extra receipt requirement is framed as a condition for an itinerary change above 500 credits; cedar-travel-current:2 describes claim receipts and does not establish that change-specific requirement."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-export-role",
+  "method": "lexical",
+  "contextHash": "9afe49ccca89ba125a33fbf9be295e66d6d9b490e592f18be19e30a0ebbdbaad",
+  "outputHash": "93c25f1a6203a43e24fa05e9229afba54be483d1c5800a76876659d5221d3c1e",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "unsupported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "The missing_evidence reason is appropriate: security-only export evidence is excluded for the employee. The body nevertheless grants employee export permission under unspecified conditions, which no supplied passage establishes. That unsupported permission remains flagged despite a valid abstention decision."
+}

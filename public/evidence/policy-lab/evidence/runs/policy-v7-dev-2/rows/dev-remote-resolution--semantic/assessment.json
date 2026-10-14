@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-remote-resolution",
+  "method": "semantic",
+  "contextHash": "448b403bb34a713c289011f3936f9ba42aa6f57e1edb371d3934b9bc90d5ba93",
+  "outputHash": "5cbfbfa21de781f837ac470b8b7dd0861bb69df7f8068506f4d32b1d75534280",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "The response identifies two named weekdays under remote-a:2 and three under remote-b:2, uses conflicting_evidence and quotes both supplied clauses. Both relevant passages are cited, so this is a useful conflict abstention."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-remote-resolution",
+  "method": "full-context",
+  "contextHash": "e51abb184aef1c5dd42a4a57a63a232390c0d9d97b89dd664bcc1016b2a2f693",
+  "outputHash": "43e3507e34e2fc057eb3eef775f62e8c72cda89fc43549f87dabbc410992eb93",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The answer selects two weekdays and manager-only recording while remote-b:2 in the same supplied context requires three weekdays and security recording. It resolves an equal-authority conflict without authority to do so."
+}

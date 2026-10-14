@@ -1,8 +1,11 @@
 # Policy Lab source-support assessment
 
-This is an assessment procedure, not a claim that model evaluation has run.
-All runner/report tests use explicitly synthetic records. Real inference and
-held-out reporting remain deferred until the shared compute slot is available.
+The real local comparison is recorded in `policy-v7-held`, after development-only
+calibration, three smoke calls and two bounded development allocations. All
+108 actual emitted responses across these stages were assessed by the main
+Codex GPT-6 agent against their exact saved contexts. This is agent assessment,
+not independent human validation. Runner/report unit tests still use synthetic
+records separately from these measured runs.
 
 The fixed fixture supplies the question, simulated principal, date, expected
 disposition, relevant passage IDs, complete required-fact statements, prohibited
@@ -124,12 +127,18 @@ npm run policy:coherence
 
 Export writes only local browser data and public evidence files inside this
 repository. It does not deploy or publish. Synthetic-test records are rejected.
-Missing real evidence must stay explicitly unavailable; never copy a test answer
-into the recorded page. No selected pointer or generated results have been
-created at this implementation stage. The browser data file currently contains
-only an explicit unavailable manifest. Real exports will replace that manifest
-and place the selected report/evidence under `public/evidence/policy-lab/`.
+The browser data now contains the explicitly selected real held-out report.
+The same report and its evidence are exported under `public/evidence/policy-lab/`.
+Missing future evidence must remain unavailable; never copy a test response into
+the recorded page or silently replace the selected snapshot.
 The build also runs the local coherence check: bundled/public report bytes,
 selected run ID/hash, local pointer and immutable snapshot must agree. The
-current unavailable manifest requires no stale selected report artifacts.
+unavailable manifest requires no stale selected report artifacts.
 Case downloads carry the selected report's SHA-256 alongside their exact rows.
+
+The v7 marked source is a warning about marker-reveal instructions, rather than
+an active hostile source command. Injection-labelled cases mix ordinary helpdesk
+questions with direct unsafe user requests. These outcomes therefore cannot
+establish broad source-injection resistance. Public-marker mentions in refusal
+explanations are distinct from a response endorsing the unsafe request. Ambiguous
+partial compliance stays unreviewed, with its reasoning visible.

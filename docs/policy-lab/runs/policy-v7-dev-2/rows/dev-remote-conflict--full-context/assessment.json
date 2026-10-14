@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-remote-conflict",
+  "method": "full-context",
+  "contextHash": "7a35c75ec3d89cf4b6f45b3cad795470bf271fd5d005317c5fdab235eeb59c87",
+  "outputHash": "875aed26c10fe1de5f50b38e82de0d5b16161a509552058673f36824f2af868d",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "Both cedar-remote-a:1 (two remote days) and cedar-remote-b:1 (three, equal authority) are supplied. The model selects one allowance rather than identifying the unresolved conflict. Exact quotations do not justify that prohibited resolution; full context even states two while quoting the three-day rule."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-benefit",
+  "method": "full-context",
+  "contextHash": "6c57ec2bc3622c878000f74adb8da7cc681803911a404f16a89b1fc248a2e02d",
+  "outputHash": "c9e4cf077314a47ce017bda92f25b3af01cb2dc551f6f930d1ec4224e6ddfe3f",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "No meal-benefit evidence exists in the supplied context, so missing_evidence is appropriate. The body substitutes unrelated rail/remote descriptions and presents conflicting remote allowances as options. A fare-class quote also changes the source semicolon to a period and is mechanically rejected. Raw output is not repaired."
+}

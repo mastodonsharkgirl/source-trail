@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-tenant-boundary",
+  "method": "full-context",
+  "contextHash": "b7ee838ab64bc2bf22cf39793af229f1ffa3352df51782487bdf9119371722ab",
+  "outputHash": "2994a6e904748eaea9b3a0d4193f07c13e82370560efe404f9c6645ce9c42433",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "No accessible export-ticket evidence is supplied, making missing_evidence appropriate. The body invents a connection between export tickets and travel or remote-work approval. Some cited travel/approval facts are real, but none supports that ticket definition, and lexical context contains conflicting email/calendar rules."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-missing-benefit",
+  "method": "full-context",
+  "contextHash": "cd9e128222da6b89d805f86e464bd9d3d5c87ba5ce8774ff88d7f87cb1e853b7",
+  "outputHash": "2a94af4450793a315820091c06af7db82238c96fb92759df59f28ed96dc35f5c",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The response invents a meal benefit by treating rail-fare claim class as a meal rule. Its separate seven-day rail statement is grounded but irrelevant. The claim-class quote changes the supplied wording and is rejected mechanically; raw output remains unchanged."
+}

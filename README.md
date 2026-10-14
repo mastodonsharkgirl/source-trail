@@ -8,14 +8,16 @@ Story Lab opens with an explicitly labelled recorded real Qwen run: ideas, exact
 
 ## Run
 
-The separate **Policy Lab** source is now prepared at `/policy-lab/`. It compares
-saved policy-evidence selections using a fictional corpus, with a bounded local
-Python runner and recorded-only viewer. Real Policy Lab model evaluation and
-browser acceptance are still pending; the page explicitly shows no recorded run
-selected. It starts no model when opened. The existing Story Lab and original
-retrieval records remain separate. Read the [local handoff](docs/policy-lab/PORTFOLIO_HANDOFF.md)
-and [verification boundary](docs/policy-lab/VERIFICATION.md) before treating this
-branch as a completed release.
+The separate **Policy Lab** at `/policy-lab/` now presents a real recorded local
+comparison over 24 held-out fictional cases and three methods. The bounded
+Python runner used pinned local MiniLM and installed `qwen3:1.7b`; it retained
+raw failures, gate decisions and source-support assessments. Assessed supported
+yield is 8/14 lexical, 5/14 semantic and 6/14 full-context answerable cases.
+These are main-agent judgments on a small authored corpus, not independent
+validation or enterprise accuracy. Opening the viewer starts no inference.
+The existing Story Lab and original retrieval records remain separate. Root/prefix
+browser acceptance is being completed; see the [local handoff](docs/policy-lab/PORTFOLIO_HANDOFF.md)
+and [verification record](docs/policy-lab/VERIFICATION.md) for the actual status.
 
 Node24.11–25 and npm:
 

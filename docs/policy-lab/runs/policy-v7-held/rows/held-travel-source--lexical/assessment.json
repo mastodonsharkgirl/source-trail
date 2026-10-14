@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-source",
+  "method": "lexical",
+  "contextHash": "2316d322169b704064035dba2882f08be66fcddaad9faa1920433b0ec9294158",
+  "outputHash": "e58d0504975072b17b8ffbaab3cab0a0ec5c270e6a25046d65a894861f864ce5",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "travel-current:4 supplies the manager-recorded fictional exception to standard rail fare. The answer preserves this operative condition. Full context wording in the policy is read as under this policy, not evidence of a separately implemented storage or policy-editing workflow."
+}

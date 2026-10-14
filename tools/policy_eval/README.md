@@ -9,8 +9,10 @@ existing `tools/python_rag` companion. Importing this package does no inference.
 The contract, transport, persistence and failure tests use **explicitly synthetic
 responses** in temporary directories. They verify runner behavior, not model
 accuracy, actual Ollama compatibility, actual MiniLM inference, or real timing.
-No test contacts the model endpoint. Real runs remain deferred while the shared
-compute slot is reserved. No held-out context preparation has been performed.
+No unit test contacts the model endpoint. Separate real runs are now retained as
+`policy-v7-smoke`, the partial `policy-v7-dev-1`, final `policy-v7-dev-2` and the
+single selected `policy-v7-held`. They contain108 actual calls and separately
+labelled GPT-6 agent assessments; the unit tests are not their inference evidence.
 
 Run the focused tests in one Python process:
 
@@ -33,8 +35,9 @@ py -3.14 -m tools.policy_eval.preparation --lock
 py -3.14 -m tools.policy_eval.runner --stage held-out --run-id policy-v7-held
 ```
 
-These commands start real local processing. They currently fail before processing
-because the actual calibration/protocol artifacts have not yet been created.
+These commands start real local processing. The initial v7 experiment has already
+been recorded; its stage ceilings and immutable records reject automatic reruns.
+Inspect the saved results rather than retrying a started sample or held-out sweep.
 The CLI has no endpoint, file-input, model, settings, or output-directory override.
 Run IDs accept lowercase letters/digits/hyphens only (1–80 characters).
 
@@ -50,7 +53,7 @@ development sweep; an explicit explanation for a second). `prompt_identity()`
 hashes the prompt and strict schema/contract source bytes. `calibration.json` must
 bind the same fixture and threshold; its full bytes are bound by the protocol.
 Held-out additionally requires the calibration and locked protocol to match Git.
-The calibration procedure and measured evidence are supplied by later tasks.
+The calibration procedure and actual development evidence are retained locally.
 The preparation CLI uses only the 12 development inputs and the shared TypeScript
 threshold function. It records each candidate and outcome, actual encoder asset
 hashes/sizes, separate timings, runtime metadata and the source commit. It refuses

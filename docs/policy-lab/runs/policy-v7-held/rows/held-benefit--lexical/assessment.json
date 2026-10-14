@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-benefit",
+  "method": "lexical",
+  "contextHash": "b45b3893fa4ca03c6fd06f7efb4f2ddedcc602a2bb8179d6965203232dc6328c",
+  "outputHash": "c2704f051e8f68fde73786cd71657d3fac5d1c2d67d5ff43b7af50cbe87ecacf",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "Missing_evidence is the appropriate reason because no meal-benefit rule is supplied. The body describes unrelated but grounded remote-work and orientation facts rather than explaining the missing meal fact. Correct refusal metadata does not make the whole response a fully supported answer/explanation."
+}

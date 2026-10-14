@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-harbour-orientation",
+  "method": "semantic",
+  "contextHash": "315ef1386926522d57660a81e0ddc5fe5c3f49fca315f740ff7320b8c3dac5f4",
+  "outputHash": "56fe8bcccb2825df9f85b89712eb8f9de34fa1e27d1a79985a3ebcd167ef3664",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The ten-working-day deadline is factually supported by harbour-onboarding-current:1. However, the model labels this correct factual answer as abstain/missing_evidence despite quoting the available answer. Content support and incorrect disposition/reason are deliberately separate; this does not earn supported-answer yield."
+}

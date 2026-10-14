@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-value",
+  "method": "lexical",
+  "contextHash": "1c0257fed440baf92f12926bd0bfab5d1306bb337f0ac0871abcd820fc9f47c9",
+  "outputHash": "b2537b68411bc79d05b91be7f332313bc5b4077b2a18282a8a8849ead49f7659",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The answer substitutes the former three-day rail-booking window for an itinerary-change deadline. travel-current:3 explicitly states the former itinerary rule allowed two working days. Both passages are supplied, so this is a factual conflation."
+}

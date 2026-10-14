@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-remote-resolution",
+  "method": "lexical",
+  "contextHash": "e13c671e0e0f08f27bb3c9f850ddd4ee9cfd7736aa3807aefe778759e9e3c4fd",
+  "outputHash": "610a2279dd40a4295a15f4b5f3f435ff982e751b40b2fedb9649218e670b0a5d",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The cited two-weekday remote-a:2 rule is real, but the response omits the supplied three-weekday remote-b:2 rule and uses missing_evidence rather than explaining their conflict. A valid abstention label alone does not establish useful conflict handling."
+}

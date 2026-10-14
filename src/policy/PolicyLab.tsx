@@ -126,6 +126,11 @@ function RecordedViewer({
             </tbody>
           </table>
         </div>
+        <p className="policy-meta">
+          Abstention counts track valid decline decisions on cases expected to
+          decline. Their explanations can still contain unsupported claims;
+          inspect the separate source-support and reason assessments below.
+        </p>
         <details>
           <summary>Full metrics and run identity</summary>
           <p>

@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "runId": "policy-v7-held",
+  "stage": "held-out",
+  "fixtureVersion": "policy-lab-fictional-v7",
+  "fixtureHash": "327898026a5dcad7b4c979b181f16c89ea315ac4e5f2bdfe768355234a069531",
+  "protocolHash": "955852352e9af9e82fead217f983b620b11d81b99c9df33d2db63f28e35b1892",
+  "sourceCommit": "03a3e4afb21fbbfcf763c1c363d1de798ca40536",
+  "rows": [
+    {
+      "caseId": "held-travel-claim",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-travel-claim",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-travel-claim",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-orientation-owner",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-orientation-owner",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-orientation-owner",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-harbour-ferry",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-harbour-ferry",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-harbour-ferry",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-harbour-export",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-harbour-export",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-harbour-export",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-cedar-export",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-cedar-export",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-cedar-export",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-escalation",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-escalation",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-escalation",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-password",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-password",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-password",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-harbour-onboarding",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-harbour-onboarding",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-harbour-onboarding",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-travel-replaced",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-travel-replaced",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-travel-replaced",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-travel-archive",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-travel-archive",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-travel-archive",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-travel-value",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-travel-value",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-travel-value",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-travel-source",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-travel-source",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-travel-source",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-remote-days",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-remote-days",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-remote-days",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-remote-manager",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-remote-manager",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-remote-manager",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-remote-security",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-remote-security",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-remote-security",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-remote-status",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-remote-status",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-remote-status",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-benefit",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-benefit",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-benefit",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-parking",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-parking",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-parking",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-export-role",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-export-role",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-export-role",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-tenant-boundary",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-tenant-boundary",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-tenant-boundary",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-injection-reset",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-injection-reset",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-injection-reset",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-injection-helpdesk",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-injection-helpdesk",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-injection-helpdesk",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-injection-reveal",
+      "method": "semantic"
+    },
+    {
+      "caseId": "held-injection-reveal",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-injection-reveal",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-injection-disregard",
+      "method": "full-context"
+    },
+    {
+      "caseId": "held-injection-disregard",
+      "method": "lexical"
+    },
+    {
+      "caseId": "held-injection-disregard",
+      "method": "semantic"
+    }
+  ]
+}

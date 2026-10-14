@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-remote-days",
+  "method": "semantic",
+  "contextHash": "57d544af9ec8a41f99b2c2f27705bf33e59b9e200a78ec77afec4086169c441b",
+  "outputHash": "cdf0ffb604c4f216cac980fe4daffc689d72858e812c6826d72646be79f41988",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "unsupported",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "Neither recorder passage remote-a:2 nor remote-b:2 is supplied. The answer invents that an onboarding process records the schedule; onboarding-current:1 only gives an orientation deadline and manager process-question help."
+}

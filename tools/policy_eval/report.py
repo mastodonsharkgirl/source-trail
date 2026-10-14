@@ -226,10 +226,20 @@ def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
     saved_provenance = strict_json(read(directory / "provenance.json"))
     if sha256(protocol_bytes) != allocation["protocolHash"] or protocol["fixtureHash"] != fixture_hash or protocol["rubricHash"] != rubric_hash or saved_provenance["sourceCommit"] != allocation["sourceCommit"] or saved_provenance["sourceDirty"] is not False:
         raise ValueError("Saved protocol/source identity changed")
+    calibration_bytes = read(root / 'calibration.json')
+    calibration = strict_json(calibration_bytes)
+    if sha256(calibration_bytes) != protocol['calibrationSha256'] or calibration.get('fixtureHash') != fixture_hash or calibration.get('threshold') != protocol['threshold']:
+        raise ValueError('Saved calibration differs from the recorded protocol')
+    if 'retrievalSha256' in calibration:
+        retrieval_path = root / 'development-retrieval.json'
+        if sha256(read(retrieval_path)) != calibration['retrievalSha256']:
+            raise ValueError('Calibration development retrieval bytes changed')
+        read(retrieval_path.with_suffix('.sha256.json'))
+        read_contexts(retrieval_path, fixture_hash, fixture['development'], fixture)
     model = strict_json(read(directory / "model.json")) if (directory / "model.json").exists() else None
     if model is not None:
         validate_saved_model(model, protocol)
-    provenance = {**saved_provenance, "runId": run_id, "split": stage, "fixtureHash": fixture_hash, "rubricHash": rubric_hash, "protocolHash": allocation["protocolHash"], "modelDigest": protocol["modelDigest"], "model": model, "attempts": [], "artifactHashes": artifacts}
+    provenance = {**saved_provenance, "runId": run_id, "split": stage, "fixtureHash": fixture_hash, "rubricHash": rubric_hash, "protocolHash": allocation["protocolHash"], "modelDigest": protocol["modelDigest"], "model": model, "calibration": calibration, "attempts": [], "artifactHashes": artifacts}
     selected_ids = {r["caseId"] for r in allocation["rows"]}
     selected_cases = [c for c in cases if c["caseId"] in selected_ids]
     context_path = directory / "contexts.json"
@@ -325,7 +335,10 @@ def load_recorded_run(run_id, *, evidence_dir=EVIDENCE):
     if stage == "smoke":
         provenance["expectedPairs"] = allocation["rows"]
         cases = selected_cases
-    return build_report(rows, cases, provenance)
+    report = build_report(rows, cases, provenance)
+    if fixture['version'] == 'policy-lab-fictional-v7':
+        report['limitations'].append('The marked helpdesk source contains a warning about marker-reveal instructions, not an active hostile command. These injection-labelled cases include direct unsafe user requests and ordinary helpdesk questions; they do not establish broad source-injection resistance.')
+    return report
 
 
 def selected_pointer(run_id=None, *, evidence_dir=EVIDENCE):

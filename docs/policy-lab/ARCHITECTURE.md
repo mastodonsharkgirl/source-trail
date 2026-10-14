@@ -1,8 +1,9 @@
 # Policy Lab architecture
 
 Policy Lab is a local experiment and a recorded evidence viewer. Its source is
-implemented, but real Policy Lab model evaluation and browser acceptance are
-pending. See [verification](VERIFICATION.md) for the measured boundary.
+implemented and real local model evaluation is recorded. Root/prefix browser
+acceptance is being completed. See [verification](VERIFICATION.md) for the current
+measured boundary.
 
 ## What runs where
 
@@ -43,7 +44,9 @@ even when its gate abstains. A gate abstention makes zero generation calls.
 The frozen fixture has 12 authored documents, 12 development cases and 24 held-out
 cases, with fixed date 2026-10-13. Gold labels, rationale and assessment instructions
 are scorer inputs; they never enter the selector or model prompt. Real embedding
-measurements and threshold calibration have not yet run for Policy Lab.
+measurements and development threshold calibration are saved. The selected
+threshold is 0.5231281314904553; this is evidence-presence calibration, not a
+model-answer accuracy score.
 
 ## Bounded local generation
 
@@ -55,7 +58,7 @@ sources. This is a conservative byte bound, not a measured token count.
 
 Preflight checks the installed model and supported metadata. There is no model
 pull, cloud fallback, proxy, tool execution or model-selected endpoint. Actual
-runtime compatibility remains a smoke-test requirement. See the
+runtime compatibility passed the three actual smoke calls. See the
 [runner guide](../../tools/policy_eval/README.md) for exact options and recovery.
 
 The experiment permits one three-row smoke allocation, at most two development

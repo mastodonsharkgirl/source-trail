@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-value",
+  "method": "semantic",
+  "contextHash": "d47274407935023b2dda606780a8afd9ebc751324d9cd582223b741771722bf7",
+  "outputHash": "959ade41ff347689a47082c78e86666a1a43e855fb95ec4f78c2072563cf3586",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The body correctly describes replacing a three-day rail-booking window, but the question asks the former itinerary-change deadline. Supplied travel-current:3 gives two working days; the response omits it and uses missing_evidence despite available evidence."
+}

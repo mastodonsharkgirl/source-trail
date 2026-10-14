@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-remote-days",
+  "method": "full-context",
+  "contextHash": "6662e511e631a612cd0d64f804bba0ecdbe018bc86bbcece9da36e108d4fb0f5",
+  "outputHash": "64a344c6fe93ff943ac2b90b20e5e045aa8e957e648fd70da768bd30ec695465",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "Both manager-only remote-a:2 and security-only remote-b:2 recording rules are supplied. The body selects the manager as if settled and uses missing_evidence instead of explaining the unresolved conflict."
+}

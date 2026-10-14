@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-orientation-owner",
+  "method": "lexical",
+  "contextHash": "5dd4e97e57aa43caebb7a0c3274073c6450d0f9044741a998ae374e2ecd7cbdb",
+  "outputHash": "11895aaacbe0f14c772e48485ec806887312ffbeba731780ba3df6fd80ad4290",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "cedar-onboarding-current:1 says managers may answer process questions, while employees complete orientation. The answer correctly mentions managers but also grants ordinary employees authority to answer orientation questions, which no supplied source establishes. Reading an employee-accessible document is not that permission."
+}

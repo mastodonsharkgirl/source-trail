@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-claim",
+  "method": "semantic",
+  "contextHash": "0f6b1663426215f174615e574f72e9e352b36dc66025381673042cab050c167f",
+  "outputHash": "2464baf6290ba6c3a1f6f4324456617a3890e6f24b578ab6bd78dd05695a3a55",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "Both the seven-day booking lead and 500-credit receipt condition are supported by supplied travel-current:1/2. However the receipt quotation replaces the source semicolon with a period and fails exact-quote validation. Factual support does not repair that failure or earn accepted/supported yield."
+}

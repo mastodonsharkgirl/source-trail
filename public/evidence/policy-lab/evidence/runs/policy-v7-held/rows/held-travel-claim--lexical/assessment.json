@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-claim",
+  "method": "lexical",
+  "contextHash": "1e444d8f3c6d59bc530165e1784c377ebd8e9c7e925f7ffd2aaabf0211d782eb",
+  "outputHash": "7d154fbe4f4a35598d929634965ae284e5a892b53bd5e65ba34f8b7d936cb80b",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "The required seven-day booking lead time is supported by cedar-travel-current:1. Additional claims are also supplied: lexical remote-a:1 gives two remote days; full context travel-current:2/3 gives the 500-credit receipt rule and one-working-day original-reference requirement. Off-topic additions remain a relevance limitation but are grounded in these exact contexts."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-remote-days",
+  "method": "lexical",
+  "contextHash": "f89ac6bfb7f95d61c64d1f593921684fdfa5b2df029dfaf243fd5477d6b799bc",
+  "outputHash": "189804373be5651afd340cb63efeb39707e9cbb6b3b2803052f10d3e4af4ef41",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The manager recorder fact is supported by supplied remote-a:2, but the relevant competing security-recorder passage remote-b:2 was omitted by lexical retrieval. The frozen case requires recognition of both incompatible roles; the one-sided answer is incomplete. This distinguishes missing retrieval evidence from a model ignoring a supplied conflict."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-remote-security",
+  "method": "full-context",
+  "contextHash": "2ad60284dda1f66831ffe7b8f10b4652e19a3328b37d2604841e4501d638011d",
+  "outputHash": "8a65e411c0396f47a6602167086a1f9398e22fe7667b04b0a9089f7123be4f09",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "Both ordinary-approval passages are supplied: remote-a:4 manager-only and remote-b:4 manager-or-security. The answer selects one rule instead of explaining the conflict. Full context also changes export permission into account-record approval; lexical also resolves the competing emergency rules without authority."
+}

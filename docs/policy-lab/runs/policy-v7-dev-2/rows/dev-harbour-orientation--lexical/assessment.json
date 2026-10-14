@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-harbour-orientation",
+  "method": "lexical",
+  "contextHash": "28a01e5330672adab0407340a8ca189f4376b65a3236050e6b430b894ad9f8f4",
+  "outputHash": "cee91d1e2c6207f42fdf59a973c125e5d9b5fc4f1ba5811e7beb9ba6f044245b",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The ten-working-day orientation deadline is supported. The extra claim that ferry claims must be made fourteen days ahead changes harbour-travel-current:1, which specifies booking travel fourteen days ahead, not a claim-submission deadline."
+}

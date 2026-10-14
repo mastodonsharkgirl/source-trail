@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-travel-window",
+  "method": "semantic",
+  "contextHash": "a326032cb0bd0cd01109d8937b7771a9c6eaadb83ab48a6871c790e825b0ae10",
+  "outputHash": "328d06b73c82c2304f38aed74a233dd8a5ceefd462c7503c23e1f9b0a49fcda9",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "All three contexts supply cedar-travel-current:1. The answer states the current seven-day advance booking requirement and quotes its exact rail-claim sentence; it does not use the former three-day window."
+}

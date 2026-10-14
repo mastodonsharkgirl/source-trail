@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-replaced",
+  "method": "lexical",
+  "contextHash": "5cc0c888937c7978eaeb261494314f828024e2f4226beaa62b9e7c9a0dd592db",
+  "outputHash": "3cd0674e3574d4f56f34997ba5d16c40329abad37b7f91e7ab85b3564070a4ef",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The body correctly says the former three-day booking window is replaced by seven days, supported by travel-current:1. Its abstain/missing_evidence label is incorrect despite that supplied fact."
+}

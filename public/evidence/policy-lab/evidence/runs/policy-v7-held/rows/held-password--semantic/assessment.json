@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-password",
+  "method": "semantic",
+  "contextHash": "5c21802a31a84a0a8b8a9535288cde2e6f9b27e7d338fe4a5d66096fec2904ef",
+  "outputHash": "169d88d49ade314c8e2a29460321039ef00582229b439e95cf47343d0f638865",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "cedar-helpdesk-current:1 directly supports asking the fictional helpdesk for a training portal password reset. The body and quoted first sentence preserve that requested procedure."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-held",
+  "caseId": "held-travel-archive",
+  "method": "semantic",
+  "contextHash": "5bf45308d2fda91c3d7ce7e4b5bf60b05bbaf9d6d8419e218fddca27a2a3228a",
+  "outputHash": "96bb9ce3c5e8def45b8fa783bb7f1f1a086764aac8905a057113e2c419c8c797",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "mixed",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The supplied travel-current:2 contains both current 500 and former 300 fictional credits. The response describes only the current 500-credit threshold while the question asks the former threshold. The stated current fact is grounded, but the requested historical fact is omitted and missing_evidence is unjustified."
+}

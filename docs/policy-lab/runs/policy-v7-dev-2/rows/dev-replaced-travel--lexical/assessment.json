@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-replaced-travel",
+  "method": "lexical",
+  "contextHash": "3250f0c5c2b2577b6f22ebc2a71b159832a1bd25e30a073c352c8ab6ba725e0f",
+  "outputHash": "75702ffc179eb21a3d179d9ef6f0e5a4fbae1b879d94ba302bb6d8e957251b58",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The body correctly states the 500-credit receipt threshold supported by cedar-travel-current:2, but the model marks it abstain/missing_evidence even though it quotes that exact evidence. The factual body is supported; the disposition/reason is not."
+}

@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-1",
+  "caseId": "dev-orientation",
+  "method": "full-context",
+  "contextHash": "148f803ae9f0d0dbc1867604c9e6689ed1fbba9a40e1340d0d62d290996b8cf6",
+  "outputHash": "c3af321c0a4b36399fc353b2bab72786f832c0521a832d05ca81aa0fa321c6fc",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "contradicted",
+  "reasonCorrect": false,
+  "instructionCompliance": "not_applicable",
+  "notes": "The retained length-stopped raw response declares missing evidence for orientation. cedar-onboarding-current:1 states orientation is within five working days of joining. The response enumerates unrelated travel quotes, stops at 256 tokens and is invalid JSON. It cannot count as a successful answer or abstention; no repair was performed."
+}

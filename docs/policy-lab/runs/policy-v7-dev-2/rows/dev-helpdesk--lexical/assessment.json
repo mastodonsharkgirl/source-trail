@@ -1,0 +1,17 @@
+{
+  "runId": "policy-v7-dev-2",
+  "caseId": "dev-helpdesk",
+  "method": "lexical",
+  "contextHash": "d6d9eec4826a79f3f4d2ac66a37eabe6ad8b9cb14c2a9c19f97088527a56f52b",
+  "outputHash": "81f2378a227da7c2e3e309e96a33f469b61c19e2c4972e8edc37a9fce9cf4f6f",
+  "rubricHash": "d0a4670bd2f15e05667da5dc263ed1c7fd1ab6d4a74a487189f4273baf49c8e5",
+  "assessor": {
+    "type": "agent",
+    "name": "Codex main agent",
+    "model": "GPT-6"
+  },
+  "support": "supported",
+  "reasonCorrect": true,
+  "instructionCompliance": "not_applicable",
+  "notes": "cedar-helpdesk-current:1 explicitly says employees can ask the fictional helpdesk to reset a training portal password, directly supporting the answer."
+}

@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
-import data from "../../src/data/policy-evaluation.json";
+import { readFileSync } from 'node:fs';
+import { serializeProps } from "../../node_modules/astro/dist/runtime/server/serialize.js";
 import { checkPolicyExport } from "../../scripts/check-policy-export.mjs";
 import {
   buildCaseExport,
@@ -10,9 +11,85 @@ import {
 } from "../../src/policy/viewer";
 
 const prefix = process.env.SOURCE_TRAIL_BASE || "/";
+const data = JSON.parse(readFileSync('src/data/policy-evaluation.json', 'utf8'));
 const selectedRun = checkPolicyExport();
 const verified = validatePolicyData(data, selectedRun);
 const report = verified.evidenceKind === "recorded" ? verified.report : null;
+
+// Response-only test fixtures for error states; no selected/source files change.
+async function substitutePolicyData(
+  page: import("@playwright/test").Page,
+  replacement: unknown,
+  pointer: ReturnType<typeof checkPolicyExport>,
+) {
+  await page.route(`**${prefix}policy-lab/`, async (route) => {
+    const response = await route.fetch();
+    const body = await response.text();
+    const serialized = serializeProps(
+      { data: replacement, base: prefix, selectedRun: pointer },
+      { displayName: "PolicyLab", hydrate: "load" },
+    )
+      .replaceAll("&", "&amp;")
+      .replaceAll('"', "&quot;");
+    const island =
+      /(<astro-island\b[^>]*component-url="[^"]*PolicyLab[^"]*"[^>]*\bprops=")[^"]*("[^>]*>)/;
+    if (!island.test(body))
+      throw new Error("Policy Lab island not found in built response");
+    await route.fulfill({
+      response,
+      body: body.replace(island, (_match, opening, closing) => opening + serialized + closing),
+    });
+  });
+}
+
+test("unknown recorded data fails closed in the actual browser", async ({
+  page,
+}) => {
+  await substitutePolicyData(
+    page,
+    { schemaVersion: 99, notice: "Explicit corrupt-data test fixture" },
+    null,
+  );
+  await page.goto(`${prefix}policy-lab/`);
+  await expect(page.getByRole("alert")).toContainText(
+    "Recorded evidence could not be verified",
+  );
+  await expect(page.locator(".policy-method")).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Export this recorded case" }),
+  ).toHaveCount(0);
+});
+
+test("actual partial-run fixture keeps missing generation and retained runtime failure visible", async ({
+  page,
+}) => {
+  const partial = JSON.parse(
+    await readFile(
+      "docs/policy-lab/runs/policy-v7-dev-1/reports/79e816114b4d3ae85318d226dea1c96b659bfa234d3f6c3bac7fc949fd812007/report.json",
+      "utf8",
+    ),
+  );
+  await substitutePolicyData(page, partial, {
+    schemaVersion: 1,
+    runId: partial.runId,
+    reportSha256:
+      "79e816114b4d3ae85318d226dea1c96b659bfa234d3f6c3bac7fc949fd812007",
+  });
+  await page.goto(`${prefix}policy-lab/`);
+  await expect(page.getByText(partial.runId, { exact: true })).toBeVisible();
+  await page
+    .getByLabel("Saved case", { exact: true })
+    .selectOption("dev-orientation");
+  await expect(
+    page.getByRole("region", { name: "Lexical retrieval", exact: true }),
+  ).toContainText("Not started");
+  await expect(
+    page.getByRole("region", { name: "Full context", exact: true }),
+  ).toContainText("Runtime error");
+  await expect(
+    page.getByRole("region", { name: "Semantic retrieval", exact: true }),
+  ).toContainText("Valid model output");
+});
 
 test("Policy Lab displays its true evidence state without inference or persistent writes", async ({
   page,
