@@ -1,6 +1,10 @@
 # Policy Lab claim ledger
 
-Recorded 15 October 2026. Actual evidence source: 02e6e17; subsequent test/documentation changes and final review identities are recorded in [the handoff](PORTFOLIO_HANDOFF.md) and [verification](VERIFICATION.md).
+Recorded 15 October 2026. Actual evidence source: `02e6e17`; final source and
+regression-tested recovery fix: `ca63ca4016b0d9973a9aa7e87b8fa55e62f6d53b`.
+The following documentation commit reconciles release status. See
+[the handoff](PORTFOLIO_HANDOFF.md), [verification](VERIFICATION.md) and
+[final review](FINAL_REVIEW.md) for exact scope.
 
 | Claim | Evidence | Status and limit |
 | --- | --- | --- |

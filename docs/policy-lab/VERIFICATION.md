@@ -1,15 +1,18 @@
 # Local verification record
 
-Recorded 15 October 2026 on codex/source-trail-policy-evaluation. Actual evidence is committed at 02e6e17; final candidate and review identities are recorded in the handoff/review record. These are local results.
+Recorded 15 October 2026 on codex/source-trail-policy-evaluation. Actual evidence
+was committed at `02e6e17`; final source and recovery fix are committed at
+`ca63ca4016b0d9973a9aa7e87b8fa55e62f6d53b`. The following commit updates
+verification/handoff documentation only. These are local results.
 
 | Check | Observed result |
 | --- | --- |
-| Actual encoder/model preflight | Six MiniLM files hashed from bytes, 37,974,266bytes; installed Qwen digest/template and Ollama metadata checked before/after generation. |
-| Actual generation/assessment | 108 calls across stages;72 held rows: 64 valid,5 gates, 3 rejected. All108 emitted responses separately agent-assessed. |
-| npm run test:policy -- --maxWorkers=1 | Exit 0;51 tests. Synthetic transport/temp-file tests are not model measurements. |
-| Python unittest discovery | Exit 0;61 tests, including actual-calibration-byte binding regression; synthetic test records. |
-| Root npm run qa | Exit 0; Astro 49 files/zero diagnostics, 73 unit tests in 11 files, build/header audit,36 browser tests (40.0s). |
-| Prefixed build and npm run test:e2e | Both exit0; 36 browser tests (40.6s) under /tools/source-trail/. |
+| Actual encoder/model preflight | Six MiniLM files hashed from bytes, 37,974,266 bytes; installed Qwen digest/template and Ollama metadata checked before/after generation. |
+| Actual generation/assessment | 108 calls across stages; 72 held rows: 64 valid, 5 gates, 3 rejected. All 108 emitted responses separately agent-assessed. |
+| npm run test:policy -- --maxWorkers=1 | Exit 0; 51 tests. Synthetic transport/temp-file tests are not model measurements. |
+| Python unittest discovery | Exit 0; 64 tests after recovery fix, including calibration-byte binding and three crash-boundary regressions; synthetic test records. |
+| Root npm run qa after recovery fix | Exit 0; Astro 49 files/zero diagnostics, 73 unit tests in 11 files, build/header audit, 36 browser tests. |
+| Prefixed build and npm run test:e2e after recovery fix | Both exit 0; 36 browser tests under /tools/source-trail/. |
 | policy:fixture | Exit 0; v7 fixture/rubric hashes match frozen manifest. |
 | policy:report:check, policy:export:check, policy:coherence | Exit 0 against actual selected report, raw records, calibration and immutable selected identity. |
 | policy:preservation | Exit 0; all 13 protected Git blobs match fd3e4371fc0f7fa99dc1b6118a66134a20e177ba. |
@@ -39,6 +42,24 @@ Initial acceptance exposed missing Astro fixture slot metadata, Node24 JSON impo
 
 ## Final review and external limits
 
-Fresh whole-change read-only review is pending on this candidate; findings and any regression-tested fixes will be appended before closure. Historical partial-status ledger entries are not current claims. See [decisions](DECISIONS.md) for deviations and their costs.
+Fresh read-only reviewer_sol review of `fd3e437..1f9b82d` found no Critical issue,
+one Important interruption-recovery defect and two factual documentation issues.
+The recovery regressions failed first (two failures and one missing-marker error),
+then passed after the repair; the full Python suite passed 64/64. Both documents
+were corrected during final status/teaching reconciliation. No deferred minor
+remains. The single author fix pass was verified by tests, without a second review.
+See [FINAL_REVIEW.md](FINAL_REVIEW.md) for scope and findings and
+[DECISIONS.md](DECISIONS.md) for every ruling and its cost.
+
+Post-fix root QA and prefixed build/browser suites passed with the counts above.
+New screenshot bytes match the previously inspected images at all four Policy
+widths, and root/prefix images match each other. Logs are
+`output/policy-review-qa-root.log`, `output/policy-review-build-prefixed.log`,
+`output/policy-review-browser-prefixed.log`, `output/policy-review-python.log`,
+and recovery RED/GREEN logs; new captures are under
+`output/policy-review-visual-{root,prefixed}/`. Original acceptance logs remain.
+Actual report/export/coherence checks still confirm the same selected hash; no
+model call, fixture/assessment change or historic raw-record rewrite occurred.
+Historical partial-status ledger entries are not current claims.
 
 Independent human answer assessment, broad source-injection testing, physical mobile GPU validation, broad device timing/memory benchmarks and hosted headers are unperformed. Push, CI, deployment, DNS, portfolio/registry writes and custom-domain changes were not performed by this workstream.
