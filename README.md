@@ -6,7 +6,7 @@ The included six notes are authored fictional equipment and workshop examples. E
 
 ## Run locally
 
-Use Node 24.11 or later (below 26) and npm:
+Use Node 24.22.1 or later (below 26) and npm:
 
 ```sh
 npm ci
