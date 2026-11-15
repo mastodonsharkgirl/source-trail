@@ -379,17 +379,33 @@ export default function StoryLab() {
       </header>
       <main id="lab">
         <section className="story-intro">
-          <p className="kicker">FOLLOW ONE REAL ANSWER BACK TO ITS SOURCES.</p>
-          <h1>
-            An answer sounds right.
-            <br />
-            <em>Does the evidence agree?</em>
-          </h1>
-          <p className="intro-copy">
-            See what a model received, what it wrote, and where it went wrong. A
-            one-minute walkthrough. Nothing to install.
-          </p>
+          <div>
+            <p className="kicker">FOLLOW ONE REAL ANSWER BACK TO ITS SOURCES.</p>
+            <h1>
+              An answer sounds right.
+              <br />
+              <em>Does the evidence agree?</em>
+            </h1>
+            <p className="intro-copy">
+              Read a model’s answer beside the notes it was given. Spot where it
+              gets the bridge rule wrong. No model download is needed for this
+              saved walkthrough.
+            </p>
+            <a className="intro-action" href="#recorded-run">Inspect the saved run <span aria-hidden="true">↓</span></a>
+          </div>
+          <div className="evidence-illustration" aria-hidden="true">
+            <svg viewBox="0 0 360 214" role="presentation">
+              <path className="trail-path" d="M35 60 C112 42 122 151 194 130 S258 73 324 102" />
+              <path className="trail-path trail-path-secondary" d="M35 145 C104 168 151 90 208 117 S274 163 327 148" />
+              <g className="source-card"><rect x="18" y="35" width="91" height="57" rx="10"/><path d="M34 54h55M34 67h38"/></g>
+              <g className="source-card"><rect x="31" y="123" width="94" height="57" rx="10"/><path d="M47 142h56M47 155h35"/></g>
+              <g className="answer-card"><rect x="222" y="72" width="115" height="86" rx="13"/><path d="M241 96h69M241 111h54M241 126h62"/><circle cx="316" cy="137" r="9"/><path d="M316 132v6M316 142h.01"/></g>
+              <circle className="trail-node" cx="143" cy="113" r="7"/><circle className="trail-node" cx="203" cy="128" r="7"/>
+            </svg>
+            <p>Passages travel into an answer. They do not automatically make it correct.</p>
+          </div>
         </section>
+        <div id="recorded-run">
         <RecordedWalkthrough
           selected={selected}
           ordered={ordered}
@@ -399,6 +415,7 @@ export default function StoryLab() {
             setSelected(["rabbit", "bridge", "sun"]);
           }}
         />
+        </div>
         <details className="live-experiment" id="experiment">
           <summary>
             Optional experiment: generate your own story on this device

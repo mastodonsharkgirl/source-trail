@@ -1,4 +1,24 @@
 const prefix = process.env.SOURCE_TRAIL_BASE || "/";
+
+test("worked text-matching example is useful immediately without a model request", async ({
+  page,
+}) => {
+  const requests: string[] = [];
+  page.on("request", (request) => requests.push(request.url()));
+  await page.goto(`${prefix}baseline/`);
+  await expect(page.getByLabel("Your question")).toHaveValue(
+    "What should I do with a broken borrowed camera?",
+  );
+  await expect(page.getByTestId("result").first()).toContainText("camera:1");
+  await expect(page.locator("[data-testid='result'].selected-result")).toHaveCount(1);
+  await expect(page.getByTestId("reader")).toContainText("Camera returns");
+  expect(requests.some((url) => url.includes("model_quantized.onnx"))).toBe(false);
+  await page.getByRole("button", { name: "Reset workspace" }).click();
+  await page.getByRole("button", { name: "Find passages", exact: true }).click();
+  await expect(page.getByRole("alert")).toContainText("Write a question");
+  await page.getByRole("button", { name: "Reload worked example" }).click();
+  await expect(page.getByTestId("result").first()).toContainText("camera:1");
+});
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 

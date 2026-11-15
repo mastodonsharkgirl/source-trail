@@ -22,16 +22,22 @@ const originalRevision = validateSources(defaultNotes()).revision;
 export default function SourceDesk() {
   const [notes, setNotes] = useState(defaultNotes);
   const corpus = validateSources(notes);
-  const [query, setQuery] = useState("");
-  const [method, setMethod] = useState<"semantic" | "lexical">("semantic");
+  // Arrival is deliberately useful without requesting a model: this is a real
+  // lexical search against the fictional notes, not a simulated result.
+  const [query, setQuery] = useState(example);
+  const [method, setMethod] = useState<"semantic" | "lexical">("lexical");
   const [model, setModel] = useState<ModelState>("idle");
   const [busy, setBusy] = useState(false);
-  const [results, setResults] = useState<RankedPassage[] | null>(null);
-  const [resultQuery, setResultQuery] = useState("");
+  const [results, setResults] = useState<RankedPassage[] | null>(() =>
+    lexicalSearch(validateSources(defaultNotes()), example).slice(0, 3),
+  );
+  const [resultQuery, setResultQuery] = useState(example);
   const [error, setError] = useState("");
-  const [status, setStatus] = useState("Your source pack is ready to explore.");
+  const [status, setStatus] = useState(
+    "Worked example loaded with text matching. Open the highlighted source or ask your own question.",
+  );
   const [selected, setSelected] = useState("camera");
-  const [selectedPassage, setSelectedPassage] = useState("");
+  const [selectedPassage, setSelectedPassage] = useState("camera:1");
   const [editing, setEditing] = useState<SourceNote | null>(null);
   const worker = useRef<InstanceType<typeof Worker> | null>(null);
   const job = useRef<Pick<WorkerRequest, "jobId" | "revision"> | null>(null);
@@ -163,9 +169,10 @@ export default function SourceDesk() {
     invalidate(true);
     setNotes(defaultNotes());
     setQuery("");
+    setMethod("lexical");
     setSelected("camera");
     setEditing(null);
-    setStatus("Workspace reset. Only the fictional source pack remains.");
+    setStatus("Workspace reset. The fictional source pack is ready for a new text search.");
   }
   function save() {
     if (!editing) return;
@@ -256,11 +263,17 @@ export default function SourceDesk() {
               onClick={() => {
                 if (busy) invalidate(true);
                 setQuery(example);
-                setResults(null);
+                setMethod("lexical");
+                const found = lexicalSearch(corpus, example).slice(0, 3);
+                setResults(found);
+                setResultQuery(example);
+                setSelected(found[0]?.sourceId ?? "camera");
+                setSelectedPassage(found[0]?.id ?? "");
+                setStatus("Worked example reloaded with text matching — no model download.");
               }}
             >
-              Try a question <span aria-hidden="true">↗</span>
-              <span className="example-text"> Broken borrowed camera</span>
+              Reload worked example <span aria-hidden="true">↗</span>
+              <span className="example-text"> Broken borrowed camera · no model</span>
             </button>
             <Button
               type="submit"
@@ -317,7 +330,7 @@ export default function SourceDesk() {
             </button>
           </div>
           <p>
-            About 38 MB downloads. Your notes and question stay in this browser.
+            Optional model: about 38 MB. Your notes and question stay in this browser.
           </p>
         </div>
         <div className="workspace-state">

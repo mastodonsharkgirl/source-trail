@@ -45,7 +45,7 @@ export default function RecordedWalkthrough({
                 onClick={() => changeWords(word)}
               >
                 <span aria-hidden="true">
-                  {selected.includes(word) ? "✦" : "＋"}
+                  {selected.includes(word) ? "✓" : "＋"}
                 </span>
                 {word}
               </button>
