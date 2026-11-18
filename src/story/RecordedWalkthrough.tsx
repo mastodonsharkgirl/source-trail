@@ -26,54 +26,15 @@ export default function RecordedWalkthrough({
     <section className="recorded-trail" aria-label="A real run in three steps">
       <div className="recorded-banner">
         <strong>Recorded real run</strong>
-        <span>Saved on 9 October 2026 · no model download</span>
+        <span>Meadow Atlas · 9 October 2026 · No download required</span>
       </div>
       <div className="walkthrough-grid">
-        <section className="walk-step">
-          <p className="kicker">01 / THE IDEAS</p>
-          <h2>Start with a few words.</h2>
-          <p>
-            This run used <strong>rabbit, bridge, sun</strong>. Try other words
-            to preview which passages match.
-          </p>
-          <div className="word-field" aria-label="Story ideas">
-            {ordered.map((word, i) => (
-              <button
-                key={word}
-                className={`word-tablet tablet-${i % 4}`}
-                aria-pressed={selected.includes(word)}
-                onClick={() => changeWords(word)}
-              >
-                <span aria-hidden="true">
-                  {selected.includes(word) ? "✓" : "＋"}
-                </span>
-                {word}
-              </button>
-            ))}
-          </div>
-          <p className="small-note">
-            {selected.length} of 5 selected · words are prompts, not evidence
-          </p>
-          {changed && (
-            <div className="retrieval-preview" aria-live="polite">
-              <strong>Retrieval preview only</strong>
-              <p>
-                Your words match:{" "}
-                {preview.map((p) => p.title).join(" · ") || "no passages"}. The
-                recorded answer below has not changed.
-              </p>
-              <button className="secondary-action" onClick={restore}>
-                Restore recorded ideas
-              </button>
-            </div>
-          )}
-        </section>
         <section className="walk-step supplied-step">
-          <p className="kicker">02 / THE EVIDENCE</p>
+          <p className="kicker">Source material</p>
           <h2>What the model received.</h2>
           <p>
-            These three passages were retrieved and supplied in the saved
-            request.
+            Three excerpts went into the model’s request. Open any note to read
+            the words it saw.
           </p>
           {context.map((p) => (
             <details
@@ -93,11 +54,9 @@ export default function RecordedWalkthrough({
           <p className="small-note">Meadow Atlas is a fictional source pack.</p>
         </section>
         <section className="walk-step recorded-reading">
-          <p className="kicker">03 / THE ANSWER</p>
+          <p className="kicker">Model output</p>
           <h2>Did it follow the evidence?</h2>
-          <p className="run-tag">
-            Actual saved model output · not generating now
-          </p>
+          <p className="run-tag">Original saved answer</p>
           <p className="recorded-output">{recorded.text}</p>
           <button
             className="primary-action"
@@ -109,8 +68,7 @@ export default function RecordedWalkthrough({
             <span aria-hidden="true">↗</span>
           </button>
           <p className="small-note">
-            This run contains a contradiction. A relevant source does not
-            guarantee a correct answer.
+            The answer reverses the rule about when the bridge opens.
           </p>
         </section>
       </div>
@@ -120,9 +78,7 @@ export default function RecordedWalkthrough({
           className="recorded-assessment"
           aria-label="Manual review of this recorded answer"
         >
-          <p className="kicker">
-            MANUALLY REVIEWED EXAMPLES · NOT AN AUTOMATIC CHECK
-          </p>
+          <p className="kicker">Manual review of the saved answer</p>
           <div className="assessment-grid">
             <article>
               <h3>Supported detail</h3>
@@ -160,11 +116,49 @@ export default function RecordedWalkthrough({
             </article>
           </div>
           <p className="walkaway">
-            Retrieval found the rule. Generation contradicted it. Inspection
-            made the difference visible.
+            The right passage was in the request. Checking the answer against it
+            exposed the mistake.
           </p>
         </section>
       )}
+      <section className="walk-step idea-workbench">
+        <p className="kicker">Try it yourself</p>
+        <h2>Start with a few words.</h2>
+        <p>
+          The saved run started with <strong>rabbit, bridge, sun</strong>.
+          Choose up to five words to see which passages your selection would
+          bring into a new run.
+        </p>
+        <div className="word-field" aria-label="Story ideas">
+          {ordered.map((word, i) => (
+            <button
+              key={word}
+              className={`word-tablet tablet-${i % 4}`}
+              aria-pressed={selected.includes(word)}
+              onClick={() => changeWords(word)}
+            >
+              <span aria-hidden="true">
+                {selected.includes(word) ? "✓" : "＋"}
+              </span>
+              {word}
+            </button>
+          ))}
+        </div>
+        <p className="small-note">{selected.length} of 5 words selected</p>
+        {changed && (
+          <div className="retrieval-preview" aria-live="polite">
+            <strong>Retrieval preview only</strong>
+            <p>
+              Your words match:{" "}
+              {preview.map((p) => p.title).join(" · ") || "no passages"}. The
+              saved answer stays the same.
+            </p>
+            <button className="secondary-action" onClick={restore}>
+              Restore recorded ideas
+            </button>
+          </div>
+        )}
+      </section>
       <details className="recorded-provenance">
         <summary>See the saved request and model</summary>
         <p>

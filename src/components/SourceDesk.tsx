@@ -34,7 +34,7 @@ export default function SourceDesk() {
   const [resultQuery, setResultQuery] = useState(example);
   const [error, setError] = useState("");
   const [status, setStatus] = useState(
-    "Worked example loaded with text matching. Open the highlighted source or ask your own question.",
+    "Example loaded. Open the highlighted passage or ask your own question.",
   );
   const [selected, setSelected] = useState("camera");
   const [selectedPassage, setSelectedPassage] = useState("camera:1");
@@ -172,7 +172,9 @@ export default function SourceDesk() {
     setMethod("lexical");
     setSelected("camera");
     setEditing(null);
-    setStatus("Workspace reset. The fictional source pack is ready for a new text search.");
+    setStatus(
+      "Workspace reset. The fictional source pack is ready for a new text search.",
+    );
   }
   function save() {
     if (!editing) return;
@@ -232,7 +234,9 @@ export default function SourceDesk() {
       <section className="question-desk" aria-label="Search workspace">
         <div className="question-label">
           <label htmlFor="question">Your question</label>
-          <span>01 / ASK THE NOTES</span>
+          <span id="question-limit">
+            {query.length} / {MAX_QUERY_CHARACTERS}
+          </span>
         </div>
         <form
           onSubmit={(event) => {
@@ -256,6 +260,13 @@ export default function SourceDesk() {
             }}
             aria-describedby="question-limit"
           />
+          <Button
+            type="submit"
+            disabled={busy || (method === "semantic" && model !== "ready")}
+          >
+            {busy ? "Finding passages…" : "Find passages"}{" "}
+            <span aria-hidden="true">→</span>
+          </Button>
           <div className="question-bottom">
             <button
               className="example-link"
@@ -269,19 +280,13 @@ export default function SourceDesk() {
                 setResultQuery(example);
                 setSelected(found[0]?.sourceId ?? "camera");
                 setSelectedPassage(found[0]?.id ?? "");
-                setStatus("Worked example reloaded with text matching — no model download.");
+                setStatus(
+                  "Worked example reloaded with text matching — no model download.",
+                );
               }}
             >
               Reload worked example <span aria-hidden="true">↗</span>
-              <span className="example-text"> Broken borrowed camera · no model</span>
             </button>
-            <Button
-              type="submit"
-              disabled={busy || (method === "semantic" && model !== "ready")}
-            >
-              {busy ? "Finding passages…" : "Find passages"}{" "}
-              <span aria-hidden="true">→</span>
-            </Button>
           </div>
         </form>
         <div className="method-row">
@@ -330,12 +335,11 @@ export default function SourceDesk() {
             </button>
           </div>
           <p>
-            Optional model: about 38 MB. Your notes and question stay in this browser.
+            Optional model download: about 38 MB. Searches run in your browser.
           </p>
         </div>
         <div className="workspace-state">
           <p role="status">{status}</p>
-          <span id="question-limit">{query.length} / 800 characters</span>
         </div>
         {error && !editing && (
           <p className="error-message" role="alert">
@@ -353,12 +357,13 @@ export default function SourceDesk() {
               notes <span aria-hidden="true">↓</span>
             </summary>
             <div className="source-index-inner">
-              <p className="eyebrow">02 / SOURCE PACK</p>
+              <p className="eyebrow">Browse notes</p>
               <nav aria-label="Choose a source">
                 {notes.map((note, index) => (
                   <button
                     key={note.id}
                     className={`source-row ${current.id === note.id ? "active" : ""}`}
+                    aria-pressed={current.id === note.id}
                     onClick={() => {
                       setSelected(note.id);
                       setSelectedPassage("");
@@ -383,8 +388,8 @@ export default function SourceDesk() {
                 ))}
               </nav>
               <p className="pack-note">
-                An authored equipment & workshop pack. All six original notes
-                are fictional.
+                The six sample notes are fictional. You can add your own for
+                this session.
               </p>
               <Button
                 variant="line"
@@ -434,8 +439,8 @@ export default function SourceDesk() {
                 </span>
                 <p>
                   {method === "semantic"
-                    ? "Runs in your browser. Similarity is not factual confidence."
-                    : "Shared words, not model inference."}
+                    ? "Ranks passages by similar meaning. Check the original note before relying on a match."
+                    : "Ranks passages by shared words. Lower results may be off topic."}
                 </p>
               </div>
               {!accepted && (
@@ -494,7 +499,8 @@ export default function SourceDesk() {
                 Download search record <span aria-hidden="true">↓</span>
               </Button>
               <p className="export-note">
-                JSON includes your question, quoted notes, versions and method.
+                The file includes your question, matches and their source
+                versions.
               </p>
             </>
           ) : (
@@ -525,7 +531,7 @@ export default function SourceDesk() {
         >
           <div className="column-heading">
             <h2>Original note</h2>
-            <span>03 / READ IN CONTEXT</span>
+            <span>Full text</span>
           </div>
           <article className="source-sheet">
             <div className="sheet-top">
@@ -653,21 +659,17 @@ export default function SourceDesk() {
 
       <section className="methodology" id="methodology">
         <div className="method-intro">
-          <span className="eyebrow">04 / SHOW YOUR WORK</span>
-          <h2>
-            Useful retrieval.
-            <br />
-            Visible limits.
-          </h2>
+          <span className="eyebrow">Search methods</span>
+          <h2>How the desk finds a match</h2>
           <p>
-            A small, reproducible experiment. The model finds related language;
-            the original notes remain the evidence.
+            Start with text matching. Try search by meaning when your question
+            uses different words from the notes.
           </p>
         </div>
         <div className="method-content">
           <details>
             <summary>
-              The measured tradeoff <span>+</span>
+              How the two methods performed <span>+</span>
             </summary>
             <p>
               On 13 answerable held-out questions, semantic search accepted 7
@@ -724,11 +726,17 @@ export default function SourceDesk() {
               fictional sources and 12 passages are a tiny test, not evidence of
               general accuracy.
             </p>
-            <a href={`${import.meta.env.BASE_URL}evidence/evaluation.json`} download>
+            <a
+              href={`${import.meta.env.BASE_URL}evidence/evaluation.json`}
+              download
+            >
               Download raw evaluation ↗
             </a>{" "}
             ·{" "}
-            <a href={`${import.meta.env.BASE_URL}evidence/source-trail-fixture.json`} download>
+            <a
+              href={`${import.meta.env.BASE_URL}evidence/source-trail-fixture.json`}
+              download
+            >
               Frozen test set ↗
             </a>
           </details>
@@ -751,7 +759,7 @@ export default function SourceDesk() {
           </details>
           <details>
             <summary>
-              The actual model & source trail <span>+</span>
+              Model details and note versions <span>+</span>
             </summary>
             <p>
               MiniLM-L6-v2, q8 weights, 384 dimensions, mean pooling and
@@ -766,8 +774,13 @@ export default function SourceDesk() {
               Editing sources invalidates results and unloads the model to clear
               pending work.
             </p>
-            <a href={`${import.meta.env.BASE_URL}models/manifest.json`}>Pinned asset hashes ↗</a> ·{" "}
-            <a href={`${import.meta.env.BASE_URL}evidence/architecture.txt`}>Architecture ↗</a>
+            <a href={`${import.meta.env.BASE_URL}models/manifest.json`}>
+              Pinned asset hashes ↗
+            </a>{" "}
+            ·{" "}
+            <a href={`${import.meta.env.BASE_URL}evidence/architecture.txt`}>
+              Architecture ↗
+            </a>
           </details>
         </div>
       </section>

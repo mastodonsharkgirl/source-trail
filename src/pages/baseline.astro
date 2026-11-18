@@ -1,7 +1,53 @@
 ---
-import SourceDesk from '../components/SourceDesk';
-import '../styles/global.css';
-import '@fontsource-variable/geist';
+import SourceDesk from "../components/SourceDesk";
+import "../styles/global.css";
+import "../styles/desk-editorial.css";
+import "@fontsource-variable/geist";
+import "@fontsource/fraunces/400.css";
+import "@fontsource/fraunces/400-italic.css";
+
+const base = import.meta.env.BASE_URL;
 ---
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><meta name="description" content="Find exact passages in fictional notes, then follow every result back to its source. Text matching is ready immediately in your browser." /><meta name="theme-color" content="#F3EFE5" /><title>Evidence Desk — Source Trail retrieval baseline</title><link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" /></head><body><a href="#desk" class="skip-link">Skip to source desk</a><div class="page-frame"><header class="site-header"><a class="wordmark" href={import.meta.env.BASE_URL} aria-label="Source Trail home"><span aria-hidden="true" class="brand-icon">s↗</span>source trail<span class="wordmark-period">.</span></a><nav aria-label="Product views"><a href={import.meta.env.BASE_URL}>Story Lab</a><a aria-current="page" href="#desk">Evidence Desk</a><a href="#methodology">How it works</a></nav></header><main id="desk"><section class="hero"><div><p class="eyebrow">EVIDENCE DESK · SIX FICTIONAL WORK NOTES</p><h1>Find the passage.<br /><em>Keep the source.</em></h1><p class="hero-summary">Ask about equipment, bookings or refunds. Open a match to read the original note.</p></div><div class="hero-note"><span class="hero-note-rule" aria-hidden="true"></span><p><strong>Try the worked example</strong><br />Broken borrowed camera<br />Six fictional notes · no model</p><span class="hero-local"><span aria-hidden="true">●</span> Runs in this browser</span></div></section><SourceDesk client:load /><noscript><p>This interactive source desk needs JavaScript. You can still read the <a href={`${import.meta.env.BASE_URL}evidence/source-trail-fixture.json`}>fictional source pack</a> and <a href={`${import.meta.env.BASE_URL}evidence/evaluation.json`}>evaluation</a>.</p></noscript></main><footer class="site-footer"><span class="wordmark">source trail.</span><p>Follow the evidence. Make your own reading.</p><a href={`${import.meta.env.BASE_URL}evidence/README.txt`}>Project notes ↗</a></footer></div></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Search six fictional work notes and open each matching passage in its original context." />
+    <meta name="theme-color" content="#f2efe6" />
+    <title>Evidence Desk — Source Trail</title>
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+  </head>
+  <body class="desk-editorial">
+    <a href="#desk" class="skip-link">Skip to source desk</a>
+    <div class="page-frame">
+      <header class="site-header">
+        <a class="wordmark" href={base} aria-label="Source Trail home"><span aria-hidden="true" class="brand-icon">s↗</span>source trail<span class="wordmark-period">.</span></a>
+        <nav aria-label="Product views">
+          <a href={base}>Story Lab</a>
+          <a aria-current="page" href="#desk">Evidence Desk</a>
+          <a href="#methodology">How search works</a>
+        </nav>
+      </header>
+      <main id="desk">
+        <section class="desk-masthead" aria-labelledby="desk-title">
+          <div>
+            <p class="eyebrow">Evidence Desk</p>
+            <h1 id="desk-title">Find the passage. <em>Keep the source.</em></h1>
+            <p>Search six fictional work notes about equipment, bookings and refunds. Each result opens in the note it came from.</p>
+          </div>
+          <a class="desk-story-link" href={base}>
+            <span>Story Lab</span>
+            See why the source matters <span aria-hidden="true">↗</span>
+          </a>
+        </section>
+        <SourceDesk client:load />
+        <noscript><p>Enable JavaScript to search. You can read the <a href={`${base}evidence/source-trail-fixture.json`}>fictional notes</a> and <a href={`${base}evidence/evaluation.json`}>search evaluation</a> directly.</p></noscript>
+      </main>
+      <footer class="site-footer">
+        <span class="wordmark">source trail.</span>
+        <a href={`${base}evidence/README.txt`}>Project notes ↗</a>
+      </footer>
+    </div>
+  </body>
+</html>

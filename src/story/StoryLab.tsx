@@ -320,6 +320,7 @@ export default function StoryLab() {
       className={`story-app ${opaque ? "opaque" : ""}`}
       data-mood={mood}
       data-tone={tone}
+      data-paused={paused}
     >
       <Horizon paused={paused || busy} mood={mood} />
       <header className="story-header">
@@ -331,7 +332,7 @@ export default function StoryLab() {
           <a href="#lab" aria-current="page">
             Story Lab
           </a>
-          <a href={`${base}baseline/`}>Evidence Desk ↗</a>
+          <a href={`${base}baseline/`}>Evidence Desk</a>
           <a href="#how">How it works</a>
         </nav>
         <details className="appearance">
@@ -378,52 +379,59 @@ export default function StoryLab() {
         </details>
       </header>
       <main id="lab">
-        <section className="story-intro">
-          <div>
-            <p className="kicker">FOLLOW ONE REAL ANSWER BACK TO ITS SOURCES.</p>
-            <h1>
-              An answer sounds right.
+        <section
+          className="story-intro meadow-intro"
+          aria-labelledby="meadow-title"
+        >
+          <figure className="meadow-scene">
+            <img
+              src={`${base}meadow-footbridge.webp`}
+              alt=""
+              width={1280}
+              height={853}
+              fetchPriority="high"
+            />
+            <figcaption>Meadow Atlas · fictional setting</figcaption>
+          </figure>
+          <div className="meadow-heading">
+            <p className="kicker">Story Lab</p>
+            <h1 id="meadow-title">
+              The bridge opens
               <br />
-              <em>Does the evidence agree?</em>
+              <em>after sunrise.</em>
             </h1>
             <p className="intro-copy">
-              Read a model’s answer beside the notes it was given. Spot where it
-              gets the bridge rule wrong. No model download is needed for this
-              saved walkthrough.
+              The model read the bridge rule and reversed it. Compare the saved
+              answer with the passage it received.
             </p>
-            <a className="intro-action" href="#recorded-run">Inspect the saved run <span aria-hidden="true">↓</span></a>
-          </div>
-          <div className="evidence-illustration" aria-hidden="true">
-            <svg viewBox="0 0 360 214" role="presentation">
-              <path className="trail-path" d="M35 60 C112 42 122 151 194 130 S258 73 324 102" />
-              <path className="trail-path trail-path-secondary" d="M35 145 C104 168 151 90 208 117 S274 163 327 148" />
-              <g className="source-card"><rect x="18" y="35" width="91" height="57" rx="10"/><path d="M34 54h55M34 67h38"/></g>
-              <g className="source-card"><rect x="31" y="123" width="94" height="57" rx="10"/><path d="M47 142h56M47 155h35"/></g>
-              <g className="answer-card"><rect x="222" y="72" width="115" height="86" rx="13"/><path d="M241 96h69M241 111h54M241 126h62"/><circle cx="316" cy="137" r="9"/><path d="M316 132v6M316 142h.01"/></g>
-              <circle className="trail-node" cx="143" cy="113" r="7"/><circle className="trail-node" cx="203" cy="128" r="7"/>
-            </svg>
-            <p>Passages travel into an answer. They do not automatically make it correct.</p>
+            <div className="meadow-actions">
+              <a className="intro-action" href="#recorded-run">
+                Compare the evidence <span aria-hidden="true">↓</span>
+              </a>
+              <a href={`${base}baseline/`}>
+                Search work notes <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
         </section>
         <div id="recorded-run">
-        <RecordedWalkthrough
-          selected={selected}
-          ordered={ordered}
-          changeWords={changeWords}
-          restore={() => {
-            if (busy) cancel();
-            setSelected(["rabbit", "bridge", "sun"]);
-          }}
-        />
+          <RecordedWalkthrough
+            selected={selected}
+            ordered={ordered}
+            changeWords={changeWords}
+            restore={() => {
+              if (busy) cancel();
+              setSelected(["rabbit", "bridge", "sun"]);
+            }}
+          />
         </div>
         <details className="live-experiment" id="experiment">
           <summary>
             Optional experiment: generate your own story on this device
           </summary>
           <p>
-            The walkthrough above is a saved real run. This separate experiment
-            uses your selected words and can generate a new paragraph after a
-            model download.
+            Use the words you picked to write a short story on this device.
+            Model setup requires a download.
           </p>
           <section className="creation" aria-labelledby="choose-title">
             <div className="word-stage">
@@ -568,9 +576,9 @@ export default function StoryLab() {
           <div>
             <p className="kicker">FROM A MEADOW TO A WORKDAY</p>
             <h2>
-              The same trail.
+              Search your way
               <br />
-              More practical questions.
+              back to the note.
             </h2>
             <p>
               Where should a damaged camera go? Which refund policy replaced the
@@ -578,7 +586,7 @@ export default function StoryLab() {
               local semantic search.
             </p>
             <a className="primary-action" href={`${base}baseline/`}>
-              Try this with work notes ↗
+              Open Evidence Desk ↗
             </a>
           </div>
           <div className="note-stack" aria-hidden="true">

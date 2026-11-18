@@ -1,0 +1,282 @@
+.desk-editorial {
+  --blue: #234ab1;
+  --ink: #182a34;
+  --muted: #4e5c60;
+  --line: #d9d4c7;
+  --paper: #f2efe6;
+  background: var(--paper);
+}
+.desk-editorial .page-frame {
+  width: min(1280px, 92%);
+}
+.desk-editorial .site-header {
+  min-height: 70px;
+}
+.desk-editorial .site-header nav {
+  flex-wrap: wrap;
+}
+.desk-editorial .site-header nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.desk-masthead {
+  margin-block: 20px 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: end;
+  gap: 18px;
+  border-radius: 22px;
+  padding: clamp(19px, 3.1vw, 40px);
+  background: linear-gradient(115deg, #112d32, #204954);
+  color: #fff8e6;
+  box-shadow: 0 13px 28px #142e3b22;
+}
+.desk-masthead .eyebrow {
+  color: #bfe4d9;
+  text-transform: uppercase;
+}
+.desk-masthead h1 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(2.1rem, 4.25vw, 3.9rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 8px 0 9px;
+}
+.desk-masthead em {
+  color: #f0d4a4;
+}
+.desk-masthead p:not(.eyebrow) {
+  max-width: 62ch;
+  color: #deebe4;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+.desk-story-link {
+  border-left: 1px solid #b9d8d199;
+  padding: 6px 0 6px 18px;
+  min-height: 44px;
+  color: #fff2d3;
+  font-size: 0.86rem;
+}
+.desk-story-link > span:first-child {
+  display: block;
+  font-weight: 650;
+  text-decoration: none;
+}
+.desk-story-link:focus-visible {
+  outline-color: #ffdf9f;
+}
+.desk-editorial .question-desk {
+  background: #fffdf7;
+  border: 1px solid #d8d2c3;
+  border-radius: 18px;
+  padding: clamp(13px, 2vw, 22px);
+  box-shadow: 0 10px 25px #2438410f;
+}
+.desk-editorial .question-desk form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 4px 9px;
+  margin-top: 6px;
+}
+.desk-editorial .question-desk form:focus-within {
+  box-shadow: none;
+}
+.desk-editorial .question-desk textarea {
+  border: 1px solid #b8c2ca;
+  padding: 10px 12px;
+  min-height: 50px;
+  border-radius: 10px;
+  background: #f8f8f6;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.32;
+  letter-spacing: -0.02em;
+  field-sizing: content;
+}
+.desk-editorial .question-desk textarea:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
+}
+.desk-editorial .question-desk .button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 50px;
+  border-radius: 10px;
+}
+.desk-editorial .question-bottom {
+  grid-column: 1 / -1;
+  padding: 0;
+}
+.desk-editorial .example-link {
+  min-height: 42px;
+  padding: 3px 0;
+  font-size: 0.82rem;
+  text-decoration: underline;
+}
+.desk-editorial .method-row {
+  padding: 7px 0;
+  gap: 8px 16px;
+}
+.desk-editorial .method-button {
+  border-radius: 8px;
+  min-height: 44px;
+}
+.desk-editorial .method-button.chosen {
+  border-color: #516faf;
+  background: #e8eef9;
+}
+.desk-editorial .workspace-state {
+  padding-top: 3px;
+}
+.desk-editorial .desk-grid {
+  margin-top: 21px;
+  gap: 14px;
+  align-items: start;
+}
+.desk-editorial .results-column,
+.desk-editorial .reader,
+.desk-editorial .source-index {
+  min-width: 0;
+  padding: clamp(12px, 1.6vw, 20px);
+  background: #fffdf7;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px #20333e0b;
+}
+.desk-editorial .column-heading {
+  padding-bottom: 9px;
+}
+.desk-editorial .column-heading h2 {
+  font-size: 1rem;
+}
+.desk-editorial .result-method {
+  padding: 8px 0;
+}
+.desk-editorial .result-list {
+  margin-top: 5px;
+}
+.desk-editorial .result-list li {
+  border-radius: 10px;
+  background: #f7f5ee;
+  border: 1px solid #e5e0d3;
+  margin: 0 0 10px;
+  padding: 12px;
+}
+.desk-editorial .result-list li:has(button:focus-visible),
+.desk-editorial .result-list li.selected-result {
+  border-color: #7190c4;
+  background: #edf2fa;
+}
+.desk-editorial .result-list blockquote {
+  line-height: 1.53;
+}
+.desk-editorial .open-source {
+  min-height: 44px;
+  font-weight: 650;
+}
+.desk-editorial .source-sheet {
+  margin-top: 10px;
+  padding: clamp(14px, 2vw, 23px);
+  background: #f7f3e8;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.desk-editorial .source-sheet h3 {
+  font-family: Fraunces, Georgia, serif;
+}
+.desk-editorial .source-text mark {
+  background: #dce8ff;
+  color: #162b46;
+}
+.desk-editorial .source-row[aria-pressed="true"] {
+  background: #e7eefb;
+  color: #193a8b;
+  border-radius: 8px;
+}
+.desk-editorial .methodology {
+  border-radius: 20px;
+  background: #e9e7dd;
+  padding: clamp(18px, 3.5vw, 44px);
+}
+.desk-editorial .method-intro h2 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  line-height: 1.05;
+}
+.desk-editorial .method-content summary {
+  min-height: 44px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .desk-editorial .result-list li:hover {
+    border-color: #91a7cd;
+  }
+  .desk-editorial .open-source:hover,
+  .desk-editorial .example-link:hover {
+    color: #122d75;
+    text-decoration: underline;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .desk-editorial .result-list li {
+    transition:
+      background-color 145ms ease,
+      border-color 145ms ease;
+  }
+  .desk-editorial .source-text mark {
+    animation: source-highlight 230ms ease-out;
+  }
+}
+@keyframes source-highlight {
+  from {
+    background: #fff1ba;
+  }
+  to {
+    background: #dce8ff;
+  }
+}
+@media (max-width: 759px) {
+  .desk-masthead {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-block: 12px;
+  }
+  .desk-story-link {
+    display: none;
+  }
+  .desk-editorial .site-header {
+    gap: 6px;
+  }
+  .desk-editorial .site-header nav {
+    gap: 8px;
+  }
+  .desk-editorial .question-desk form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .desk-editorial .question-desk .button-primary {
+    justify-self: stretch;
+    min-height: 44px;
+  }
+  .desk-editorial .question-bottom {
+    padding: 0;
+  }
+  .desk-editorial .desk-grid {
+    margin-top: 13px;
+  }
+  .desk-editorial .source-index {
+    padding: 7px 12px;
+  }
+}
+@media (forced-colors: active) {
+  .desk-editorial .source-row[aria-pressed="true"] {
+    outline: 2px solid Highlight;
+  }
+  .desk-editorial .source-text mark {
+    color: HighlightText;
+    background: Highlight;
+  }
+}
